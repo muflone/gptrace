@@ -20,11 +20,16 @@
 
 from gi.repository import Gtk
 from gi.repository import Gio
+from gi.repository import GObject
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
 from gptrace.model_syscalls import ModelSyscalls
 from gptrace.about import AboutWindow
+from daemon_thread import DaemonThread
+from syscall_tracer import SyscallTracer
+
+import optparse
 
 class MainWindow(object):
   def __init__(self, application, settings):
@@ -42,7 +47,7 @@ class MainWindow(object):
         self.settings.get_value('top', 0))
     # Load the others dialogs
     self.about = AboutWindow(self.winMain, False)
-    self.detected_addresses = {}
+    self.thread_loader = None
 
   def run(self):
     "Show the UI"
@@ -66,6 +71,10 @@ class MainWindow(object):
 
   def on_winMain_delete_event(self, widget, event):
     "Close the application"
+    # Cancel the running thread
+    if self.thread_loader.isAlive():
+      self.thread_loader.cancel()
+      self.thread_loader.join()
     self.about.destroy()
     self.settings.set_sizes(self.winMain)
     self.settings.save()
@@ -79,4 +88,27 @@ class MainWindow(object):
   def on_filechooserProgram_file_set(self, widget):
     "Select the program to execute"
     if self.filechooserProgram.get_filename():
-      print self.filechooserProgram.get_filename()
+      self.thread_loader = DaemonThread(
+        target=self.thread_debug_process,
+        args=(self.filechooserProgram.get_filename(), )
+        )
+      self.thread_loader.start()
+
+  def thread_debug_process(self, program):
+    debugger = SyscallTracer(
+      options=optparse.Values(),
+      program=program,
+      syscall_callback=self.syscall_callback,
+      event_callback=self.event_callback)
+    debugger.main()
+    # Cancel the running thread
+    #  if self.thread_loader.cancelled:
+    #    print 'abort'
+    #    break
+    return True
+
+  def syscall_callback(self, syscall):
+    GObject.idle_add(self.model.add, syscall.name)
+
+  def event_callback(self, event):
+    print event
