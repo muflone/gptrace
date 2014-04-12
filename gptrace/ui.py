@@ -54,8 +54,8 @@ class MainWindow(object):
     builder.add_from_file(FILE_UI_MAIN)
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
-    self.model = ModelSyscalls(builder.get_object('storeItems'))
-    self.tvwItems = builder.get_object('tvwItems')
+    self.model = ModelSyscalls(builder.get_object('storeSyscalls'))
+    self.tvwItems = builder.get_object('tvwSyscalls')
     self.filechooserProgram = builder.get_object('filechooserProgram')
     # Set various properties
     self.winMain.set_title(APP_NAME)
