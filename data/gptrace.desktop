@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=gpTrace
+GenericName=gpTrace
+Comment=Trace the activities of an external application
+Comment[it]=Traccia le attivita di un'applicazione esterna
+Terminal=false
+Categories=System;GTK;
+Icon=gptrace
+TryExec=gptrace
+Exec=gptrace
