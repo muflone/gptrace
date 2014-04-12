@@ -37,9 +37,10 @@ class ModelSyscalls(object):
     self.model[self.path_from_iter(treeiter)][column] = value
 
   def add(self, item):
-    return self.model.append((
-      item
+    self.model.append((
+      item,
     ))
+    return False
 
   def remove(self, treeiter):
     self.model.remove(treeiter)
