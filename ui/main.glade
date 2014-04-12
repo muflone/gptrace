@@ -8,11 +8,6 @@
       <!-- column-name Item -->
       <column type="gchararray"/>
     </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">sdadsa</col>
-      </row>
-    </data>
   </object>
   <object class="GtkApplicationWindow" id="winMain">
     <property name="can_focus">False</property>
