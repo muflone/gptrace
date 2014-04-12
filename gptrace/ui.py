@@ -56,6 +56,7 @@ class MainWindow(object):
     self.winMain = builder.get_object("winMain")
     self.model = ModelSyscalls(builder.get_object('storeItems'))
     self.tvwItems = builder.get_object('tvwItems')
+    self.filechooserProgram = builder.get_object('filechooserProgram')
     # Set various properties
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
@@ -74,3 +75,8 @@ class MainWindow(object):
   def on_btnAbout_clicked(self, widget):
     "Show the about dialog"
     self.about.show()
+
+  def on_filechooserProgram_file_set(self, widget):
+    "Select the program to execute"
+    if self.filechooserProgram.get_filename():
+      print self.filechooserProgram.get_filename()
