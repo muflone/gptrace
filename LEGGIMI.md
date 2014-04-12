@@ -18,6 +18,7 @@ Requisiti di sistema
 * Libreria GTK+3.0 per Python 2
 * Libreria GObject per Python 2
 * Libreria Distutils per Python 2 (generalmente fornita col pacchetto Python)
+* Libreria PTrace per Python 2 (http://bitbucket.org/haypo/python-ptrace)
 
 Installazione
 -------------
