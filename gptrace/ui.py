@@ -72,7 +72,7 @@ class MainWindow(object):
   def on_winMain_delete_event(self, widget, event):
     "Close the application"
     # Cancel the running thread
-    if self.thread_loader.isAlive():
+    if self.thread_loader and self.thread_loader.isAlive():
       self.thread_loader.cancel()
       self.thread_loader.join()
     self.about.destroy()
