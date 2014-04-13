@@ -49,6 +49,7 @@ class MainWindow(object):
     # Load the others dialogs
     self.about = AboutWindow(self.winMain, False)
     self.thread_loader = None
+    self.debugger = None
 
   def run(self):
     "Show the UI"
@@ -100,12 +101,12 @@ class MainWindow(object):
 
   def thread_debug_process(self, program):
     self.debug_start_time = datetime.datetime.now()
-    debugger = SyscallTracer(
+    self.debugger = SyscallTracer(
       options=optparse.Values(),
       program=program,
       syscall_callback=self.syscall_callback,
       event_callback=self.event_callback)
-    debugger.main()
+    self.debugger.main()
     # Cancel the running thread
     #  if self.thread_loader.cancelled:
     #    print 'abort'
