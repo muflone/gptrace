@@ -30,6 +30,7 @@ from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
 
 import optparse
+import datetime
 
 class MainWindow(object):
   def __init__(self, application, settings):
@@ -62,6 +63,9 @@ class MainWindow(object):
     self.model = ModelSyscalls(builder.get_object('storeSyscalls'))
     self.tvwItems = builder.get_object('tvwSyscalls')
     self.filechooserProgram = builder.get_object('filechooserProgram')
+    # Set cellrenderers alignment
+    builder.get_object('cellTimestamp').set_property('xalign', 1.0)
+    builder.get_object('cellTime').set_property('xalign', 1.0)
     # Set various properties
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
@@ -95,6 +99,7 @@ class MainWindow(object):
       self.thread_loader.start()
 
   def thread_debug_process(self, program):
+    self.debug_start_time = datetime.datetime.now()
     debugger = SyscallTracer(
       options=optparse.Values(),
       program=program,
@@ -108,7 +113,12 @@ class MainWindow(object):
     return True
 
   def syscall_callback(self, syscall):
-    GObject.idle_add(self.model.add, syscall.name)
+    now = datetime.datetime.now()
+    GObject.idle_add(self.model.add,
+      (now - self.debug_start_time).total_seconds(),
+      now.strftime('%H:%M:%S.%f'),
+      syscall.name,
+      0)
 
   def event_callback(self, event):
     print event

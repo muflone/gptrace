@@ -36,10 +36,8 @@ class ModelSyscalls(object):
   def set_model_data(self, treeiter, column, value):
     self.model[self.path_from_iter(treeiter)][column] = value
 
-  def add(self, item):
-    self.model.append((
-      item,
-    ))
+  def add(self, timestamp, current_time, syscall, pid):
+    self.model.append((timestamp, current_time, syscall, pid))
     return False
 
   def remove(self, treeiter):
