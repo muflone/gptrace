@@ -136,7 +136,15 @@ class MainWindow(object):
     print 'event', event
 
   def ignore_syscall_callback(self, syscall):
-    return False
+    """Determine if to ignore a callback before it's processed"""
+    name = syscall.name
+    if syscall.name in self.modelInterceptedSyscalls.syscalls:
+      # Process the syscall
+      return False
+    else:
+      # Ignore the syscall
+      print 'ignored syscall %s' % name
+      return True
 
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
     """Handle click on the checked column"""
