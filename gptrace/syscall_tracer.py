@@ -1,8 +1,4 @@
-from logging import getLogger, error
-
-from ptrace import PtraceError
 from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal
-from ptrace.error import PTRACE_ERRORS, writeError
 from ptrace.func_call import FunctionCallOptions
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 from ptrace.ctypes_tools import formatAddress
@@ -153,10 +149,4 @@ class SyscallTracer(Application):
       self.runDebugger()
     except ProcessExit as event:
       self.processExited(event)
-    #except PtraceError as err:
-    #  error("ptrace() error: %s" % err)
-    #except KeyboardInterrupt:
-    #  error("Interrupted.")
-    #except PTRACE_ERRORS as err:
-    #  writeError(getLogger(), err, "Debugger error")
     self.debugger.quit()
