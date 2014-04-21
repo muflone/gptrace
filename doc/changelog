@@ -1,3 +1,10 @@
+gptrace 0.0.2
+
+  * Added a list for syscalls to intercept
+  * Added PID and IP (Instruction Pointer) column in the results list
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Mon, 21 Apr 2014 20:18:14 +0200
+
 gptrace 0.0.1
 
   * Initial release
