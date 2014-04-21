@@ -26,16 +26,41 @@ class ModelInterceptedSyscalls(ModelBase):
   COL_SYSCALL = 1
 
   def __init__(self, model):
+    """Initialize the model and set the syscalls list to empty list"""
     super(self.__class__, self).__init__(model)
+    self.clear()
+
+  def add(self, items):
+    """Add a new row in the model"""
+    super(self.__class__, self).add(items)
+    # If the checked status is True add the syscall name to the syscalls list
+    if items[self.COL_CHECKED]:
+      self.syscalls.append(items[self.COL_SYSCALL])
+    return False
+
+  def clear(self):
+    """Remove every items in the model and clear the syscalls list"""
+    super(self.__class__, self).clear()
+    self.syscalls = []
+    return False
 
   def get_checked(self, treepath):
+    """Get the checked status"""
     return self.get_model_data(treepath, self.COL_CHECKED)
 
   def set_checked(self, treepath, value):
+    """Set the checked status and insert/remove from the syscalls list"""
+    name = self.get_syscall(treepath)
+    if value and name not in self.syscalls:
+      self.syscalls.append(name)
+    elif not value and name in self.syscalls:
+      self.syscalls.remove(name)
     return self.set_model_data(treepath, self.COL_CHECKED, value)
 
   def toggle_checked(self, treepath):
+    """Toggle the checked status"""
     return self.set_checked(treepath, not self.get_checked(treepath))
 
   def get_syscall(self, treepath):
+    """Get the syscall name"""
     return self.get_model_data(treepath, self.COL_SYSCALL)
