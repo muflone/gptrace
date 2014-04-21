@@ -24,7 +24,7 @@ from gi.repository import GObject
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
-from gptrace.model_syscalls import ModelSyscalls
+from gptrace.model_results import ModelResults
 from gptrace.about import AboutWindow
 from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
@@ -61,7 +61,7 @@ class MainWindow(object):
     builder.add_from_file(FILE_UI_MAIN)
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
-    self.model = ModelSyscalls(builder.get_object('storeSyscalls'))
+    self.modelResults = ModelResults(builder.get_object('storeResults'))
     self.tvwItems = builder.get_object('tvwSyscalls')
     self.filechooserProgram = builder.get_object('filechooserProgram')
     # Set cellrenderers alignment
@@ -115,11 +115,11 @@ class MainWindow(object):
 
   def syscall_callback(self, syscall):
     now = datetime.datetime.now()
-    GObject.idle_add(self.model.add,
+    GObject.idle_add(self.modelResults.add, (
       (now - self.debug_start_time).total_seconds(),
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
-      0)
+      0))
 
   def event_callback(self, event):
     print event

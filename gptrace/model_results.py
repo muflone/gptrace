@@ -19,35 +19,13 @@
 ##
 
 from gi.repository import Gtk
-from gptrace.constants import *
+from gptrace.model_base import ModelBase
 
-class ModelSyscalls(object):
-  COL_ITEM = 0
+class ModelResults(ModelBase):
+  COL_RELATIVE_TIME = 0
+  COL_TIMESTAMP = 1
+  COL_SYSCALL = 2
+  COL_PID = 3
+
   def __init__(self, model):
-    self.model = model
-    self.index = 0
-
-  def path_from_iter(self, treeiter):
-    return type(treeiter) is Gtk.TreeModelRow and treeiter.path or treeiter
-
-  def get_model_data(self, treeiter, column):
-    return self.model[self.path_from_iter(treeiter)][column]
-
-  def set_model_data(self, treeiter, column, value):
-    self.model[self.path_from_iter(treeiter)][column] = value
-
-  def add(self, timestamp, current_time, syscall, pid):
-    self.model.append((timestamp, current_time, syscall, pid))
-    return False
-
-  def remove(self, treeiter):
-    self.model.remove(treeiter)
-
-  def clear(self):
-    return self.model.clear()
-
-  def count(self):
-    return len(self.model)
-
-  def __iter__(self):
-    return iter(self.model)
+    super(self.__class__, self).__init__(model)
