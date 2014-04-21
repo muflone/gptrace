@@ -111,6 +111,7 @@ class MainWindow(object):
     self.debugger = SyscallTracer(
       options=optparse.Values(),
       program=program,
+      ignore_syscall_callback=self.ignore_syscall_callback,
       syscall_callback=self.syscall_callback,
       event_callback=self.event_callback)
     self.debugger.main()
@@ -130,3 +131,6 @@ class MainWindow(object):
 
   def event_callback(self, event):
     print 'event', event
+
+  def ignore_syscall_callback(self, syscall):
+    return False

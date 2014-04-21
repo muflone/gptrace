@@ -4,12 +4,13 @@ from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS
 from ptrace.ctypes_tools import formatAddress
 
 class SyscallTracer(Application):
-  def __init__(self, options, program, syscall_callback, event_callback):
+  def __init__(self, options, program, ignore_syscall_callback, syscall_callback, event_callback):
     Application.__init__(self)
     # Parse self.options
     self.options = options
     self.program=[program, ]
     self.parseOptions()
+    self.ignore_syscall_callback = ignore_syscall_callback
     self.syscall_callback = syscall_callback
     self.event_callback = event_callback
 
@@ -126,13 +127,7 @@ class SyscallTracer(Application):
 
   def prepareProcess(self, process):
     process.syscall()
-    process.syscall_state.ignore_callback = self.ignoreSyscall
-
-  def ignoreSyscall(self, syscall):
-    name = syscall.name
-    if (self.only and (name not in self.only)) or (self.excluding and (name in self.excluding)):
-      return True
-    return False
+    process.syscall_state.ignore_callback = self.ignore_syscall_callback
 
   def processExited(self, event):
     # Display syscall which has not exited
