@@ -134,3 +134,7 @@ class MainWindow(object):
 
   def ignore_syscall_callback(self, syscall):
     return False
+
+  def on_cellInterceptedChecked_toggled(self, widget, treepath):
+    """Handle click on the checked column"""
+    self.modelInterceptedSyscalls.toggle_checked(treepath)
