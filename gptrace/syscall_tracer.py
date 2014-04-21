@@ -16,7 +16,7 @@ class SyscallTracer(Application):
   def parseOptions(self):
     self.options.fork = False
     self.options.enter = False
-    self.options.show_ip = False
+    self.options.show_ip = True
     self.options.trace_exec = True
     #self.options.socket = False
     #self.options.filename = False

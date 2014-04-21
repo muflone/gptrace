@@ -31,6 +31,7 @@ from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
 
 from ptrace.syscall import SYSCALL_NAMES
+from ptrace.ctypes_tools import formatAddress
 
 import optparse
 import datetime
@@ -128,7 +129,8 @@ class MainWindow(object):
       (now - self.debug_start_time).total_seconds(),
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
-      0))
+      syscall.process.pid,
+      formatAddress(syscall.instr_pointer)))
 
   def event_callback(self, event):
     print 'event', event

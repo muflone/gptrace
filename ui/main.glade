@@ -21,6 +21,8 @@
       <column type="gchararray"/>
       <!-- column-name PID -->
       <column type="gint"/>
+      <!-- column-name Instruction pointer -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="winMain">
@@ -152,6 +154,21 @@
                           <object class="GtkCellRendererText" id="cellPID"/>
                           <attributes>
                             <attribute name="text">3</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvwcolIP">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Instruction Pointer</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <property name="sort_column_id">4</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellIP"/>
+                          <attributes>
+                            <attribute name="text">4</attribute>
                           </attributes>
                         </child>
                       </object>
