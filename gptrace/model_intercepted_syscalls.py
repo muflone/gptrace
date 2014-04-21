@@ -28,14 +28,14 @@ class ModelInterceptedSyscalls(ModelBase):
   def __init__(self, model):
     super(self.__class__, self).__init__(model)
 
-  def get_checked(self, path):
-    return self.get_model_data(path, self.COL_CHECKED)
+  def get_checked(self, treepath):
+    return self.get_model_data(treepath, self.COL_CHECKED)
 
-  def set_checked(self, path, value):
-    return self.set_model_data(path, self.COL_CHECKED, value)
+  def set_checked(self, treepath, value):
+    return self.set_model_data(treepath, self.COL_CHECKED, value)
 
-  def toggle_checked(self, path):
-    return self.set_checked(path, not self.get_checked(path))
+  def toggle_checked(self, treepath):
+    return self.set_checked(treepath, not self.get_checked(treepath))
 
-  def get_syscall(self, path):
-    return self.get_model_data(path, self.COL_SYSCALL)
+  def get_syscall(self, treepath):
+    return self.get_model_data(treepath, self.COL_SYSCALL)
