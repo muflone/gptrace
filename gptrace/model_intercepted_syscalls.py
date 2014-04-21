@@ -24,5 +24,18 @@ from gptrace.model_base import ModelBase
 class ModelInterceptedSyscalls(ModelBase):
   COL_CHECKED = 0
   COL_SYSCALL = 1
+
   def __init__(self, model):
     super(self.__class__, self).__init__(model)
+
+  def get_checked(self, path):
+    return self.get_model_data(path, self.COL_CHECKED)
+
+  def set_checked(self, path, value):
+    return self.set_model_data(path, self.COL_CHECKED, value)
+
+  def toggle_checked(self, path):
+    return self.set_checked(path, not self.get_checked(path))
+
+  def get_syscall(self, path):
+    return self.get_model_data(path, self.COL_SYSCALL)
