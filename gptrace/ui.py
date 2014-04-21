@@ -124,6 +124,7 @@ class MainWindow(object):
 
   def syscall_callback(self, syscall):
     """Add the syscall to the results model"""
+    # print syscall, syscall.instr_pointer, syscall.format()
     now = datetime.datetime.now()
     GObject.idle_add(self.modelResults.add, (
       (now - self.debug_start_time).total_seconds(),
@@ -143,7 +144,7 @@ class MainWindow(object):
       return False
     else:
       # Ignore the syscall
-      print 'ignored syscall %s' % name
+      # print 'ignored syscall %s' % name
       return True
 
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
