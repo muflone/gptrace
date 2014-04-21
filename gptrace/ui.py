@@ -25,9 +25,12 @@ from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
 from gptrace.model_results import ModelResults
+from gptrace.model_intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.about import AboutWindow
 from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
+
+from ptrace.syscall import SYSCALL_NAMES
 
 import optparse
 import datetime
@@ -62,7 +65,8 @@ class MainWindow(object):
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
     self.modelResults = ModelResults(builder.get_object('storeResults'))
-    self.tvwItems = builder.get_object('tvwSyscalls')
+    self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
+      builder.get_object('storeInterceptedSyscalls'))
     self.filechooserProgram = builder.get_object('filechooserProgram')
     # Set cellrenderers alignment
     builder.get_object('cellTimestamp').set_property('xalign', 1.0)
@@ -71,6 +75,9 @@ class MainWindow(object):
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
     self.winMain.set_application(self.application)
+    # Load all the available syscall names
+    for syscall in SYSCALL_NAMES.values():
+      self.modelInterceptedSyscalls.add(items=(True, syscall))
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
