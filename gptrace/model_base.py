@@ -23,7 +23,6 @@ from gi.repository import Gtk
 class ModelBase(object):
   def __init__(self, model):
     self.model = model
-    self.index = 0
 
   def path_from_iter(self, treeiter):
     return type(treeiter) is Gtk.TreeModelRow and treeiter.path or treeiter

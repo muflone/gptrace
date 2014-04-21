@@ -129,4 +129,4 @@ class MainWindow(object):
       0))
 
   def event_callback(self, event):
-    print event
+    print 'event', event
