@@ -149,3 +149,13 @@ class MainWindow(object):
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
     """Handle click on the checked column"""
     self.modelInterceptedSyscalls.toggle_checked(treepath)
+
+  def on_btnInterceptedSyscallsSelectAll_clicked(self, widget):
+    """Intercept all the syscalls"""
+    for row in self.modelInterceptedSyscalls:
+      self.modelInterceptedSyscalls.set_checked(row, True)
+
+  def on_btnInterceptedSyscallsClear_clicked(self, widget):
+    """Disable any syscall to intercept"""
+    for row in self.modelInterceptedSyscalls:
+      self.modelInterceptedSyscalls.set_checked(row, False)
