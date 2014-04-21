@@ -1,7 +1,6 @@
 from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal
 from ptrace.func_call import FunctionCallOptions
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
-from ptrace.ctypes_tools import formatAddress
 
 class SyscallTracer(Application):
   def __init__(self, options, program, ignore_syscall_callback, syscall_callback, event_callback):
@@ -26,13 +25,6 @@ class SyscallTracer(Application):
     self.options.show_pid = False
 
 
-    #if self.options.list_syscalls:
-    #    syscalls = list(SYSCALL_NAMES.items())
-    #    syscalls.sort(key=lambda data: data[0])
-    #    for num, name in syscalls:
-    #        print("% 3s: %s" % (num, name))
-    #    exit(0)
-
     # Create "only" filter
     only = set()
     #if self.options.filename:
@@ -43,9 +35,6 @@ class SyscallTracer(Application):
     #if self.options.socket:
     #    only |= SOCKET_SYSCALL_NAMES
     self.only = only
-    self.excluding = ('sendmsg', 'recvmsg', 'connect', 'socket', 'getsockopt', 'sendto', 'recvfrom', 'listen', 'getsockname', 'getpeername', 'poll', 'futex', 'write', 'writev', 'read', 'stat', 'fstat', 'close', 'open', 'shmctl', 'shmget', 'shmdt', 'fcntl', 'brk', 'mmap', 'munmap', 'mprotect', 'lseek', 'lstat', 'fstatfs', 'access', 'getdents', 'fadvise64', 'openat', 'getressgid', 'getresuid', 'getegid', 'getressgid', 'shmat', 'syscall<290>', 'geteuid', 'getuid', 'rt_sigaction', 'getresgid', 'clone', 'set_tid_address')
-    self.excluding = ()
-
     if self.options.fork:
         self.options.show_pid = True
     self.processOptions()
@@ -58,12 +47,12 @@ class SyscallTracer(Application):
         return
 
     self.syscall_options = FunctionCallOptions(
-        write_types=True,
-        write_argname=True,
-        string_max_length=300,
-        replace_socketcall=False,
-        write_address=True,
-        max_array_count=20,
+      write_types=True,
+      write_argname=True,
+      string_max_length=300,
+      replace_socketcall=False,
+      write_address=True,
+      max_array_count=20,
     )
     self.syscall_options.instr_pointer = self.options.show_ip
     self.syscallTrace(process)
@@ -74,13 +63,6 @@ class SyscallTracer(Application):
     #text = syscall.format()
     #if syscall.result is not None:
     #    text = "%-40s = %s" % (text, syscall.result_text)
-    #prefix = []
-    #if self.options.show_pid:
-    #    prefix.append("[%s]" % syscall.process.pid)
-    #if self.options.show_ip:
-    #    prefix.append("[%s]" % formatAddress(syscall.instr_pointer))
-    #if prefix:
-    #    text = ''.join(prefix) + ' ' + text
     #error(text)
 
   def syscall(self, process):
@@ -88,7 +70,6 @@ class SyscallTracer(Application):
     syscall = state.event(self.syscall_options)
     if syscall and (syscall.result is not None or self.options.enter):
       self.displaySyscall(syscall)
-
     # Break at next syscall
     process.syscall()
 

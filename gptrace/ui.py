@@ -122,6 +122,7 @@ class MainWindow(object):
     return True
 
   def syscall_callback(self, syscall):
+    """Add the syscall to the results model"""
     now = datetime.datetime.now()
     GObject.idle_add(self.modelResults.add, (
       (now - self.debug_start_time).total_seconds(),
