@@ -24,6 +24,10 @@ from gptrace.model_base import ModelBase
 class ModelInterceptedSyscalls(ModelBase):
   COL_CHECKED = 0
   COL_SYSCALL = 1
+  COL_RESULT = 2
+  COL_ARGUMENTS = 3
+  COL_FILENAME_ARGUMENTS = 4
+  COL_SOCKET_FUNCTION = 5
 
   def __init__(self, model):
     """Initialize the model and set the syscalls list to empty list"""
@@ -64,3 +68,19 @@ class ModelInterceptedSyscalls(ModelBase):
   def get_syscall(self, treepath):
     """Get the syscall name"""
     return self.get_model_data(treepath, self.COL_SYSCALL)
+
+  def get_result_type(self, treepath):
+    """Get the result type"""
+    return self.get_model_data(treepath, self.COL_RESULT)
+
+  def get_arguments(self, treepath):
+    """Get the arguments list"""
+    return self.get_model_data(treepath, self.COL_ARGUMENTS)
+
+  def get_has_filename_arguments(self, treepath):
+    """Get if any arguments is filename/pathname"""
+    return self.get_model_data(treepath, self.COL_FILENAME_ARGUMENTS)
+
+  def get_socket_function(self, treepath):
+    """Get if the function is used by sockets"""
+    return self.get_model_data(treepath, self.COL_SOCKET_FUNCTION)

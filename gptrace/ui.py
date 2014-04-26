@@ -30,7 +30,7 @@ from gptrace.about import AboutWindow
 from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
 
-from ptrace.syscall import SYSCALL_NAMES
+from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 from ptrace.ctypes_tools import formatAddress
 
 import optparse
@@ -44,11 +44,24 @@ class MainWindow(object):
     # Restore the intercepted syscalls list from settings
     saved_syscalls = settings.get_intercepted_syscalls()
     # Load all the available syscall names
-    # If the configuration file has a list of intercepted syscalls then
-    # set each syscall status accordingly
     for syscall in SYSCALL_NAMES.values():
+      prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
       self.modelInterceptedSyscalls.add(items=(
-        saved_syscalls is None and True or syscall in saved_syscalls, syscall))
+        # If the configuration file has a list of intercepted syscalls then
+        # set each syscall status accordingly
+        saved_syscalls is None and True or syscall in saved_syscalls,
+        # Add syscall name
+        syscall,
+        # Add return type
+        prototype[0],
+        # Add prototype arguments
+        ', '.join(['%s %s' % m for m in prototype[1]]),
+        # Does this syscall use any filename/pathname argument?
+        any(argname in FILENAME_ARGUMENTS for argtype, argname in prototype[1]),
+        # Is this syscall used by sockets?
+        syscall in SOCKET_SYSCALL_NAMES,
+      )
+    )
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
       self.winMain.set_default_size(
@@ -167,3 +180,15 @@ class MainWindow(object):
     """Disable any syscall to intercept"""
     for row in self.modelInterceptedSyscalls:
       self.modelInterceptedSyscalls.set_checked(row, False)
+
+  def on_btnInterceptedSyscallsSelectForFile_clicked(self, widget):
+    """Intercept all the syscalls that use filenames"""
+    for row in self.modelInterceptedSyscalls:
+      if self.modelInterceptedSyscalls.get_has_filename_arguments(row):
+        self.modelInterceptedSyscalls.set_checked(row, True)
+
+  def on_btnInterceptedSyscallsSelectForSocket_clicked(self, widget):
+    """Intercept all the syscalls used by sockets"""
+    for row in self.modelInterceptedSyscalls:
+      if self.modelInterceptedSyscalls.get_socket_function(row):
+        self.modelInterceptedSyscalls.set_checked(row, True)

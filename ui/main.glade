@@ -9,6 +9,14 @@
       <column type="gboolean"/>
       <!-- column-name colSyscall -->
       <column type="gchararray"/>
+      <!-- column-name colResults -->
+      <column type="gchararray"/>
+      <!-- column-name colArguments -->
+      <column type="gchararray"/>
+      <!-- column-name colForFilename -->
+      <column type="gboolean"/>
+      <!-- column-name colForSocket -->
+      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkListStore" id="storeResults">
@@ -21,7 +29,7 @@
       <column type="gchararray"/>
       <!-- column-name PID -->
       <column type="gint"/>
-      <!-- column-name Instruction pointer -->
+      <!-- column-name Instruction -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -231,6 +239,24 @@
                                 </child>
                               </object>
                             </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="tvwcolInterceptedFormat">
+                                <property name="sizing">autosize</property>
+                                <property name="title" translatable="yes">Format</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellInterceptedResult"/>
+                                  <attributes>
+                                    <attribute name="text">2</attribute>
+                                  </attributes>
+                                </child>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellInterceptedArguments"/>
+                                  <attributes>
+                                    <attribute name="text">3</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -262,6 +288,34 @@
                           </packing>
                         </child>
                         <child>
+                          <object class="GtkButton" id="btnInterceptedSyscallsSelectForFile">
+                            <property name="label">Filename arguments</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_btnInterceptedSyscallsSelectForFile_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btnInterceptedSyscallsSelectForSocket">
+                            <property name="label">Socket functions</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_btnInterceptedSyscallsSelectForSocket_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkButton" id="btnInterceptedSyscallsClear">
                             <property name="label">gtk-clear</property>
                             <property name="visible">True</property>
@@ -273,7 +327,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                       </object>
