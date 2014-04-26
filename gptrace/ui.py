@@ -134,7 +134,7 @@ class MainWindow(object):
       formatAddress(syscall.instr_pointer)))
 
   def event_callback(self, event):
-    print 'event', event
+    print 'event', type(event), event
 
   def ignore_syscall_callback(self, syscall):
     """Determine if to ignore a callback before it's processed"""

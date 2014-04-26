@@ -91,7 +91,7 @@ class SyscallTracer(Application):
         continue
       except ProcessSignal as event:
         self.event_callback(event)
-        event.display()
+        #event.display()
         process.syscall(event.signum)
         continue
       except NewProcessEvent as event:
@@ -113,10 +113,8 @@ class SyscallTracer(Application):
   def processExited(self, event):
     # Display syscall which has not exited
     state = event.process.syscall_state
-    if (state.next_event == "exit") \
-    and (not self.options.enter) \
-    and state.syscall:
-        self.displaySyscall(state.syscall)
+    if (state.next_event == "exit") and (not self.options.enter) and state.syscall:
+      self.displaySyscall(state.syscall)
     self.event_callback(event)
 
   def main(self):
