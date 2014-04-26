@@ -50,8 +50,13 @@ def readlines(filename, empty_lines = False):
     f.close()
   return result
 
+def process_events():
+  while Gtk.events_pending():
+    Gtk.main_iteration()
+
 __all__ = [
   'show_message_dialog_yesno',
   'readlines',
+  'process_events',
   '_'
 ]
