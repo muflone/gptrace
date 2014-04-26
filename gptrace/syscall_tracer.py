@@ -14,7 +14,7 @@ class SyscallTracer(Application):
     self.event_callback = event_callback
 
   def parseOptions(self):
-    self.options.fork = False
+    self.options.fork = True
     self.options.enter = False
     self.options.show_ip = True
     self.options.trace_exec = True
@@ -82,11 +82,14 @@ class SyscallTracer(Application):
         continue
       except NewProcessEvent as event:
         self.event_callback(event)
-      #  self.newProcess(event)
+        process = event.process
+        self.prepareProcess(process)
+        process.parent.syscall()
         continue
       except ProcessExecution as event:
         self.event_callback(event)
-      #  self.processExecution(event)
+        process = event.process
+        process.syscall()
         continue
 
       # Process syscall enter or exit
