@@ -27,6 +27,7 @@ from gptrace.functions import *
 from gptrace.constants import *
 
 SECTION_MAINWIN = 'main window'
+SECTION_APPLICATION = 'application'
 
 class Settings(object):
   def __init__(self):
@@ -84,6 +85,21 @@ class Settings(object):
     size = winParent.get_size()
     self.config.set(SECTION_MAINWIN, 'width', size[0])
     self.config.set(SECTION_MAINWIN, 'height', size[1])
+
+  def get_intercepted_syscalls(self):
+    """Get the intercepted syscalls list"""
+    results = None
+    if self.config.has_option(SECTION_APPLICATION, 'intercepted syscalls'):
+      results = self.config.get(
+        SECTION_APPLICATION, 'intercepted syscalls').split(',')
+    return results
+
+  def set_intercepted_syscalls(self, model):
+    """Save the intercepted syscalls list"""
+    if not self.config.has_section(SECTION_APPLICATION):
+      self.config.add_section(SECTION_APPLICATION)
+    self.config.set(SECTION_APPLICATION, 'intercepted syscalls', 
+      ','.join(model.syscalls))
 
   def save(self):
     """Save the whole configuration"""

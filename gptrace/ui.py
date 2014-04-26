@@ -41,9 +41,14 @@ class MainWindow(object):
     self.application = application
     self.loadUI()
     self.settings = settings
+    # Restore the intercepted syscalls list from settings
+    saved_syscalls = settings.get_intercepted_syscalls()
     # Load all the available syscall names
+    # If the configuration file has a list of intercepted syscalls then
+    # set each syscall status accordingly
     for syscall in SYSCALL_NAMES.values():
-      self.modelInterceptedSyscalls.add(items=(True, syscall))
+      self.modelInterceptedSyscalls.add(items=(
+        saved_syscalls is None and True or syscall in saved_syscalls, syscall))
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
       self.winMain.set_default_size(
@@ -89,7 +94,9 @@ class MainWindow(object):
       self.thread_loader.cancel()
       self.thread_loader.join()
     self.about.destroy()
+    # Save settings for window size and intercepted syscalls list
     self.settings.set_sizes(self.winMain)
+    self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
     self.settings.save()
     self.winMain.destroy()
     self.application.quit()
