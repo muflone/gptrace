@@ -1,3 +1,12 @@
+gptrace 0.0.3
+
+  * Automatic save and restore of intercepted syscalls list
+  * Added selection of syscalls with filename/pathname arguments and socket
+    related
+  * Added forked process support
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Sat, 26 Apr 2014 19:47:05 +0200
+
 gptrace 0.0.2
 
   * Added a list for syscalls to intercept
