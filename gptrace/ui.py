@@ -124,7 +124,7 @@ class MainWindow(object):
       self.thread_loader = DaemonThread(
         target=self.thread_debug_process,
         args=(self.filechooserProgram.get_filename(), )
-        )
+      )
       self.thread_loader.start()
 
   def thread_debug_process(self, program):
@@ -151,7 +151,8 @@ class MainWindow(object):
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
       syscall.process.pid,
-      formatAddress(syscall.instr_pointer)))
+      formatAddress(syscall.instr_pointer)
+    ))
 
   def event_callback(self, event):
     print 'event', type(event), event

@@ -1,4 +1,4 @@
-from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal
+from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal, NewProcessEvent, ProcessExecution
 from ptrace.func_call import FunctionCallOptions
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 
@@ -18,25 +18,11 @@ class SyscallTracer(Application):
     self.options.enter = False
     self.options.show_ip = True
     self.options.trace_exec = True
-    #self.options.socket = False
-    #self.options.filename = False
     self.options.pid = None
     self.options.no_stdout = False
     self.options.show_pid = False
-
-
-    # Create "only" filter
-    only = set()
-    #if self.options.filename:
-    #    for syscall, format in SYSCALL_PROTOTYPES.items():
-    #        restype, arguments = format
-    #        if any(argname in FILENAME_ARGUMENTS for argtype, argname in arguments):
-    #            only.add(syscall)
-    #if self.options.socket:
-    #    only |= SOCKET_SYSCALL_NAMES
-    self.only = only
     if self.options.fork:
-        self.options.show_pid = True
+      self.options.show_pid = True
     self.processOptions()
 
   def runDebugger(self):
@@ -44,7 +30,7 @@ class SyscallTracer(Application):
     self.setupDebugger()
     process = self.createProcess()
     if not process:
-        return
+      return
 
     self.syscall_options = FunctionCallOptions(
       write_types=True,
