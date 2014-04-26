@@ -8,22 +8,10 @@ class SyscallTracer(Application):
     # Parse self.options
     self.options = options
     self.program=[program, ]
-    self.parseOptions()
+    self.processOptions()
     self.ignore_syscall_callback = ignore_syscall_callback
     self.syscall_callback = syscall_callback
     self.event_callback = event_callback
-
-  def parseOptions(self):
-    self.options.fork = True
-    self.options.enter = False
-    self.options.show_ip = True
-    self.options.trace_exec = True
-    self.options.pid = None
-    self.options.no_stdout = False
-    self.options.show_pid = False
-    if self.options.fork:
-      self.options.show_pid = True
-    self.processOptions()
 
   def runDebugger(self):
     # Create debugger and traced process

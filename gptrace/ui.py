@@ -139,7 +139,15 @@ class MainWindow(object):
     """Debug the requested program to trace the syscalls"""
     self.debug_start_time = datetime.datetime.now()
     self.debugger = SyscallTracer(
-      options=optparse.Values(),
+      options=optparse.Values({
+        'fork': True,
+        'enter': False,
+        'show_ip': True,
+        'trace_exec': True,
+        'no_stdout': False,
+        'pid': None,
+        'show_pid': True,
+      }),
       program=program,
       ignore_syscall_callback=self.ignore_syscall_callback,
       syscall_callback=self.syscall_callback,
