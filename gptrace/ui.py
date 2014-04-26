@@ -41,6 +41,9 @@ class MainWindow(object):
     self.application = application
     self.loadUI()
     self.settings = settings
+    # Load all the available syscall names
+    for syscall in SYSCALL_NAMES.values():
+      self.modelInterceptedSyscalls.add(items=(True, syscall))
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
       self.winMain.set_default_size(
@@ -76,9 +79,6 @@ class MainWindow(object):
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
     self.winMain.set_application(self.application)
-    # Load all the available syscall names
-    for syscall in SYSCALL_NAMES.values():
-      self.modelInterceptedSyscalls.add(items=(True, syscall))
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
