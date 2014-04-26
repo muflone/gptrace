@@ -78,11 +78,11 @@ class MainWindow(object):
     self.debugger = None
 
   def run(self):
-    "Show the UI"
+    """Show the UI"""
     self.winMain.show_all()
 
   def loadUI(self):
-    "Load the interface UI"
+    """Load the interface UI"""
     builder = Gtk.Builder()
     builder.add_from_file(FILE_UI_MAIN)
     # Obtain widget references
@@ -104,7 +104,7 @@ class MainWindow(object):
     builder.connect_signals(self)
 
   def on_winMain_delete_event(self, widget, event):
-    "Close the application"
+    """Close the application"""
     # Immediately hide the main window and let the events process to handle
     # an instantly close instead of slowly let GTK to empty the model before
     # the window is effectively destroyed
@@ -123,11 +123,11 @@ class MainWindow(object):
     self.application.quit()
 
   def on_btnAbout_clicked(self, widget):
-    "Show the about dialog"
+    """Show the about dialog"""
     self.about.show()
 
   def on_filechooserProgram_file_set(self, widget):
-    "Select the program to execute"
+    """Select the program to execute"""
     if self.filechooserProgram.get_filename():
       self.thread_loader = DaemonThread(
         target=self.thread_debug_process,
@@ -136,6 +136,7 @@ class MainWindow(object):
       self.thread_loader.start()
 
   def thread_debug_process(self, program):
+    """Debug the requested program to trace the syscalls"""
     self.debug_start_time = datetime.datetime.now()
     self.debugger = SyscallTracer(
       options=optparse.Values(),
@@ -208,6 +209,7 @@ class MainWindow(object):
     self.update_InterceptedSyscalls_count()
 
   def update_InterceptedSyscalls_count(self):
+    """Update the intercepted syscalls count label"""
     self.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % (
       len(self.modelInterceptedSyscalls.syscalls),
       self.modelInterceptedSyscalls.count(),

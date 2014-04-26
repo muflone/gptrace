@@ -25,7 +25,7 @@ from gi.repository import Gtk
 from gptrace.constants import *
 
 def show_message_dialog_yesno(winParent, message, title, default_response):
-  "Show a GtkMessageDialog with yes and no buttons"
+  """Show a GtkMessageDialog with yes and no buttons"""
   dialog = Gtk.MessageDialog(
     parent=winParent,
     flags=Gtk.DialogFlags.MODAL,
@@ -41,6 +41,7 @@ def show_message_dialog_yesno(winParent, message, title, default_response):
   return response
 
 def readlines(filename, empty_lines = False):
+  """Read all the text in the specified filename, allowing to skip empty lines"""
   result = []
   with open(filename) as f:
     for line in f.readlines():
@@ -51,6 +52,7 @@ def readlines(filename, empty_lines = False):
   return result
 
 def process_events():
+  """Process every pending GTK+ event"""
   while Gtk.events_pending():
     Gtk.main_iteration()
 

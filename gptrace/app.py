@@ -31,7 +31,7 @@ class Application(Gtk.Application):
     self.connect('startup', self.startup)
 
   def startup(self, application):
-    "Configure the application during the startup"
+    """Configure the application during the startup"""
     self.ui = MainWindow(self, self.settings)
     # Add the actions related to the app menu
     action = Gio.SimpleAction(name="about")
@@ -48,13 +48,13 @@ class Application(Gtk.Application):
     self.set_app_menu(menubar)
 
   def activate(self, application):
-    "Execute the application"
+    """Execute the application"""
     self.ui.run()
 
   def on_app_about_activate(self, action, data):
-    "Show the about dialog from the app menu"
+    """Show the about dialog from the app menu"""
     self.ui.on_btnAbout_clicked(self)
 
   def on_app_quit_activate(self, action, data):
-    "Quit the application from the app menu"
+    """Quit the application from the app menu"""
     self.ui.on_winMain_delete_event(self, None)
