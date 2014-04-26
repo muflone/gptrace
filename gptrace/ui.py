@@ -105,6 +105,11 @@ class MainWindow(object):
 
   def on_winMain_delete_event(self, widget, event):
     "Close the application"
+    # Immediately hide the main window and let the events process to handle
+    # an instantly close instead of slowly let GTK to empty the model before
+    # the window is effectively destroyed
+    self.winMain.hide()
+    process_events()
     # Cancel the running thread
     if self.thread_loader and self.thread_loader.isAlive():
       self.thread_loader.cancel()
