@@ -62,6 +62,7 @@ class MainWindow(object):
         syscall in SOCKET_SYSCALL_NAMES,
       )
     )
+    self.update_InterceptedSyscalls_count()
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
       self.winMain.set_default_size(
@@ -90,6 +91,7 @@ class MainWindow(object):
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       builder.get_object('storeInterceptedSyscalls'))
     self.filechooserProgram = builder.get_object('filechooserProgram')
+    self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     # Set cellrenderers alignment
     builder.get_object('cellTimestamp').set_property('xalign', 1.0)
     builder.get_object('cellTime').set_property('xalign', 1.0)
@@ -97,6 +99,7 @@ class MainWindow(object):
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
     self.winMain.set_application(self.application)
+    self.lblInterceptedSyscalls_descr = self.lblInterceptedSyscalls.get_text()
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
 
@@ -171,25 +174,36 @@ class MainWindow(object):
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
     """Handle click on the checked column"""
     self.modelInterceptedSyscalls.toggle_checked(treepath)
+    self.update_InterceptedSyscalls_count()
 
   def on_btnInterceptedSyscallsSelectAll_clicked(self, widget):
     """Intercept all the syscalls"""
     for row in self.modelInterceptedSyscalls:
       self.modelInterceptedSyscalls.set_checked(row, True)
+    self.update_InterceptedSyscalls_count()
 
   def on_btnInterceptedSyscallsClear_clicked(self, widget):
     """Disable any syscall to intercept"""
     for row in self.modelInterceptedSyscalls:
       self.modelInterceptedSyscalls.set_checked(row, False)
+    self.update_InterceptedSyscalls_count()
 
   def on_btnInterceptedSyscallsSelectForFile_clicked(self, widget):
     """Intercept all the syscalls that use filenames"""
     for row in self.modelInterceptedSyscalls:
       if self.modelInterceptedSyscalls.get_has_filename_arguments(row):
         self.modelInterceptedSyscalls.set_checked(row, True)
+    self.update_InterceptedSyscalls_count()
 
   def on_btnInterceptedSyscallsSelectForSocket_clicked(self, widget):
     """Intercept all the syscalls used by sockets"""
     for row in self.modelInterceptedSyscalls:
       if self.modelInterceptedSyscalls.get_socket_function(row):
         self.modelInterceptedSyscalls.set_checked(row, True)
+    self.update_InterceptedSyscalls_count()
+
+  def update_InterceptedSyscalls_count(self):
+    self.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % (
+      len(self.modelInterceptedSyscalls.syscalls),
+      self.modelInterceptedSyscalls.count(),
+    ))

@@ -343,7 +343,7 @@
                   <object class="GtkLabel" id="lblInterceptedSyscalls">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Intercepted Syscalls</property>
+                    <property name="label" translatable="yes">Selected Intercepted Syscalls (%d of %d)</property>
                   </object>
                 </child>
               </object>
