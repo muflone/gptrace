@@ -73,6 +73,11 @@ class MainWindow(object):
       self.winMain.move(
         self.settings.get_value('left', 0),
         self.settings.get_value('top', 0))
+    # Restore visible columns
+    saved_visible_columns = self.settings.get_visible_columns()
+    if saved_visible_columns is not None:
+      for key, (column, menuitem) in self.dict_column_headers.items():
+        menuitem.set_active(key in saved_visible_columns)
     # Load the others dialogs
     self.about = AboutWindow(self.winMain, False)
     self.thread_loader = None
@@ -138,9 +143,11 @@ class MainWindow(object):
       self.thread_loader.cancel()
       self.thread_loader.join()
     self.about.destroy()
-    # Save settings for window size and intercepted syscalls list
+    # Save settings for window size, intercepted syscalls and visible columns
     self.settings.set_sizes(self.winMain)
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
+    self.settings.set_visible_columns(
+      [column for column, menuitem in self.dict_column_headers.values()])
     self.settings.save()
     self.winMain.destroy()
     self.application.quit()

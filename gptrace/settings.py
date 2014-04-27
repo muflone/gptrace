@@ -101,6 +101,25 @@ class Settings(object):
     self.config.set(SECTION_APPLICATION, 'intercepted syscalls', 
       ','.join(model.syscalls))
 
+  def get_visible_columns(self):
+    """Get the visible column list"""
+    results = None
+    if self.config.has_option(SECTION_APPLICATION, 'visible columns'):
+      results = self.config.get(
+        SECTION_APPLICATION, 'visible columns').split(',')
+    return results
+
+  def set_visible_columns(self, columns_list):
+    """Save the visible column list"""
+    if not self.config.has_section(SECTION_APPLICATION):
+      self.config.add_section(SECTION_APPLICATION)
+    names_list = []
+    for column in columns_list:
+      if column.get_visible():
+        names_list.append(column.get_name())
+    self.config.set(SECTION_APPLICATION, 'visible columns', 
+      ','.join(names_list))
+
   def save(self):
     """Save the whole configuration"""
     # Always save the settings in the new configuration file
