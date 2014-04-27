@@ -1,3 +1,10 @@
+gptrace 0.0.5
+
+  * Added format column
+  * Added option menu to set column visibility
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Mon, 28 Apr 2014 01:58:04 +0200
+
 gptrace 0.0.4
 
   * Added selected intercepted syscalls count
