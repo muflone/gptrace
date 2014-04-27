@@ -3,6 +3,84 @@
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <!-- interface-license-type gplv2 -->
+  <object class="GtkMenu" id="menuOptions">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="menuitemVisibleColumns">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Visible columns</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menuVisibleColumns">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsTimestamp">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C Timestamp</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsTime">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C Time</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsSyscall">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C Syscall</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsFormat">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C Format</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsPID">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C PID</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsIP">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">C Instruction Pointer</property>
+                <property name="use_underline">True</property>
+                <property name="active">True</property>
+                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkListStore" id="storeInterceptedSyscalls">
     <columns>
       <!-- column-name colChecked -->
@@ -72,6 +150,26 @@
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnOptions">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_btnOptions_clicked" swapped="no"/>
+                <child>
+                  <object class="GtkImage" id="imgGear">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">emblem-system-symbolic</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>

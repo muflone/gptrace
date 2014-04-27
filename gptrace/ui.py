@@ -92,9 +92,31 @@ class MainWindow(object):
       builder.get_object('storeInterceptedSyscalls'))
     self.filechooserProgram = builder.get_object('filechooserProgram')
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
+    self.menuOptions = builder.get_object('menuOptions')
+    # TreeViewColumns
+    self.tvwcolTimestamp = builder.get_object('tvwcolTimestamp')
+    self.tvwcolTime = builder.get_object('tvwcolTime')
+    self.tvwcolSyscall = builder.get_object('tvwcolSyscall')
+    self.tvwcolFormat = builder.get_object('tvwcolFormat')
+    self.tvwcolPID = builder.get_object('tvwcolPID')
+    self.tvwcolIP = builder.get_object('tvwcolIP')
+    # MenuItems used to show/hide the column headers
+    self.menuitemVisibleColumnsTimestamp = builder.get_object('menuitemVisibleColumnsTimestamp')
+    self.menuitemVisibleColumnsTime = builder.get_object('menuitemVisibleColumnsTime')
+    self.menuitemVisibleColumnsSyscall = builder.get_object('menuitemVisibleColumnsSyscall')
+    self.menuitemVisibleColumnsFormat = builder.get_object('menuitemVisibleColumnsFormat')
+    self.menuitemVisibleColumnsPID = builder.get_object('menuitemVisibleColumnsPID')
+    self.menuitemVisibleColumnsIP = builder.get_object('menuitemVisibleColumnsIP')
     # Set cellrenderers alignment
     builder.get_object('cellTimestamp').set_property('xalign', 1.0)
     builder.get_object('cellTime').set_property('xalign', 1.0)
+    # Set options menu items value as their column headers
+    self.menuitemVisibleColumnsTimestamp.set_label(self.tvwcolTimestamp.get_title())
+    self.menuitemVisibleColumnsTime.set_label(self.tvwcolTime.get_title())
+    self.menuitemVisibleColumnsSyscall.set_label(self.tvwcolSyscall.get_title())
+    self.menuitemVisibleColumnsFormat.set_label(self.tvwcolFormat.get_title())
+    self.menuitemVisibleColumnsPID.set_label(self.tvwcolPID.get_title())
+    self.menuitemVisibleColumnsIP.set_label(self.tvwcolIP.get_title())
     # Set various properties
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
@@ -223,3 +245,22 @@ class MainWindow(object):
       len(self.modelInterceptedSyscalls.syscalls),
       self.modelInterceptedSyscalls.count(),
     ))
+
+  def on_btnOptions_clicked(self, widget):
+    """Show the options popup menu"""
+    self.menuOptions.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+
+  def on_menuitemVisibleColumns_toggled(self, widget):
+    """Hide or show a column header"""
+    if widget is self.menuitemVisibleColumnsTimestamp:
+      self.tvwcolTimestamp.set_visible(widget.get_active())
+    elif widget is self.menuitemVisibleColumnsTime:
+      self.tvwcolTime.set_visible(widget.get_active())
+    elif widget is self.menuitemVisibleColumnsSyscall:
+      self.tvwcolSyscall.set_visible(widget.get_active())
+    elif widget is self.menuitemVisibleColumnsFormat:
+      self.tvwcolFormat.set_visible(widget.get_active())
+    elif widget is self.menuitemVisibleColumnsPID:
+      self.tvwcolPID.set_visible(widget.get_active())
+    elif widget is self.menuitemVisibleColumnsIP:
+      self.tvwcolIP.set_visible(widget.get_active())
