@@ -95,30 +95,29 @@ class MainWindow(object):
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     self.menuOptions = builder.get_object('menuOptions')
     self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
-    # TreeViewColumns
-    self.tvwcolTimestamp = builder.get_object('tvwcolTimestamp')
-    self.tvwcolTime = builder.get_object('tvwcolTime')
-    self.tvwcolSyscall = builder.get_object('tvwcolSyscall')
-    self.tvwcolFormat = builder.get_object('tvwcolFormat')
-    self.tvwcolPID = builder.get_object('tvwcolPID')
-    self.tvwcolIP = builder.get_object('tvwcolIP')
-    # MenuItems used to show/hide the column headers
-    self.menuitemVisibleColumnsTimestamp = builder.get_object('menuitemVisibleColumnsTimestamp')
-    self.menuitemVisibleColumnsTime = builder.get_object('menuitemVisibleColumnsTime')
-    self.menuitemVisibleColumnsSyscall = builder.get_object('menuitemVisibleColumnsSyscall')
-    self.menuitemVisibleColumnsFormat = builder.get_object('menuitemVisibleColumnsFormat')
-    self.menuitemVisibleColumnsPID = builder.get_object('menuitemVisibleColumnsPID')
-    self.menuitemVisibleColumnsIP = builder.get_object('menuitemVisibleColumnsIP')
+    # Associate each TreeViewColumn to the MenuItem used to show/hide
+    self.dict_column_headers = {}
+    for column, menuitem in (
+        ('tvwcolTimestamp', 'menuitemVisibleColumnsTimestamp'),
+        ('tvwcolTime', 'menuitemVisibleColumnsTime'),
+        ('tvwcolSyscall', 'menuitemVisibleColumnsSyscall'),
+        ('tvwcolFormat', 'menuitemVisibleColumnsFormat'),
+        ('tvwcolPID', 'menuitemVisibleColumnsPID'),
+        ('tvwcolIP', 'menuitemVisibleColumnsIP')):
+      self._associate_column_to_menuitem(
+        builder.get_object(column), builder.get_object(menuitem))
     # Set cellrenderers alignment
     builder.get_object('cellTimestamp').set_property('xalign', 1.0)
     builder.get_object('cellTime').set_property('xalign', 1.0)
     # Set options menu items value as their column headers
-    self.menuitemVisibleColumnsTimestamp.set_label(self.tvwcolTimestamp.get_title())
-    self.menuitemVisibleColumnsTime.set_label(self.tvwcolTime.get_title())
-    self.menuitemVisibleColumnsSyscall.set_label(self.tvwcolSyscall.get_title())
-    self.menuitemVisibleColumnsFormat.set_label(self.tvwcolFormat.get_title())
-    self.menuitemVisibleColumnsPID.set_label(self.tvwcolPID.get_title())
-    self.menuitemVisibleColumnsIP.set_label(self.tvwcolIP.get_title())
+    for key, (tvwcolumn, menuitem) in self.dict_column_headers.items():
+      # Set the MenuItem label as the TreeViewColumn header
+      menuitem.set_label(tvwcolumn.get_title())
+      # Set button-press-event to the Button contained inside the TreeViewColumn
+      button = find_button_from_gtktreeviewcolumn(tvwcolumn)
+      if button:
+        # Set a signal callback to the Button
+        button.connect('button-press-event', self.on_tvwcolumn_button_release_event)
     # Set various properties
     self.winMain.set_title(APP_NAME)
     self.winMain.set_icon_from_file(FILE_ICON)
@@ -126,13 +125,6 @@ class MainWindow(object):
     self.lblInterceptedSyscalls_descr = self.lblInterceptedSyscalls.get_text()
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
-    # Set a button-press-event to the Button contained inside the TreeViewColumn
-    for tvwcolumn in (self.tvwcolTimestamp, self.tvwcolTime, self.tvwcolSyscall,
-        self.tvwcolFormat, self.tvwcolPID, self.tvwcolIP):
-      button_from_treeviewcolumn = find_button_from_gtktreeviewcolumn(tvwcolumn)
-      # Set a signal callback to the Button
-      button_from_treeviewcolumn.connect('button-press-event',
-        self.on_tvwcolumn_button_release_event)
 
   def on_winMain_delete_event(self, widget, event):
     """Close the application"""
@@ -260,20 +252,17 @@ class MainWindow(object):
 
   def on_menuitemVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
-    if widget is self.menuitemVisibleColumnsTimestamp:
-      self.tvwcolTimestamp.set_visible(widget.get_active())
-    elif widget is self.menuitemVisibleColumnsTime:
-      self.tvwcolTime.set_visible(widget.get_active())
-    elif widget is self.menuitemVisibleColumnsSyscall:
-      self.tvwcolSyscall.set_visible(widget.get_active())
-    elif widget is self.menuitemVisibleColumnsFormat:
-      self.tvwcolFormat.set_visible(widget.get_active())
-    elif widget is self.menuitemVisibleColumnsPID:
-      self.tvwcolPID.set_visible(widget.get_active())
-    elif widget is self.menuitemVisibleColumnsIP:
-      self.tvwcolIP.set_visible(widget.get_active())
+    for column, menuitem in self.dict_column_headers.values():
+      # If both column and menuitem have the same label set column visibility
+      if column.get_title() == widget.get_label():
+        column.set_visible(widget.get_active())
+        break
 
   def on_tvwcolumn_button_release_event(self, widget, event):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
       self.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+
+  def _associate_column_to_menuitem(self, column, menuitem):
+    """Associate each column to the MenuItem used to set column visibility"""
+    self.dict_column_headers[column.get_name()] = (column, menuitem)
