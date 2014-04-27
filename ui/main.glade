@@ -305,7 +305,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkTreeViewColumn" id="tvwcolIP">
                         <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Instruction Pointer</property>
+                        <property name="title" translatable="yes">Instruction pointer</property>
                         <property name="clickable">True</property>
                         <property name="reorderable">True</property>
                         <property name="sort_column_id">5</property>

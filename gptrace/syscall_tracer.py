@@ -23,8 +23,8 @@ class SyscallTracer(Application):
     self.syscall_options = FunctionCallOptions(
       write_types=True,
       write_argname=True,
-      string_max_length=300,
       replace_socketcall=False,
+      string_max_length=300,
       write_address=True,
       max_array_count=20,
     )
