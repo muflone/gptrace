@@ -44,7 +44,7 @@ class MainWindow(object):
     # Restore the intercepted syscalls list from settings
     saved_syscalls = settings.get_intercepted_syscalls()
     # Load all the available syscall names
-    for syscall in SYSCALL_NAMES.values():
+    for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
       self.modelInterceptedSyscalls.add(items=(
         # If the configuration file has a list of intercepted syscalls then
