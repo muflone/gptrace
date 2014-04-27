@@ -167,6 +167,7 @@ class MainWindow(object):
       (now - self.debug_start_time).total_seconds(),
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
+      syscall.format(),
       syscall.process.pid,
       formatAddress(syscall.instr_pointer)
     ))
