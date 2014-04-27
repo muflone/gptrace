@@ -21,6 +21,7 @@
 from gi.repository import Gtk
 from gi.repository import Gio
 from gi.repository import GObject
+from gi.repository import Gdk
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
@@ -93,6 +94,7 @@ class MainWindow(object):
     self.filechooserProgram = builder.get_object('filechooserProgram')
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     self.menuOptions = builder.get_object('menuOptions')
+    self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
     # TreeViewColumns
     self.tvwcolTimestamp = builder.get_object('tvwcolTimestamp')
     self.tvwcolTime = builder.get_object('tvwcolTime')
@@ -124,6 +126,13 @@ class MainWindow(object):
     self.lblInterceptedSyscalls_descr = self.lblInterceptedSyscalls.get_text()
     # Connect signals from the glade file to the functions with the same name
     builder.connect_signals(self)
+    # Set a button-press-event to the Button contained inside the TreeViewColumn
+    for tvwcolumn in (self.tvwcolTimestamp, self.tvwcolTime, self.tvwcolSyscall,
+        self.tvwcolFormat, self.tvwcolPID, self.tvwcolIP):
+      button_from_treeviewcolumn = find_button_from_gtktreeviewcolumn(tvwcolumn)
+      # Set a signal callback to the Button
+      button_from_treeviewcolumn.connect('button-press-event',
+        self.on_tvwcolumn_button_release_event)
 
   def on_winMain_delete_event(self, widget, event):
     """Close the application"""
@@ -264,3 +273,7 @@ class MainWindow(object):
       self.tvwcolPID.set_visible(widget.get_active())
     elif widget is self.menuitemVisibleColumnsIP:
       self.tvwcolIP.set_visible(widget.get_active())
+
+  def on_tvwcolumn_button_release_event(self, widget, event):
+    if event.button == Gdk.BUTTON_SECONDARY:
+      self.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
