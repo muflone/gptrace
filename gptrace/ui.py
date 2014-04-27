@@ -274,5 +274,6 @@ class MainWindow(object):
       self.tvwcolIP.set_visible(widget.get_active())
 
   def on_tvwcolumn_button_release_event(self, widget, event):
+    """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
       self.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
