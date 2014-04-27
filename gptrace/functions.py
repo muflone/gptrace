@@ -56,9 +56,27 @@ def process_events():
   while Gtk.events_pending():
     Gtk.main_iteration()
 
+def find_button_from_gtktreeviewcolumn(tvwcolumn):
+  """Find the Button widget contained inside a TreeViewColumn"""
+  # Save the column title to restore it later
+  column_title = tvwcolumn.get_title()
+  # Create a Label widget and add it to the TreeViewColumn
+  label_widget = Gtk.Label('')
+  tvwcolumn.set_widget(label_widget)
+  # Iter every parent until a Button is found
+  widget = label_widget
+  while not isinstance(widget, Gtk.Button):
+    widget = widget.get_parent()
+  # Remove the Label from the TreeViewColumn and restore the column title
+  tvwcolumn.set_widget(None)
+  tvwcolumn.set_title(column_title)
+  label_widget.destroy()
+  return widget
+
 __all__ = [
   'show_message_dialog_yesno',
   'readlines',
   'process_events',
+  'find_button_from_gtktreeviewcolumn',
   '_'
 ]
