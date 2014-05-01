@@ -1,5 +1,5 @@
 from ptrace import PtraceError
-from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal, NewProcessEvent, ProcessExecution
+from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal, NewProcessEvent, ProcessExecution, ChildError
 from ptrace.func_call import FunctionCallOptions
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 
@@ -99,6 +99,8 @@ class SyscallTracer(Application):
     self.debugger = PtraceDebugger()
     try:
       self.runDebugger()
+    except ChildError as event:
+      self.event_callback(event)
     except ProcessExit as event:
       self.processExited(event)
     except (KeyError, PtraceError, OSError) as error:
