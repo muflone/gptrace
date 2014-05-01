@@ -1,9 +1,10 @@
+from ptrace import PtraceError
 from ptrace.debugger import PtraceDebugger, Application, ProcessExit, ProcessSignal, NewProcessEvent, ProcessExecution
 from ptrace.func_call import FunctionCallOptions
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 
 class SyscallTracer(Application):
-  def __init__(self, options, program, ignore_syscall_callback, syscall_callback, event_callback):
+  def __init__(self, options, program, ignore_syscall_callback, syscall_callback, event_callback, quit_callback):
     Application.__init__(self)
     # Parse self.options
     self.options = options
@@ -12,6 +13,7 @@ class SyscallTracer(Application):
     self.ignore_syscall_callback = ignore_syscall_callback
     self.syscall_callback = syscall_callback
     self.event_callback = event_callback
+    self.quit_callback = quit_callback
 
   def runDebugger(self):
     # Create debugger and traced process
@@ -55,7 +57,6 @@ class SyscallTracer(Application):
       # No more process? Exit
       if not self.debugger:
         break
-
       # Wait until next syscall enter
       try:
         event = self.debugger.waitSyscall()
@@ -100,4 +101,28 @@ class SyscallTracer(Application):
       self.runDebugger()
     except ProcessExit as event:
       self.processExited(event)
-    self.debugger.quit()
+    except (KeyError, PtraceError, OSError) as error:
+      self._handle_exceptions_during_quit(error, 'main')
+    if self.debugger:
+      self.debugger.quit()
+    self.quit_callback()
+
+  def quit(self):
+    try:
+      self.debugger.quit()
+    except (KeyError, PtraceError, OSError) as error:
+      self._handle_exceptions_during_quit(error, 'quit')
+    self.quit_callback()
+    self.debugger = None
+
+  def _handle_exceptions_during_quit(self, exception, context):
+    if isinstance(exception, KeyError):
+      # When the debugger is waiting for a syscall and the debugger process
+      # is closed with quit() a KeyError Exception for missing PID is fired
+      pass
+    elif isinstance(exception, PtraceError):
+      print "PtraceError from %s" % context, exception
+    elif isinstance(exception, OSError):
+      print 'OSError from %s' % context, exception
+    else:
+      print 'Unexpected exception from %s' % context

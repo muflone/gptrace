@@ -100,6 +100,8 @@ class MainWindow(object):
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     self.menuOptions = builder.get_object('menuOptions')
     self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
+    self.btnStartStop = builder.get_object('btnStartStop')
+    self.imgStartStop = builder.get_object('imgStartStop')
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
@@ -158,12 +160,7 @@ class MainWindow(object):
 
   def on_filechooserProgram_file_set(self, widget):
     """Select the program to execute"""
-    if self.filechooserProgram.get_filename():
-      self.thread_loader = DaemonThread(
-        target=self.thread_debug_process,
-        args=(self.filechooserProgram.get_filename(), )
-      )
-      self.thread_loader.start()
+    self.btnStartStop.set_sensitive(self.filechooserProgram.get_filename())
 
   def thread_debug_process(self, program):
     """Debug the requested program to trace the syscalls"""
@@ -181,12 +178,9 @@ class MainWindow(object):
       program=program,
       ignore_syscall_callback=self.ignore_syscall_callback,
       syscall_callback=self.syscall_callback,
-      event_callback=self.event_callback)
+      event_callback=self.event_callback,
+      quit_callback=self.quit_callback)
     self.debugger.main()
-    # Cancel the running thread
-    #  if self.thread_loader.cancelled:
-    #    print 'abort'
-    #    break
     return True
 
   def syscall_callback(self, syscall):
@@ -215,6 +209,10 @@ class MainWindow(object):
       # print 'ignored syscall %s' % name
       return True
 
+  def quit_callback(self):
+    """The debugger is quitting"""
+    self.btnStartStop.set_active(False)
+    
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
     """Handle click on the checked column"""
     self.modelInterceptedSyscalls.toggle_checked(treepath)
@@ -273,3 +271,28 @@ class MainWindow(object):
   def _associate_column_to_menuitem(self, column, menuitem):
     """Associate each column to the MenuItem used to set column visibility"""
     self.dict_column_headers[column.get_name()] = (column, menuitem)
+
+  def on_btnStartStop_toggled(self, widget):
+    """Start and stop program tracing"""
+    if self.btnStartStop.get_active():
+      if self.filechooserProgram.get_filename():
+        # Disable file chooser and set stop icon
+        self.filechooserProgram.set_sensitive(False)
+        self.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP, Gtk.IconSize.BUTTON)
+        # Start debugger
+        self.thread_loader = DaemonThread(
+          target=self.thread_debug_process,
+          args=(self.filechooserProgram.get_filename(), )
+        )
+        self.thread_loader.start()
+      else:
+        # If no filename was selected then set button status as unpressed
+        self.btnStartStop.set_active(False)
+    else:
+      # Cancel running debugger
+      if self.thread_loader:
+        self.thread_loader.cancel()
+        self.debugger.quit()
+        # Restore file chooser and set execute icon
+        self.filechooserProgram.set_sensitive(True)
+        self.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
