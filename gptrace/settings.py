@@ -120,6 +120,19 @@ class Settings(object):
     self.config.set(SECTION_APPLICATION, 'visible columns', 
       ','.join(names_list))
 
+  def get_boolean(self, name, default=None):
+    """Get a boolean option"""
+    if self.config.has_option(SECTION_APPLICATION, name):
+      return self.config.get(SECTION_APPLICATION, name) == '1'
+    else:
+      return default
+
+  def set_boolean(self, name, value):
+    """Save a boolean option"""
+    if not self.config.has_section(SECTION_APPLICATION):
+      self.config.add_section(SECTION_APPLICATION)
+    self.config.set(SECTION_APPLICATION, name, value and '1' or '0')
+    
   def save(self):
     """Save the whole configuration"""
     # Always save the settings in the new configuration file
