@@ -2,8 +2,9 @@ gptrace 0.0.6
 
   * Added a button to start and cancel tracing. The tracing is not automatically
     anymore started when a file is executed.
+  * Added menu item to clear the result list immediately
 
- -- Fabio Castelli <webreg@vbsimple.net>  Thu, 1 Maj 2014 20:30:07 +0200
+ -- Fabio Castelli <webreg@vbsimple.net>  Thu, 1 Maj 2014 21:04:48 +0200
 
 gptrace 0.0.5
 

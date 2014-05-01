@@ -296,3 +296,7 @@ class MainWindow(object):
         # Restore file chooser and set execute icon
         self.filechooserProgram.set_sensitive(True)
         self.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
+
+  def on_menuitemClear_activate(self, widget):
+    """Clear the results list"""
+    self.modelResults.clear()
