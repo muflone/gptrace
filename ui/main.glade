@@ -108,6 +108,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="activate" handler="on_menuitemClear_activate" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="menuitemAutoClear">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Clear automatically</property>
+        <property name="use_underline">True</property>
+        <property name="active">True</property>
+      </object>
+    </child>
   </object>
   <object class="GtkListStore" id="storeInterceptedSyscalls">
     <columns>

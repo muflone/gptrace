@@ -44,6 +44,9 @@ class MainWindow(object):
     self.settings = settings
     # Restore the intercepted syscalls list from settings
     saved_syscalls = settings.get_intercepted_syscalls()
+    # Restore the options from settings
+    self.menuitemAutoClear.set_active(self.settings.get_boolean(
+      'autoclear', self.menuitemAutoClear.get_active()))
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
@@ -102,6 +105,7 @@ class MainWindow(object):
     self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
     self.btnStartStop = builder.get_object('btnStartStop')
     self.imgStartStop = builder.get_object('imgStartStop')
+    self.menuitemAutoClear = builder.get_object('menuitemAutoClear')
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
@@ -150,6 +154,7 @@ class MainWindow(object):
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
     self.settings.set_visible_columns(
       [column for column, menuitem in self.dict_column_headers.values()])
+    self.settings.set_boolean('autoclear', self.menuitemAutoClear.get_active())
     self.settings.save()
     self.winMain.destroy()
     self.application.quit()
@@ -276,6 +281,8 @@ class MainWindow(object):
     """Start and stop program tracing"""
     if self.btnStartStop.get_active():
       if self.filechooserProgram.get_filename():
+        if self.menuitemAutoClear.get_active():
+          self.on_menuitemClear_activate(None)
         # Disable file chooser and set stop icon
         self.filechooserProgram.set_sensitive(False)
         self.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP, Gtk.IconSize.BUTTON)
