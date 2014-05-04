@@ -1,3 +1,9 @@
+gptrace 0.1.0
+
+  * First public release
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Sun, 4 Maj 2014 15:59:31 +0200
+
 gptrace 0.0.6
 
   * Added a button to start and cancel tracing. The tracing is not automatically
