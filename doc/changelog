@@ -1,3 +1,9 @@
+gptrace 0.1.1
+
+  * Replaced the GtkButtonFileChooser with a GtkEntry and a GtkButton
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Mon, 2 Jun 2014 19:27:17 +0200
+
 gptrace 0.1.0
 
   * First public release
