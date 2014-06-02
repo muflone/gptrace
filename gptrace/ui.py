@@ -36,6 +36,7 @@ from ptrace.ctypes_tools import formatAddress
 
 import optparse
 import datetime
+import shlex
 
 class MainWindow(object):
   def __init__(self, application, settings):
@@ -296,7 +297,7 @@ class MainWindow(object):
         # Start debugger
         self.thread_loader = DaemonThread(
           target=self.thread_debug_process,
-          args=(self.filechooserProgram.get_text(), )
+          args=(shlex.split(self.txtProgram.get_text()), )
         )
         self.thread_loader.start()
       else:
