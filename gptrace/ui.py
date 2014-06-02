@@ -82,6 +82,10 @@ class MainWindow(object):
     if saved_visible_columns is not None:
       for key, (column, menuitem) in self.dict_column_headers.items():
         menuitem.set_active(key in saved_visible_columns)
+    # Set ModelFilter
+    self.filtered_items = []
+    self.filterSyscalls.set_visible_func(self.check_for_filtered_syscall,
+      self.filtered_items)
     # Load the others dialogs
     self.about = AboutWindow(self.winMain, False)
     self.thread_loader = None
@@ -98,6 +102,7 @@ class MainWindow(object):
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
     self.modelSyscalls = ModelSyscalls(builder.get_object('storeSyscalls'))
+    self.filterSyscalls = builder.get_object('filterSyscalls')
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       builder.get_object('storeInterceptedSyscalls'))
     self.txtProgram = builder.get_object('txtProgram')
@@ -105,6 +110,8 @@ class MainWindow(object):
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     self.menuOptions = builder.get_object('menuOptions')
     self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
+    self.menuFilter = builder.get_object('menuFilter')
+    self.tvwSyscalls = builder.get_object('tvwSyscalls')
     self.btnStartStop = builder.get_object('btnStartStop')
     self.imgStartStop = builder.get_object('imgStartStop')
     self.menuitemAutoClear = builder.get_object('menuitemAutoClear')
@@ -316,6 +323,51 @@ class MainWindow(object):
   def on_menuitemClear_activate(self, widget):
     """Clear the syscalls list"""
     self.modelSyscalls.clear()
+
+  def on_menuitemFilterHideSyscall_activate(self, widget):
+    """Hide the selected syscall from the results"""
+    selection = self.tvwSyscalls.get_selection()
+    if selection:
+      model, iter = selection.get_selected()
+      if iter:
+        # Add the selected syscall to the filtered syscalls list
+        self.filtered_items.append(self.modelSyscalls.get_syscall(
+          self.filterSyscalls.convert_iter_to_child_iter(iter)))
+        # Filter the results
+        self.filterSyscalls.refilter()
+
+  def on_menuitemFilterShowOnlySyscall_activate(self, widget):
+    """Show only the selected syscall from the results"""
+    selection = self.tvwSyscalls.get_selection()
+    if selection:
+      model, iter = selection.get_selected()
+      if iter:
+        while len(self.filtered_items):
+          self.filtered_items.pop()
+        # First include every syscall names to the filtered syscalls
+        self.filtered_items.extend(SYSCALL_NAMES.values())
+        # Then remove the selected syscall from the filtered syscalls list
+        self.filtered_items.remove(self.modelSyscalls.get_syscall(
+          self.filterSyscalls.convert_iter_to_child_iter(iter)))
+        # Filter the results
+        self.filterSyscalls.refilter()
+
+  def on_menuitemFilterReset_activate(self, widget):
+    """Clear the filtered syscalls list including all"""
+    while len(self.filtered_items):
+      self.filtered_items.pop()
+    self.filterSyscalls.refilter()
+
+  def on_tvwSyscalls_button_release_event(self, widget, event):
+    """Show filter menu on right click"""
+    if event.button == Gdk.BUTTON_SECONDARY:
+      current_selection = self.tvwSyscalls.get_path_at_pos(int(event.x), int(event.y))
+      if current_selection:
+        self.menuFilter.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+
+  def check_for_filtered_syscall(self, model, iter, data):
+    """Check if the sycall name should be filtered"""
+    return self.modelSyscalls.get_syscall(iter) not in self.filtered_items
 
   def on_btnProgramOpen_clicked(self, widget):
     """Select the program to open"""

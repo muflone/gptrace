@@ -1,3 +1,9 @@
+gptrace 0.1.2
+
+  * Added filtering menu to hide or show only the selected syscall
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Mon, 2 Jun 2014 20:42:12 +0200
+
 gptrace 0.1.1
 
   * Replaced the GtkButtonFileChooser with a GtkEntry and a GtkButton
