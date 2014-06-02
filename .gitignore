@@ -3,3 +3,4 @@
 *.glade~
 /build/
 /root/
+__pycache__
