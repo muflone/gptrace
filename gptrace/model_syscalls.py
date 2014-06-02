@@ -21,7 +21,7 @@
 from gi.repository import Gtk
 from gptrace.model_base import ModelBase
 
-class ModelResults(ModelBase):
+class ModelSyscalls(ModelBase):
   COL_TIMESTAMP = 0
   COL_TIME = 1
   COL_SYSCALL = 2

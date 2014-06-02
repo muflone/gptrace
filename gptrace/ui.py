@@ -25,7 +25,7 @@ from gi.repository import Gdk
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
-from gptrace.model_results import ModelResults
+from gptrace.model_syscalls import ModelSyscalls
 from gptrace.model_intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.about import AboutWindow
 from daemon_thread import DaemonThread
@@ -97,7 +97,7 @@ class MainWindow(object):
     builder.add_from_file(FILE_UI_MAIN)
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
-    self.modelSyscalls = ModelResults(builder.get_object('storeSyscalls'))
+    self.modelSyscalls = ModelSyscalls(builder.get_object('storeSyscalls'))
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       builder.get_object('storeInterceptedSyscalls'))
     self.txtProgram = builder.get_object('txtProgram')
