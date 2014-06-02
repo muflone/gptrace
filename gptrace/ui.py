@@ -99,7 +99,8 @@ class MainWindow(object):
     self.modelSyscalls = ModelResults(builder.get_object('storeSyscalls'))
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       builder.get_object('storeInterceptedSyscalls'))
-    self.filechooserProgram = builder.get_object('filechooserProgram')
+    self.txtProgram = builder.get_object('txtProgram')
+    self.btnProgramOpen = builder.get_object('btnProgramOpen')
     self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
     self.menuOptions = builder.get_object('menuOptions')
     self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
@@ -163,9 +164,14 @@ class MainWindow(object):
     """Show the about dialog"""
     self.about.show()
 
-  def on_filechooserProgram_file_set(self, widget):
-    """Select the program to execute"""
-    self.btnStartStop.set_sensitive(self.filechooserProgram.get_filename())
+  def on_txtProgram_icon_release(self, widget, icon_position, event):
+    """Click an icon next to a Entry"""
+    if icon_position == Gtk.EntryIconPosition.SECONDARY:
+      self.txtProgram.set_text('')
+    
+  def on_txtProgram_changed(self, widget):
+    """Enable or disable the button if a program path was set"""
+    self.btnStartStop.set_sensitive(len(self.txtProgram.get_text()) > 0)
 
   def thread_debug_process(self, program):
     """Debug the requested program to trace the syscalls"""
@@ -280,16 +286,17 @@ class MainWindow(object):
   def on_btnStartStop_toggled(self, widget):
     """Start and stop program tracing"""
     if self.btnStartStop.get_active():
-      if self.filechooserProgram.get_filename():
+      if self.txtProgram.get_text():
         if self.menuitemAutoClear.get_active():
           self.on_menuitemClear_activate(None)
         # Disable file chooser and set stop icon
-        self.filechooserProgram.set_sensitive(False)
+        self.txtProgram.set_sensitive(False)
+        self.btnProgramOpen.set_sensitive(False)
         self.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP, Gtk.IconSize.BUTTON)
         # Start debugger
         self.thread_loader = DaemonThread(
           target=self.thread_debug_process,
-          args=(self.filechooserProgram.get_filename(), )
+          args=(self.filechooserProgram.get_text(), )
         )
         self.thread_loader.start()
       else:
@@ -301,9 +308,18 @@ class MainWindow(object):
         self.thread_loader.cancel()
         self.debugger.quit()
         # Restore file chooser and set execute icon
-        self.filechooserProgram.set_sensitive(True)
+        self.txtProgram.set_sensitive(True)
+        self.btnProgramOpen.set_sensitive(True)
         self.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
 
   def on_menuitemClear_activate(self, widget):
     """Clear the syscalls list"""
     self.modelSyscalls.clear()
+
+  def on_btnProgramOpen_clicked(self, widget):
+    """Select the program to open"""
+    program = show_dialog_fileopen(
+      parent=self.winMain,
+      title = _("Select a program to execute"))
+    if program:
+      self.txtProgram.set_text(program)

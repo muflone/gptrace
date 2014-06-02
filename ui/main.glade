@@ -178,10 +178,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </packing>
             </child>
             <child>
-              <object class="GtkFileChooserButton" id="filechooserProgram">
+              <object class="GtkEntry" id="txtProgram">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <signal name="file-set" handler="on_filechooserProgram_file_set" swapped="no"/>
+                <property name="can_focus">True</property>
+                <property name="secondary_icon_stock">gtk-clear</property>
+                <signal name="changed" handler="on_txtProgram_changed" swapped="no"/>
+                <signal name="icon-release" handler="on_txtProgram_icon_release" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -228,7 +230,29 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
+                <property name="pack_type">end</property>
                 <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btnProgramOpen">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_btnProgramOpen_clicked" swapped="no"/>
+                <child>
+                  <object class="GtkImage" id="imgProgramOpen">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="stock">gtk-open</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack_type">end</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
