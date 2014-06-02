@@ -8,7 +8,7 @@ class SyscallTracer(Application):
     Application.__init__(self)
     # Parse self.options
     self.options = options
-    self.program=[program, ]
+    self.program=program
     self.processOptions()
     self.ignore_syscall_callback = ignore_syscall_callback
     self.syscall_callback = syscall_callback
