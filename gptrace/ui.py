@@ -96,7 +96,7 @@ class MainWindow(object):
     builder.add_from_file(FILE_UI_MAIN)
     # Obtain widget references
     self.winMain = builder.get_object("winMain")
-    self.modelResults = ModelResults(builder.get_object('storeResults'))
+    self.modelSyscalls = ModelResults(builder.get_object('storeSyscalls'))
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       builder.get_object('storeInterceptedSyscalls'))
     self.filechooserProgram = builder.get_object('filechooserProgram')
@@ -189,9 +189,9 @@ class MainWindow(object):
     return True
 
   def syscall_callback(self, syscall):
-    """Add the syscall to the results model"""
+    """Add the syscall to the syscalls model"""
     now = datetime.datetime.now()
-    GObject.idle_add(self.modelResults.add, (
+    GObject.idle_add(self.modelSyscalls.add, (
       (now - self.debug_start_time).total_seconds(),
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
@@ -305,5 +305,5 @@ class MainWindow(object):
         self.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
 
   def on_menuitemClear_activate(self, widget):
-    """Clear the results list"""
-    self.modelResults.clear()
+    """Clear the syscalls list"""
+    self.modelSyscalls.clear()
