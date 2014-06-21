@@ -1,3 +1,11 @@
+gptrace 0.1.3
+
+  * Added GtkBuilderLoader class
+  * Moved all the Gtk widget references and moved to the GtkBuilderLoader
+  * Updated project homepage URL
+
+ -- Fabio Castelli <webreg@vbsimple.net>  Sat, 21 Jun 2014 21:52:26 +0200
+
 gptrace 0.1.2
 
   * Added filtering menu to hide or show only the selected syscall
