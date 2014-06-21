@@ -33,6 +33,10 @@ class ModelBase(object):
     """Return a path from a treerow"""
     return isinstance(treerow, Gtk.TreeModelRow) and treerow.path or treerow
   
+  def row_from_iter(self, treeiter):
+    """Return a model row from an iter"""
+    return self.model[treeiter]
+
   def get_model_data(self, treeiter, column):
     """Return a specific column from a treerow"""
     return self.model[self.path_from_iter(treeiter)][column]
