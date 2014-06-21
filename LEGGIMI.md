@@ -8,7 +8,7 @@ gpTrace
 
 **Codice sorgente:** https://github.com/muflone/gptrace
 
-**Documentazione:** http://url.muflone.com/gptrace
+**Documentazione:** http://www.muflone.com/gptrace/
 
 Requisiti di sistema
 --------------------
