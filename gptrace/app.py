@@ -22,6 +22,7 @@ from gi.repository import Gtk
 from gi.repository import Gio
 from gptrace.ui import MainWindow
 from gptrace.constants import *
+from gptrace.gtkbuilder_loader import GtkBuilderLoader
 
 class Application(Gtk.Application):
   def __init__(self, settings):
@@ -42,10 +43,8 @@ class Application(Gtk.Application):
     action.connect("activate", self.on_app_quit_activate)
     self.add_action(action)
     # Add the app menu
-    builder = Gtk.Builder()
-    builder.add_from_file(FILE_UI_APPMENU)
-    menubar = builder.get_object('app-menu')
-    self.set_app_menu(menubar)
+    builder = GtkBuilderLoader(FILE_UI_APPMENU)
+    self.set_app_menu(builder.app_menu)
 
   def activate(self, application):
     """Execute the application"""

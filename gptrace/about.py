@@ -22,6 +22,7 @@ from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
 from gptrace.constants import *
 from gptrace.functions import *
+from gptrace.gtkbuilder_loader import GtkBuilderLoader
 
 class AboutWindow(object):
   def __init__(self, winParent, show = False):
@@ -34,37 +35,33 @@ class AboutWindow(object):
       if line not in translators:
         translators.append(line)
     # Load the user interface
-    builder = Gtk.Builder()
-    builder.add_from_file(FILE_UI_ABOUT)
-    # Obtain widget references
-    self.dialog = builder.get_object("dialogAbout")
+    self.ui = GtkBuilderLoader(FILE_UI_ABOUT)
     # Set various properties
-    self.dialog.set_program_name(APP_NAME)
-    self.dialog.set_version('Version %s' % APP_VERSION)
-    self.dialog.set_comments(APP_DESCRIPTION)
-    self.dialog.set_website(APP_URL)
-    self.dialog.set_copyright(APP_COPYRIGHT)
-    self.dialog.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)])
+    self.ui.dialogAbout.set_program_name(APP_NAME)
+    self.ui.dialogAbout.set_version('Version %s' % APP_VERSION)
+    self.ui.dialogAbout.set_comments(APP_DESCRIPTION)
+    self.ui.dialogAbout.set_website(APP_URL)
+    self.ui.dialogAbout.set_copyright(APP_COPYRIGHT)
+    self.ui.dialogAbout.set_authors(['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)])
     #self.dialog.set_license_type(Gtk.License.GPL_2_0)
-    self.dialog.set_license('\n'.join(readlines(FILE_LICENSE, True)))
-    self.dialog.set_translator_credits('\n'.join(translators))
+    self.ui.dialogAbout.set_license('\n'.join(readlines(FILE_LICENSE, True)))
+    self.ui.dialogAbout.set_translator_credits('\n'.join(translators))
     # Retrieve the external resources links
     for line in readlines(FILE_RESOURCES, False):
       resource_type, resource_url = line.split(':', 1)
-      self.dialog.add_credit_section(resource_type, (resource_url,))
+      self.ui.dialogAbout.add_credit_section(resource_type, (resource_url,))
     icon_logo = Pixbuf.new_from_file(FILE_ICON)
-    self.dialog.set_logo(icon_logo)
-    self.dialog.set_transient_for(winParent)
+    self.ui.dialogAbout.set_logo(icon_logo)
+    self.ui.dialogAbout.set_transient_for(winParent)
     # Optionally show the dialog
     if show:
       self.show()
 
   def show(self):
     "Show the About dialog"
-    self.dialog.run()
-    self.dialog.hide()
+    self.ui.dialogAbout.run()
+    self.ui.dialogAbout.hide()
 
   def destroy(self):
     "Destroy the About dialog"
-    self.dialog.destroy()
-    self.dialog = None
+    self.ui.dialogAbout.destroy()

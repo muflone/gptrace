@@ -28,6 +28,7 @@ from gptrace.settings import Settings
 from gptrace.model_syscalls import ModelSyscalls
 from gptrace.model_intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.about import AboutWindow
+from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from daemon_thread import DaemonThread
 from syscall_tracer import SyscallTracer
 
@@ -41,13 +42,14 @@ import shlex
 class MainWindow(object):
   def __init__(self, application, settings):
     self.application = application
+    self.ui = GtkBuilderLoader(FILE_UI_MAIN)
     self.loadUI()
     self.settings = settings
     # Restore the intercepted syscalls list from settings
     saved_syscalls = settings.get_intercepted_syscalls()
     # Restore the options from settings
-    self.menuitemAutoClear.set_active(self.settings.get_boolean(
-      'autoclear', self.menuitemAutoClear.get_active()))
+    self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
+      'autoclear', self.ui.menuitemAutoClear.get_active()))
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
@@ -70,11 +72,11 @@ class MainWindow(object):
     self.update_InterceptedSyscalls_count()
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
-      self.winMain.set_default_size(
+      self.ui.winMain.set_default_size(
         self.settings.get_value('width', -1),
         self.settings.get_value('height', -1))
     if self.settings.get_value('left', 0) and self.settings.get_value('top', 0):
-      self.winMain.move(
+      self.ui.winMain.move(
         self.settings.get_value('left', 0),
         self.settings.get_value('top', 0))
     # Restore visible columns
@@ -84,37 +86,23 @@ class MainWindow(object):
         menuitem.set_active(key in saved_visible_columns)
     # Set ModelFilter
     self.filtered_items = []
-    self.filterSyscalls.set_visible_func(self.check_for_filtered_syscall,
+    self.ui.filterSyscalls.set_visible_func(self.check_for_filtered_syscall,
       self.filtered_items)
     # Load the others dialogs
-    self.about = AboutWindow(self.winMain, False)
+    self.about = AboutWindow(self.ui.winMain, False)
     self.thread_loader = None
     self.debugger = None
 
   def run(self):
     """Show the UI"""
-    self.winMain.show_all()
+    self.ui.winMain.show_all()
 
   def loadUI(self):
     """Load the interface UI"""
-    builder = Gtk.Builder()
-    builder.add_from_file(FILE_UI_MAIN)
-    # Obtain widget references
-    self.winMain = builder.get_object("winMain")
-    self.modelSyscalls = ModelSyscalls(builder.get_object('storeSyscalls'))
-    self.filterSyscalls = builder.get_object('filterSyscalls')
+    self.modelSyscalls = ModelSyscalls(self.ui.storeSyscalls)
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
-      builder.get_object('storeInterceptedSyscalls'))
-    self.txtProgram = builder.get_object('txtProgram')
-    self.btnProgramOpen = builder.get_object('btnProgramOpen')
-    self.lblInterceptedSyscalls = builder.get_object('lblInterceptedSyscalls')
-    self.menuOptions = builder.get_object('menuOptions')
-    self.menuVisibleColumns = builder.get_object('menuVisibleColumns')
-    self.menuFilter = builder.get_object('menuFilter')
-    self.tvwSyscalls = builder.get_object('tvwSyscalls')
-    self.btnStartStop = builder.get_object('btnStartStop')
-    self.imgStartStop = builder.get_object('imgStartStop')
-    self.menuitemAutoClear = builder.get_object('menuitemAutoClear')
+      self.ui.storeInterceptedSyscalls)
+
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
@@ -125,10 +113,10 @@ class MainWindow(object):
         ('tvwcolPID', 'menuitemVisibleColumnsPID'),
         ('tvwcolIP', 'menuitemVisibleColumnsIP')):
       self._associate_column_to_menuitem(
-        builder.get_object(column), builder.get_object(menuitem))
+        self.ui.get_object(column), self.ui.get_object(menuitem))
     # Set cellrenderers alignment
-    builder.get_object('cellTimestamp').set_property('xalign', 1.0)
-    builder.get_object('cellTime').set_property('xalign', 1.0)
+    self.ui.cellTimestamp.set_property('xalign', 1.0)
+    self.ui.cellTime.set_property('xalign', 1.0)
     # Set options menu items value as their column headers
     for key, (tvwcolumn, menuitem) in self.dict_column_headers.items():
       # Set the MenuItem label as the TreeViewColumn header
@@ -139,19 +127,19 @@ class MainWindow(object):
         # Set a signal callback to the Button
         button.connect('button-press-event', self.on_tvwcolumn_button_release_event)
     # Set various properties
-    self.winMain.set_title(APP_NAME)
-    self.winMain.set_icon_from_file(FILE_ICON)
-    self.winMain.set_application(self.application)
-    self.lblInterceptedSyscalls_descr = self.lblInterceptedSyscalls.get_text()
+    self.ui.winMain.set_title(APP_NAME)
+    self.ui.winMain.set_icon_from_file(FILE_ICON)
+    self.ui.winMain.set_application(self.application)
+    self.lblInterceptedSyscalls_descr = self.ui.lblInterceptedSyscalls.get_text()
     # Connect signals from the glade file to the functions with the same name
-    builder.connect_signals(self)
+    self.ui.connect_signals(self)
 
   def on_winMain_delete_event(self, widget, event):
     """Close the application"""
     # Immediately hide the main window and let the events process to handle
     # an instantly close instead of slowly let GTK to empty the model before
     # the window is effectively destroyed
-    self.winMain.hide()
+    self.ui.winMain.hide()
     process_events()
     # Cancel the running thread
     if self.thread_loader and self.thread_loader.isAlive():
@@ -159,13 +147,13 @@ class MainWindow(object):
       self.thread_loader.join()
     self.about.destroy()
     # Save settings for window size, intercepted syscalls and visible columns
-    self.settings.set_sizes(self.winMain)
+    self.settings.set_sizes(self.ui.winMain)
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
     self.settings.set_visible_columns(
       [column for column, menuitem in self.dict_column_headers.values()])
-    self.settings.set_boolean('autoclear', self.menuitemAutoClear.get_active())
+    self.settings.set_boolean('autoclear', self.ui.menuitemAutoClear.get_active())
     self.settings.save()
-    self.winMain.destroy()
+    self.ui.winMain.destroy()
     self.application.quit()
 
   def on_btnAbout_clicked(self, widget):
@@ -175,11 +163,11 @@ class MainWindow(object):
   def on_txtProgram_icon_release(self, widget, icon_position, event):
     """Click an icon next to a Entry"""
     if icon_position == Gtk.EntryIconPosition.SECONDARY:
-      self.txtProgram.set_text('')
+      self.ui.txtProgram.set_text('')
     
   def on_txtProgram_changed(self, widget):
     """Enable or disable the button if a program path was set"""
-    self.btnStartStop.set_sensitive(len(self.txtProgram.get_text()) > 0)
+    self.ui.btnStartStop.set_sensitive(len(self.ui.txtProgram.get_text()) > 0)
 
   def thread_debug_process(self, program):
     """Debug the requested program to trace the syscalls"""
@@ -230,7 +218,7 @@ class MainWindow(object):
 
   def quit_callback(self):
     """The debugger is quitting"""
-    self.btnStartStop.set_active(False)
+    self.ui.btnStartStop.set_active(False)
     
   def on_cellInterceptedChecked_toggled(self, widget, treepath):
     """Handle click on the checked column"""
@@ -265,14 +253,14 @@ class MainWindow(object):
 
   def update_InterceptedSyscalls_count(self):
     """Update the intercepted syscalls count label"""
-    self.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % (
+    self.ui.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % (
       len(self.modelInterceptedSyscalls.syscalls),
       self.modelInterceptedSyscalls.count(),
     ))
 
   def on_btnOptions_clicked(self, widget):
     """Show the options popup menu"""
-    self.menuOptions.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+    self.ui.menuOptions.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
 
   def on_menuitemVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
@@ -285,7 +273,7 @@ class MainWindow(object):
   def on_tvwcolumn_button_release_event(self, widget, event):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      self.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+      self.ui.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
 
   def _associate_column_to_menuitem(self, column, menuitem):
     """Associate each column to the MenuItem used to set column visibility"""
@@ -293,32 +281,32 @@ class MainWindow(object):
 
   def on_btnStartStop_toggled(self, widget):
     """Start and stop program tracing"""
-    if self.btnStartStop.get_active():
-      if self.txtProgram.get_text():
-        if self.menuitemAutoClear.get_active():
+    if self.ui.btnStartStop.get_active():
+      if self.ui.txtProgram.get_text():
+        if self.ui.menuitemAutoClear.get_active():
           self.on_menuitemClear_activate(None)
         # Disable file chooser and set stop icon
-        self.txtProgram.set_sensitive(False)
-        self.btnProgramOpen.set_sensitive(False)
-        self.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP, Gtk.IconSize.BUTTON)
+        self.ui.txtProgram.set_sensitive(False)
+        self.ui.btnProgramOpen.set_sensitive(False)
+        self.ui.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP, Gtk.IconSize.BUTTON)
         # Start debugger
         self.thread_loader = DaemonThread(
           target=self.thread_debug_process,
-          args=(shlex.split(self.txtProgram.get_text()), )
+          args=(shlex.split(self.ui.txtProgram.get_text()), )
         )
         self.thread_loader.start()
       else:
         # If no filename was selected then set button status as unpressed
-        self.btnStartStop.set_active(False)
+        self.ui.btnStartStop.set_active(False)
     else:
       # Cancel running debugger
       if self.thread_loader:
         self.thread_loader.cancel()
         self.debugger.quit()
         # Restore file chooser and set execute icon
-        self.txtProgram.set_sensitive(True)
-        self.btnProgramOpen.set_sensitive(True)
-        self.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
+        self.ui.txtProgram.set_sensitive(True)
+        self.ui.btnProgramOpen.set_sensitive(True)
+        self.ui.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE, Gtk.IconSize.BUTTON)
 
   def on_menuitemClear_activate(self, widget):
     """Clear the syscalls list"""
@@ -326,19 +314,19 @@ class MainWindow(object):
 
   def on_menuitemFilterHideSyscall_activate(self, widget):
     """Hide the selected syscall from the results"""
-    selection = self.tvwSyscalls.get_selection()
+    selection = self.ui.tvwSyscalls.get_selection()
     if selection:
       model, iter = selection.get_selected()
       if iter:
         # Add the selected syscall to the filtered syscalls list
         self.filtered_items.append(self.modelSyscalls.get_syscall(
-          self.filterSyscalls.convert_iter_to_child_iter(iter)))
+          self.ui.filterSyscalls.convert_iter_to_child_iter(iter)))
         # Filter the results
-        self.filterSyscalls.refilter()
+        self.ui.filterSyscalls.refilter()
 
   def on_menuitemFilterShowOnlySyscall_activate(self, widget):
     """Show only the selected syscall from the results"""
-    selection = self.tvwSyscalls.get_selection()
+    selection = self.ui.tvwSyscalls.get_selection()
     if selection:
       model, iter = selection.get_selected()
       if iter:
@@ -348,22 +336,22 @@ class MainWindow(object):
         self.filtered_items.extend(SYSCALL_NAMES.values())
         # Then remove the selected syscall from the filtered syscalls list
         self.filtered_items.remove(self.modelSyscalls.get_syscall(
-          self.filterSyscalls.convert_iter_to_child_iter(iter)))
+          self.ui.filterSyscalls.convert_iter_to_child_iter(iter)))
         # Filter the results
-        self.filterSyscalls.refilter()
+        self.ui.filterSyscalls.refilter()
 
   def on_menuitemFilterReset_activate(self, widget):
     """Clear the filtered syscalls list including all"""
     while len(self.filtered_items):
       self.filtered_items.pop()
-    self.filterSyscalls.refilter()
+    self.ui.filterSyscalls.refilter()
 
   def on_tvwSyscalls_button_release_event(self, widget, event):
     """Show filter menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      current_selection = self.tvwSyscalls.get_path_at_pos(int(event.x), int(event.y))
+      current_selection = self.ui.tvwSyscalls.get_path_at_pos(int(event.x), int(event.y))
       if current_selection:
-        self.menuFilter.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+        self.ui.menuFilter.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
 
   def check_for_filtered_syscall(self, model, iter, data):
     """Check if the sycall name should be filtered"""
@@ -372,7 +360,7 @@ class MainWindow(object):
   def on_btnProgramOpen_clicked(self, widget):
     """Select the program to open"""
     program = show_dialog_fileopen(
-      parent=self.winMain,
+      parent=self.ui.winMain,
       title = _("Select a program to execute"))
     if program:
-      self.txtProgram.set_text(program)
+      self.ui.txtProgram.set_text(program)
