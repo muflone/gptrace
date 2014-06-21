@@ -342,6 +342,32 @@ class MainWindow(object):
         # Filter the results
         self.ui.filterSyscalls.refilter()
 
+  def on_menuitemIgnoreSyscall_activate(self, widget):
+    """Remove the selected syscall name from the intercepted syscalls model"""
+    self.on_menuitemIgnoreUnignoreSyscall(False)
+
+  def on_menuitemUnignoreSyscall_activate(self, widget):
+    """Add the selected syscall name to the intercepted syscalls model"""
+    self.on_menuitemIgnoreUnignoreSyscall(True)
+
+  def on_menuitemIgnoreUnignoreSyscall(self, status):
+    """Add or remove the selected syscall name from the intercepted syscalls model"""
+    selection = self.ui.tvwSyscalls.get_selection()
+    if selection:
+      model, iter = selection.get_selected()
+      if iter:
+        # Get the syscall name to ignore/unignore
+        selected_syscall = self.modelSyscalls.get_syscall(
+          self.ui.filterSyscalls.convert_iter_to_child_iter(iter))
+        # Cycle each row in the intercepted syscalls model
+        for row in self.modelInterceptedSyscalls:
+          # If the syscall name for the row is the same then ignore/unignore
+          if self.modelInterceptedSyscalls.get_syscall(row) == selected_syscall:
+            self.modelInterceptedSyscalls.set_checked(row, status)
+            break
+        # Update the intercepted syscalls count
+        self.update_InterceptedSyscalls_count()
+    
   def on_menuitemFilterReset_activate(self, widget):
     """Clear the filtered syscalls list including all"""
     while len(self.filtered_items):

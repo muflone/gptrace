@@ -154,6 +154,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <signal name="activate" handler="on_menuitemFilterReset_activate" swapped="no"/>
               </object>
             </child>
+            <child>
+              <object class="GtkSeparatorMenuItem" id="menuitemFilterSeparator">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="menuitemIgnoreSyscall">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Ignore (don't intercept) this syscall</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_menuitemIgnoreSyscall_activate" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="menuitemUnignoreSyscall">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Unignore (intercept) this syscall</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_menuitemUnignoreSyscall_activate" swapped="no"/>
+              </object>
+            </child>
           </object>
         </child>
       </object>
