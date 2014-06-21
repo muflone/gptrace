@@ -23,6 +23,7 @@ import os.path
 import optparse
 import time
 import ConfigParser
+
 from gptrace.functions import *
 from gptrace.constants import *
 

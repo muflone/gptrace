@@ -20,6 +20,7 @@
 
 import sys
 import os.path
+
 from xdg import BaseDirectory
 
 # Application constants

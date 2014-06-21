@@ -20,6 +20,7 @@
 
 from gi.repository import Gdk
 from gi.repository import GObject
+
 from threading import Thread
 
 class DaemonThread(Thread):

@@ -20,6 +20,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Gio
+
 from gptrace.ui import MainWindow
 from gptrace.constants import *
 from gptrace.gtkbuilder_loader import GtkBuilderLoader

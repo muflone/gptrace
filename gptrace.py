@@ -21,6 +21,7 @@
 
 import gettext
 import locale
+
 from gptrace.settings import Settings
 from gptrace.app import Application
 from gptrace.constants import *

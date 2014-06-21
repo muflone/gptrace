@@ -20,8 +20,11 @@
 
 import struct
 import socket
-from gettext import gettext as _
+
 from gi.repository import Gtk
+
+from gettext import gettext as _
+
 from gptrace.constants import *
 
 def show_message_dialog_yesno(winParent, message, title, default_response):
