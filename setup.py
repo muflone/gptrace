@@ -88,7 +88,7 @@ setup(
   description=APP_DESCRIPTION,
   license='GPL v2',
   scripts=['gptrace.py'],
-  packages=['gptrace'],
+  packages=['gptrace', 'gptrace/ui', 'gptrace/models'],
   data_files=[
     ('share/gptrace/data', ['data/gptrace.png']),
     ('share/applications', ['data/gptrace.desktop']),
