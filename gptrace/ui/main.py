@@ -18,26 +18,28 @@
 #  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 ##
 
+import optparse
+import datetime
+import shlex
+
 from gi.repository import Gtk
 from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gdk
+
+from .about import AboutWindow
+
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
 from gptrace.models.syscalls import ModelSyscalls
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
-from gptrace.about import AboutWindow
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
-from daemon_thread import DaemonThread
-from syscall_tracer import SyscallTracer
+from gptrace.daemon_thread import DaemonThread
+from gptrace.syscall_tracer import SyscallTracer
 
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 from ptrace.ctypes_tools import formatAddress
-
-import optparse
-import datetime
-import shlex
 
 class MainWindow(object):
   def __init__(self, application, settings):

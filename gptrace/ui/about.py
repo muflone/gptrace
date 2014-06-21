@@ -20,6 +20,7 @@
 
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
+
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
