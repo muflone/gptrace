@@ -19,7 +19,8 @@
 ##
 
 from gi.repository import Gtk
-from gptrace.model_base import ModelBase
+
+from .base import ModelBase
 
 class ModelInterceptedSyscalls(ModelBase):
   COL_CHECKED = 0

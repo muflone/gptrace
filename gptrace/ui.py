@@ -25,8 +25,8 @@ from gi.repository import Gdk
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
-from gptrace.model_syscalls import ModelSyscalls
-from gptrace.model_intercepted_syscalls import ModelInterceptedSyscalls
+from gptrace.models.syscalls import ModelSyscalls
+from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.about import AboutWindow
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from daemon_thread import DaemonThread
