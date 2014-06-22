@@ -5,3 +5,4 @@
 /root/
 __pycache__
 /tmp/
+ui/*.h
