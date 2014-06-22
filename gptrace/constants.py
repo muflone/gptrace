@@ -25,7 +25,7 @@ from xdg import BaseDirectory
 
 # Application constants
 APP_NAME = 'gpTrace'
-APP_VERSION = '0.1.3'
+APP_VERSION = '0.1.4'
 APP_DESCRIPTION = 'Trace the activities of an external application.'
 APP_ID = 'gptrace.muflone.com'
 APP_URL = 'http://www.muflone.com/gptrace/'
