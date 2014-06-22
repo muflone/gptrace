@@ -92,7 +92,7 @@ setup(
   data_files=[
     ('share/gptrace/data', ['data/gptrace.png']),
     ('share/applications', ['data/gptrace.desktop']),
-    ('share/doc/gptrace', list(chain(glob('doc/*'),  glob('*.md')))),
+    ('share/doc/gptrace', list(chain(glob('doc/*'), glob('*.md')))),
     ('share/man/man1', ['man/gptrace.1']),
     ('share/gptrace/ui', glob('ui/*')),
   ],
