@@ -255,10 +255,10 @@ class MainWindow(object):
 
   def update_InterceptedSyscalls_count(self):
     """Update the intercepted syscalls count label"""
-    self.ui.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % (
-      len(self.modelInterceptedSyscalls.syscalls),
-      self.modelInterceptedSyscalls.count(),
-    ))
+    self.ui.lblInterceptedSyscalls.set_text(self.lblInterceptedSyscalls_descr % {
+      'selected': len(self.modelInterceptedSyscalls.syscalls),
+      'total': self.modelInterceptedSyscalls.count(),
+    })
 
   def on_btnOptions_clicked(self, widget):
     """Show the options popup menu"""

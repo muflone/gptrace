@@ -611,7 +611,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                   <object class="GtkLabel" id="lblInterceptedSyscalls">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Selected Intercepted Syscalls (%d of %d)</property>
+                    <property name="label" translatable="yes">Selected Intercepted Syscalls (%(selected)d of %(total)d)</property>
                   </object>
                 </child>
               </object>
