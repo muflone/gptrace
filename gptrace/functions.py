@@ -23,6 +23,7 @@ import socket
 
 from gi.repository import Gtk
 
+from gettext import dgettext as gettext_with_domain
 from gettext import gettext as _
 
 from gptrace.constants import *
@@ -94,11 +95,17 @@ def find_button_from_gtktreeviewcolumn(tvwcolumn):
   label_widget.destroy()
   return widget
 
+def GTK30_(message, context=None):
+  """Get a translated message from GTK+ 3 domain"""
+  return gettext_with_domain('gtk30', 
+    context and '%s\x04%s' % (context, message) or message)
+  
 __all__ = [
   'show_message_dialog_yesno',
   'show_dialog_fileopen',
   'readlines',
   'process_events',
   'find_button_from_gtktreeviewcolumn',
-  '_'
+  '_',
+  'GTK30_'
 ]
