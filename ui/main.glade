@@ -131,7 +131,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkMenuItem" id="menuitemFilterHideSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Hide this syscall</property>
+                <property name="label" translatable="yes">Hide the selected syscall</property>
                 <property name="use_underline">True</property>
                 <signal name="activate" handler="on_menuitemFilterHideSyscall_activate" swapped="no"/>
               </object>
@@ -140,7 +140,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkMenuItem" id="menuitemFilterShowOnlySyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Show only this syscall</property>
+                <property name="label" translatable="yes">Show only the selected syscall</property>
                 <property name="use_underline">True</property>
                 <signal name="activate" handler="on_menuitemFilterShowOnlySyscall_activate" swapped="no"/>
               </object>
@@ -164,7 +164,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkMenuItem" id="menuitemIgnoreSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Ignore (don't intercept) this syscall</property>
+                <property name="label" translatable="yes">Ignore (don't intercept) the selected syscall</property>
                 <property name="use_underline">True</property>
                 <signal name="activate" handler="on_menuitemIgnoreSyscall_activate" swapped="no"/>
               </object>
@@ -173,7 +173,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkMenuItem" id="menuitemUnignoreSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Unignore (intercept) this syscall</property>
+                <property name="label" translatable="yes">Unignore (intercept) the selected syscall</property>
                 <property name="use_underline">True</property>
                 <signal name="activate" handler="on_menuitemUnignoreSyscall_activate" swapped="no"/>
               </object>
@@ -611,7 +611,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                   <object class="GtkLabel" id="lblInterceptedSyscalls">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Selected Intercepted Syscalls (%(selected)d of %(total)d)</property>
+                    <property name="label" translatable="yes">Selected intercepted syscalls (%(selected)d of %(total)d)</property>
                   </object>
                 </child>
               </object>
