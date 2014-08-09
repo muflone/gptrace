@@ -32,7 +32,7 @@ from .about import AboutWindow
 from gptrace.constants import *
 from gptrace.functions import *
 from gptrace.settings import Settings
-from gptrace.models.syscalls import ModelSyscalls
+from gptrace.models.activities import ModelActivities
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.daemon_thread import DaemonThread
@@ -69,8 +69,7 @@ class MainWindow(object):
         any(argname in FILENAME_ARGUMENTS for argtype, argname in prototype[1]),
         # Is this syscall used by sockets?
         syscall in SOCKET_SYSCALL_NAMES,
-      )
-    )
+      ))
     self.update_InterceptedSyscalls_count()
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
@@ -88,7 +87,7 @@ class MainWindow(object):
         menuitem.set_active(key in saved_visible_columns)
     # Set ModelFilter
     self.filtered_items = []
-    self.ui.filterSyscalls.set_visible_func(self.check_for_filtered_syscall,
+    self.ui.filterActivities.set_visible_func(self.check_for_filtered_syscall,
       self.filtered_items)
     # Load the others dialogs
     self.about = AboutWindow(self.ui.winMain, False)
@@ -101,24 +100,24 @@ class MainWindow(object):
 
   def loadUI(self):
     """Load the interface UI"""
-    self.modelSyscalls = ModelSyscalls(self.ui.storeSyscalls)
+    self.modelActivities = ModelActivities(self.ui.storeActivities)
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       self.ui.storeInterceptedSyscalls)
 
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
-        ('tvwcolTimestamp', 'menuitemVisibleColumnsTimestamp'),
-        ('tvwcolTime', 'menuitemVisibleColumnsTime'),
-        ('tvwcolSyscall', 'menuitemVisibleColumnsSyscall'),
-        ('tvwcolFormat', 'menuitemVisibleColumnsFormat'),
-        ('tvwcolPID', 'menuitemVisibleColumnsPID'),
-        ('tvwcolIP', 'menuitemVisibleColumnsIP')):
+        ('tvwcolActivitiesTimestamp', 'menuitemVisibleColumnsTimestamp'),
+        ('tvwcolActivitiesTime', 'menuitemVisibleColumnsTime'),
+        ('tvwcolActivitiesSyscall', 'menuitemVisibleColumnsSyscall'),
+        ('tvwcolActivitiesFormat', 'menuitemVisibleColumnsFormat'),
+        ('tvwcolActivitiesPID', 'menuitemVisibleColumnsPID'),
+        ('tvwcolActivitiesIP', 'menuitemVisibleColumnsIP')):
       self._associate_column_to_menuitem(
         self.ui.get_object(column), self.ui.get_object(menuitem))
     # Set cellrenderers alignment
-    self.ui.cellTimestamp.set_property('xalign', 1.0)
-    self.ui.cellTime.set_property('xalign', 1.0)
+    self.ui.cellActivitiesTimestamp.set_property('xalign', 1.0)
+    self.ui.cellActivitiesTime.set_property('xalign', 1.0)
     # Set options menu items value as their column headers
     for key, (tvwcolumn, menuitem) in self.dict_column_headers.items():
       # Set the MenuItem label as the TreeViewColumn header
@@ -195,7 +194,7 @@ class MainWindow(object):
   def syscall_callback(self, syscall):
     """Add the syscall to the syscalls model"""
     now = datetime.datetime.now()
-    GObject.idle_add(self.modelSyscalls.add, (
+    GObject.idle_add(self.modelActivities.add, (
       (now - self.debug_start_time).total_seconds(),
       now.strftime('%H:%M:%S.%f'),
       syscall.name,
@@ -312,23 +311,23 @@ class MainWindow(object):
 
   def on_menuitemClear_activate(self, widget):
     """Clear the syscalls list"""
-    self.modelSyscalls.clear()
+    self.modelActivities.clear()
 
   def on_menuitemFilterHideSyscall_activate(self, widget):
     """Hide the selected syscall from the results"""
-    selection = self.ui.tvwSyscalls.get_selection()
+    selection = self.ui.tvwActivities.get_selection()
     if selection:
       model, iter = selection.get_selected()
       if iter:
         # Add the selected syscall to the filtered syscalls list
-        self.filtered_items.append(self.modelSyscalls.get_syscall(
-          self.ui.filterSyscalls.convert_iter_to_child_iter(iter)))
+        self.filtered_items.append(self.modelActivities.get_syscall(
+          self.ui.filterActivities.convert_iter_to_child_iter(iter)))
         # Filter the results
-        self.ui.filterSyscalls.refilter()
+        self.ui.filterActivities.refilter()
 
   def on_menuitemFilterShowOnlySyscall_activate(self, widget):
     """Show only the selected syscall from the results"""
-    selection = self.ui.tvwSyscalls.get_selection()
+    selection = self.ui.tvwActivities.get_selection()
     if selection:
       model, iter = selection.get_selected()
       if iter:
@@ -337,10 +336,10 @@ class MainWindow(object):
         # First include every syscall names to the filtered syscalls
         self.filtered_items.extend(SYSCALL_NAMES.values())
         # Then remove the selected syscall from the filtered syscalls list
-        self.filtered_items.remove(self.modelSyscalls.get_syscall(
-          self.ui.filterSyscalls.convert_iter_to_child_iter(iter)))
+        self.filtered_items.remove(self.modelActivities.get_syscall(
+          self.ui.filterActivities.convert_iter_to_child_iter(iter)))
         # Filter the results
-        self.ui.filterSyscalls.refilter()
+        self.ui.filterActivities.refilter()
 
   def on_menuitemIgnoreSyscall_activate(self, widget):
     """Remove the selected syscall name from the intercepted syscalls model"""
@@ -352,13 +351,13 @@ class MainWindow(object):
 
   def on_menuitemIgnoreUnignoreSyscall(self, status):
     """Add or remove the selected syscall name from the intercepted syscalls model"""
-    selection = self.ui.tvwSyscalls.get_selection()
+    selection = self.ui.tvwActivities.get_selection()
     if selection:
       model, iter = selection.get_selected()
       if iter:
         # Get the syscall name to ignore/unignore
-        selected_syscall = self.modelSyscalls.get_syscall(
-          self.ui.filterSyscalls.convert_iter_to_child_iter(iter))
+        selected_syscall = self.modelActivities.get_syscall(
+          self.ui.filterActivities.convert_iter_to_child_iter(iter))
         # Cycle each row in the intercepted syscalls model
         for row in self.modelInterceptedSyscalls:
           # If the syscall name for the row is the same then ignore/unignore
@@ -372,18 +371,19 @@ class MainWindow(object):
     """Clear the filtered syscalls list including all"""
     while len(self.filtered_items):
       self.filtered_items.pop()
-    self.ui.filterSyscalls.refilter()
+    self.ui.filterActivities.refilter()
 
-  def on_tvwSyscalls_button_release_event(self, widget, event):
+  def on_tvwActivities_button_release_event(self, widget, event):
     """Show filter menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      current_selection = self.ui.tvwSyscalls.get_path_at_pos(int(event.x), int(event.y))
+      current_selection = self.ui.tvwActivities.get_path_at_pos(
+        int(event.x), int(event.y))
       if current_selection:
         self.ui.menuFilter.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
 
   def check_for_filtered_syscall(self, model, iter, data):
     """Check if the sycall name should be filtered"""
-    return self.modelSyscalls.get_syscall(iter) not in self.filtered_items
+    return self.modelActivities.get_syscall(iter) not in self.filtered_items
 
   def on_btnProgramOpen_clicked(self, widget):
     """Select the program to open"""

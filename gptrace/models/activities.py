@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 from .base import ModelBase
 
-class ModelSyscalls(ModelBase):
+class ModelActivities(ModelBase):
   COL_TIMESTAMP = 0
   COL_TIME = 1
   COL_SYSCALL = 2
