@@ -1,21 +1,104 @@
 # gpTrace
 # Trace the activities of an external application.
 # Copyright (C) 2014 Fabio Castelli (Muflone) <webreg(at)vbsimple.net>
-# This file is distributed under the GPL v2 license (see copyright file).
+# This file is distributed under the same license as the gpTrace package.
 # Italian translation for gpTrace.
 #
-# Translators:
-# Fabio Castelli <webreg(at)vbsimple.net>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
-"Report-Msgid-Bugs-To: Fabio Castelli <webreg(at)vbsimple.net>\n"
-"POT-Creation-Date: 2014-04-12 17:30+0200\n"
-"PO-Revision-Date: 2014-04-12 17:30+0200\n"
-"Last-Translator: Fabio Castelli <webreg(at)vbsimple.net>\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues \n"
+"POT-Creation-Date: 2014-07-13 13:21:30 +0200\n"
+"PO-Revision-Date: 2014-07-13 13:21:30 +0200\n"
+"Last-Translator: Fabio Castelli (Muflone) <webreg(at)vbsimple.net>\n"
 "Language-Team: Italian\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: ui/main.glade.h:1
+msgid "Visible columns"
+msgstr "Colonne visibili"
+
+#: ui/main.glade.h:2
+msgid "Clear list now"
+msgstr "Svuota lista adesso"
+
+#: ui/main.glade.h:3
+msgid "Clear automatically"
+msgstr "Svuota automaticamente"
+
+#: ui/main.glade.h:4
+msgid "Filter items"
+msgstr "Filtra elementi"
+
+#: ui/main.glade.h:5
+msgid "Hide the selected syscall"
+msgstr "Nascondi la syscall selezionata"
+
+#: ui/main.glade.h:6
+msgid "Show only the selected syscall"
+msgstr "Mostra solo la syscall selezionata"
+
+#: ui/main.glade.h:7
+msgid "Reset filter"
+msgstr "Resetta il filtro"
+
+#: ui/main.glade.h:8
+msgid "Ignore (don't intercept) the selected syscall"
+msgstr "Ignora (non intercettare) la syscall selezionata"
+
+#: ui/main.glade.h:9
+msgid "Unignore (intercept) the selected syscall"
+msgstr "De-ignora (intercetta) la syscall selezionata"
+
+#: ui/main.glade.h:10
+msgid "Program to execute:"
+msgstr "Programma da eseguire:"
+
+#: ui/main.glade.h:11
+msgid "Timestamp"
+msgstr "Marcatore orario"
+
+#: ui/main.glade.h:12
+msgid "Time"
+msgstr "Orario"
+
+#: ui/main.glade.h:13
+msgid "Syscall"
+msgstr "Syscall"
+
+#: ui/main.glade.h:14
+msgid "Format"
+msgstr "Formato"
+
+#: ui/main.glade.h:15
+msgid "PID"
+msgstr "ID processo"
+
+#: ui/main.glade.h:16
+msgid "Instruction pointer"
+msgstr "Puntatore all'istruzione"
+
+#: ui/main.glade.h:17
+msgid "Checked"
+msgstr "Spuntata"
+
+#: ui/appmenu.ui.h:1
+msgid "_About gpTrace"
+msgstr "_Informazioni su gpTrace"
+
+#: ui/appmenu.ui.h:2
+msgid "_Quit"
+msgstr "_Esci"
+
+#: gptrace/ui/main.py:392
+msgid "Select a program to execute"
+msgstr "Scegliere un programma da eseguire"
+
+#: ui/main.glade.h:19
+#, no-c-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Syscall intercettate selezionate (%(selected)d of %(total)d)"
