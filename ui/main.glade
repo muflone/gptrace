@@ -202,6 +202,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   <object class="GtkTreeModelFilter" id="filterActivities">
     <property name="child_model">storeActivities</property>
   </object>
+  <object class="GtkListStore" id="storeCounts">
+    <columns>
+      <!-- column-name Syscall -->
+      <column type="gchararray"/>
+      <!-- column-name Count -->
+      <column type="gint"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="storeInterceptedSyscalls">
     <columns>
       <!-- column-name colChecked -->
@@ -336,107 +344,177 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="can_focus">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrollActivities">
+              <object class="GtkNotebook" id="noteSections">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkTreeView" id="tvwActivities">
+                  <object class="GtkScrolledWindow" id="scrollActivities">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="model">filterActivities</property>
-                    <property name="search_column">2</property>
-                    <signal name="button-release-event" handler="on_tvwActivities_button_release_event" swapped="no"/>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="treeview-selection2"/>
-                    </child>
+                    <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesTimestamp">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Timestamp</property>
-                        <property name="clickable">True</property>
-                        <property name="alignment">0.5</property>
-                        <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesTimestamp"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
+                      <object class="GtkTreeView" id="tvwActivities">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="model">filterActivities</property>
+                        <property name="search_column">2</property>
+                        <signal name="button-release-event" handler="on_tvwActivities_button_release_event" swapped="no"/>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection" id="treeview-selection2"/>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesTime">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Time</property>
-                        <property name="clickable">True</property>
-                        <property name="alignment">0.5</property>
                         <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesTime"/>
-                          <attributes>
-                            <attribute name="text">1</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesSyscall">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Syscall</property>
-                        <property name="expand">True</property>
-                        <property name="clickable">True</property>
-                        <property name="alignment">0.5</property>
-                        <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesSyscall"/>
-                          <attributes>
-                            <attribute name="text">2</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesFormat">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Format</property>
-                        <property name="clickable">True</property>
-                        <property name="alignment">0.5</property>
-                        <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesFormat">
-                            <property name="ellipsize">end</property>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesTimestamp">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">Timestamp</property>
+                            <property name="clickable">True</property>
+                            <property name="alignment">0.5</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesTimestamp"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
                           </object>
-                          <attributes>
-                            <attribute name="text">3</attribute>
-                          </attributes>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesPID">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">PID</property>
-                        <property name="clickable">True</property>
-                        <property name="alignment">0.5</property>
                         <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesPID"/>
-                          <attributes>
-                            <attribute name="text">4</attribute>
-                          </attributes>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesTime">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">Time</property>
+                            <property name="clickable">True</property>
+                            <property name="alignment">0.5</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesTime"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="tvwcolActivitiesIP">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Instruction pointer</property>
-                        <property name="clickable">True</property>
                         <child>
-                          <object class="GtkCellRendererText" id="cellActivitiesIP"/>
-                          <attributes>
-                            <attribute name="text">5</attribute>
-                          </attributes>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesSyscall">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">Syscall</property>
+                            <property name="expand">True</property>
+                            <property name="clickable">True</property>
+                            <property name="alignment">0.5</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesSyscall"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesFormat">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">Format</property>
+                            <property name="clickable">True</property>
+                            <property name="alignment">0.5</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesFormat">
+                                <property name="ellipsize">end</property>
+                              </object>
+                              <attributes>
+                                <attribute name="text">3</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesPID">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">PID</property>
+                            <property name="clickable">True</property>
+                            <property name="alignment">0.5</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesPID"/>
+                              <attributes>
+                                <attribute name="text">4</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesIP">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">Instruction pointer</property>
+                            <property name="clickable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellActivitiesIP"/>
+                              <attributes>
+                                <attribute name="text">5</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
                       </object>
                     </child>
                   </object>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="lblSectionActivities">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Activities</property>
+                  </object>
+                  <packing>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrollCounts">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkTreeView" id="tvwCounts">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="model">storeCounts</property>
+                        <property name="search_column">0</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection" id="treeview-selection3"/>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colCountsSyscall">
+                            <property name="title" translatable="yes">Syscall</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellCountsSyscall"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colCountsCount">
+                            <property name="title" translatable="yes">Calls count</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellCountsCount"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="lblSectionTotals">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Counts</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
                 </child>
               </object>
               <packing>

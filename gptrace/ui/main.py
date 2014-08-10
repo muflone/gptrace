@@ -34,6 +34,7 @@ from gptrace.functions import *
 from gptrace.settings import Settings
 from gptrace.models.activities import ModelActivities
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
+from gptrace.models.counts import ModelCounts
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.daemon_thread import DaemonThread
 from gptrace.syscall_tracer import SyscallTracer
@@ -70,6 +71,7 @@ class MainWindow(object):
         # Is this syscall used by sockets?
         syscall in SOCKET_SYSCALL_NAMES,
       ))
+      self.modelCounts.add(items=(syscall, 0))
     self.update_InterceptedSyscalls_count()
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
@@ -103,6 +105,7 @@ class MainWindow(object):
     self.modelActivities = ModelActivities(self.ui.storeActivities)
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       self.ui.storeInterceptedSyscalls)
+    self.modelCounts = ModelCounts(self.ui.storeCounts)
 
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
@@ -202,6 +205,7 @@ class MainWindow(object):
       syscall.process.pid,
       formatAddress(syscall.instr_pointer)
     ))
+    GObject.idle_add(self.modelCounts.increment_count, syscall.name)
 
   def event_callback(self, event):
     print 'event', type(event), event
@@ -312,6 +316,7 @@ class MainWindow(object):
   def on_menuitemClear_activate(self, widget):
     """Clear the syscalls list"""
     self.modelActivities.clear()
+    self.modelCounts.clear_values()
 
   def on_menuitemFilterHideSyscall_activate(self, widget):
     """Hide the selected syscall from the results"""

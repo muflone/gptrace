@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: Italian\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -82,7 +82,7 @@ msgstr "ID processo"
 msgid "Instruction pointer"
 msgstr "Puntatore all'istruzione"
 
-#: ui/main.glade.h:17
+#: ui/main.glade.h:17 ui/main.glade.h:20
 msgid "Checked"
 msgstr "Spuntata"
 
@@ -94,11 +94,23 @@ msgstr "_Informazioni su gpTrace"
 msgid "_Quit"
 msgstr "_Esci"
 
-#: gptrace/ui/main.py:392
+#: gptrace/ui/main.py:392 gptrace/ui/main.py:397
 msgid "Select a program to execute"
 msgstr "Scegliere un programma da eseguire"
 
-#: ui/main.glade.h:19
+#: ui/main.glade.h:19 ui/main.glade.h:22
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr "Syscall intercettate selezionate (%(selected)d of %(total)d)"
+
+#: ui/main.glade.h:17
+msgid "Activities"
+msgstr "Attività"
+
+#: ui/main.glade.h:18
+msgid "Calls count"
+msgstr "Conteggio chiamate"
+
+#: ui/main.glade.h:19
+msgid "Counts"
+msgstr "Conteggi"

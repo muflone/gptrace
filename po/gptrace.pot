@@ -82,7 +82,7 @@ msgstr ""
 msgid "Instruction pointer"
 msgstr ""
 
-#: ui/main.glade.h:17
+#: ui/main.glade.h:17 ui/main.glade.h:20
 msgid "Checked"
 msgstr ""
 
@@ -94,11 +94,23 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: gptrace/ui/main.py:392
+#: gptrace/ui/main.py:392 gptrace/ui/main.py:397
 msgid "Select a program to execute"
 msgstr ""
 
-#: ui/main.glade.h:19
+#: ui/main.glade.h:19 ui/main.glade.h:22
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr ""
+
+#: ui/main.glade.h:17
+msgid "Activities"
+msgstr ""
+
+#: ui/main.glade.h:18
+msgid "Calls count"
+msgstr ""
+
+#: ui/main.glade.h:19
+msgid "Counts"
 msgstr ""
