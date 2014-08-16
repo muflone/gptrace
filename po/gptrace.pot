@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ui/main.glade.h:1
-msgid "Visible columns"
+msgid "Visible columns in activities"
 msgstr ""
 
 #: ui/main.glade.h:2
@@ -59,50 +59,70 @@ msgid "Show only called syscalls in counts"
 msgstr ""
 
 #: ui/main.glade.h:11
-msgid "Program to execute:"
+msgid "Show only existing files"
 msgstr ""
 
 #: ui/main.glade.h:12
-msgid "Timestamp"
+msgid "Program to execute:"
 msgstr ""
 
 #: ui/main.glade.h:13
-msgid "Time"
+msgid "Timestamp"
 msgstr ""
 
 #: ui/main.glade.h:14
-msgid "Syscall"
+msgid "Time"
 msgstr ""
 
 #: ui/main.glade.h:15
-msgid "Format"
+msgid "Syscall"
 msgstr ""
 
 #: ui/main.glade.h:16
-msgid "PID"
+msgid "Format"
 msgstr ""
 
 #: ui/main.glade.h:17
-msgid "Instruction pointer"
+msgid "PID"
 msgstr ""
 
 #: ui/main.glade.h:18
-msgid "Activities"
+msgid "Instruction pointer"
 msgstr ""
 
 #: ui/main.glade.h:19
-msgid "Calls count"
+msgid "Activities"
 msgstr ""
 
 #: ui/main.glade.h:20
-msgid "Counts"
+msgid "Calls count"
 msgstr ""
 
 #: ui/main.glade.h:21
-msgid "Checked"
+msgid "Counts"
+msgstr ""
+
+#: ui/main.glade.h:22
+msgid "Existing"
 msgstr ""
 
 #: ui/main.glade.h:23
+msgid "File name"
+msgstr ""
+
+#: ui/main.glade.h:24
+msgid "File path"
+msgstr ""
+
+#: ui/main.glade.h:25
+msgid "Files"
+msgstr ""
+
+#: ui/main.glade.h:26
+msgid "Checked"
+msgstr ""
+
+#: ui/main.glade.h:28
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr ""
@@ -115,6 +135,12 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: gptrace/ui/main.py:405
+#: gptrace/ui/main.py:431
 msgid "Select a program to execute"
+msgstr ""
+
+#: gptrace/ui/main.py:452
+msgid ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
 msgstr ""

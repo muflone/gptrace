@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ui/main.glade.h:1
-msgid "Visible columns"
-msgstr "Visible columns"
+msgid "Visible columns in activities"
+msgstr "Visible columns in activities"
 
 #: ui/main.glade.h:2
 msgid "Clear list now"
@@ -59,50 +59,70 @@ msgid "Show only called syscalls in counts"
 msgstr "Show only called syscalls in counts"
 
 #: ui/main.glade.h:11
+msgid "Show only existing files"
+msgstr "Show only existing files"
+
+#: ui/main.glade.h:12
 msgid "Program to execute:"
 msgstr "Program to execute:"
 
-#: ui/main.glade.h:12
+#: ui/main.glade.h:13
 msgid "Timestamp"
 msgstr "Timestamp"
 
-#: ui/main.glade.h:13
+#: ui/main.glade.h:14
 msgid "Time"
 msgstr "Time"
 
-#: ui/main.glade.h:14
+#: ui/main.glade.h:15
 msgid "Syscall"
 msgstr "Syscall"
 
-#: ui/main.glade.h:15
+#: ui/main.glade.h:16
 msgid "Format"
 msgstr "Format"
 
-#: ui/main.glade.h:16
+#: ui/main.glade.h:17
 msgid "PID"
 msgstr "PID"
 
-#: ui/main.glade.h:17
+#: ui/main.glade.h:18
 msgid "Instruction pointer"
 msgstr "Instruction pointer"
 
-#: ui/main.glade.h:18
+#: ui/main.glade.h:19
 msgid "Activities"
 msgstr "Activities"
 
-#: ui/main.glade.h:19
+#: ui/main.glade.h:20
 msgid "Calls count"
 msgstr "Calls count"
 
-#: ui/main.glade.h:20
+#: ui/main.glade.h:21
 msgid "Counts"
 msgstr "Counts"
 
-#: ui/main.glade.h:21
+#: ui/main.glade.h:22
+msgid "Existing"
+msgstr "Existing"
+
+#: ui/main.glade.h:23
+msgid "File name"
+msgstr "File name"
+
+#: ui/main.glade.h:24
+msgid "File path"
+msgstr "File path"
+
+#: ui/main.glade.h:25
+msgid "Files"
+msgstr "Files"
+
+#: ui/main.glade.h:26
 msgid "Checked"
 msgstr "Checked"
 
-#: ui/main.glade.h:23
+#: ui/main.glade.h:28
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr "Selected intercepted syscalls (%(selected)d of %(total)d)"
@@ -115,6 +135,14 @@ msgstr "_About gpTrace"
 msgid "_Quit"
 msgstr "_Quit"
 
-#: gptrace/ui/main.py:405
+#: gptrace/ui/main.py:431
 msgid "Select a program to execute"
 msgstr "Select a program to execute"
+
+#: gptrace/ui/main.py:452
+msgid ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
+msgstr ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
