@@ -99,6 +99,10 @@ def GTK30_(message, context=None):
   """Get a translated message from GTK+ 3 domain"""
   return gettext_with_domain('gtk30', 
     context and '%s\x04%s' % (context, message) or message)
+
+def show_popup_menu(menu):
+  """Show a popup menu at the current position"""
+  return menu.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
   
 __all__ = [
   'show_message_dialog_yesno',
@@ -107,5 +111,6 @@ __all__ = [
   'process_events',
   'find_button_from_gtktreeviewcolumn',
   '_',
-  'GTK30_'
+  'GTK30_',
+  'show_popup_menu'
 ]

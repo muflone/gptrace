@@ -292,7 +292,7 @@ class MainWindow(object):
 
   def on_btnOptions_clicked(self, widget):
     """Show the options popup menu"""
-    self.ui.menuOptions.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+    show_popup_menu(self.ui.menuOptions)
 
   def on_menuitemVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
@@ -305,7 +305,7 @@ class MainWindow(object):
   def on_tvwcolumn_button_release_event(self, widget, event):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      self.ui.menuVisibleColumns.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+      show_popup_menu(self.ui.menuVisibleColumns)
 
   def _associate_column_to_menuitem(self, column, menuitem):
     """Associate each column to the MenuItem used to set column visibility"""
@@ -412,8 +412,7 @@ class MainWindow(object):
       current_selection = self.ui.tvwActivities.get_path_at_pos(
         int(event.x), int(event.y))
       if current_selection:
-        self.ui.menuFilterActivities.popup(None, None, None, 0, 0,
-          Gtk.get_current_event_time())
+        show_popup_menu(self.ui.menuFilterActivities)
 
   def check_for_filtered_syscall(self, model, iter, data):
     """Check if the sycall name should be filtered"""
