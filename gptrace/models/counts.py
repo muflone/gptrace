@@ -25,6 +25,7 @@ from .base import ModelBase
 class ModelCounts(ModelBase):
   COL_SYSCALL = 0
   COL_COUNT = 1
+  COL_VISIBILITY = 2
 
   def __init__(self, model):
     super(self.__class__, self).__init__(model)
@@ -44,13 +45,19 @@ class ModelCounts(ModelBase):
     """Get the count of a row"""
     return self.get_model_data(treepath, self.COL_COUNT)
 
+  def get_visibility(self, treepath):
+    """Get the visibility of a row"""
+    return self.get_model_data(treepath, self.COL_VISIBILITY)
+
   def increment_count(self, syscall):
     """Increment the count by 1 for the requested syscall"""
     model_row = self.dictSyscalls[syscall]
     self.set_model_data(model_row, self.COL_COUNT,
       self.get_model_data(model_row, self.COL_COUNT) + 1)
+    self.set_model_data(model_row, self.COL_VISIBILITY, True)
     
   def clear_values(self):
     """Set the count of all items to zero"""
     for model_row in self.dictSyscalls.values():
       self.set_model_data(model_row, self.COL_COUNT, 0)
+      self.set_model_data(model_row, self.COL_VISIBILITY, False)

@@ -53,6 +53,9 @@ class MainWindow(object):
     # Restore the options from settings
     self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
       'autoclear', self.ui.menuitemAutoClear.get_active()))
+    self.ui.menuitemListInCounts.set_active(self.settings.get_boolean(
+      'countsall', self.ui.menuitemListInCounts.get_active()))
+    self.on_menuitemListInCounts_toggled(None)
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
@@ -71,7 +74,7 @@ class MainWindow(object):
         # Is this syscall used by sockets?
         syscall in SOCKET_SYSCALL_NAMES,
       ))
-      self.modelCounts.add(items=(syscall, 0))
+      self.modelCounts.add(items=(syscall, 0, False))
     self.update_InterceptedSyscalls_count()
     # Restore the saved size and position
     if self.settings.get_value('width', 0) and self.settings.get_value('height', 0):
@@ -91,6 +94,9 @@ class MainWindow(object):
     self.filtered_items = []
     self.ui.filterActivities.set_visible_func(self.check_for_filtered_syscall,
       self.filtered_items)
+    # Set counts filter
+    self.ui.filterCounts.set_visible_column(self.modelCounts.COL_VISIBILITY)
+    self.ui.filterCounts.refilter()
     # Load the others dialogs
     self.about = AboutWindow(self.ui.winMain, False)
     self.thread_loader = None
@@ -156,6 +162,7 @@ class MainWindow(object):
     self.settings.set_visible_columns(
       [column for column, menuitem in self.dict_column_headers.values()])
     self.settings.set_boolean('autoclear', self.ui.menuitemAutoClear.get_active())
+    self.settings.set_boolean('countsall', self.ui.menuitemListInCounts.get_active())
     self.settings.save()
     self.ui.winMain.destroy()
     self.application.quit()
@@ -384,7 +391,8 @@ class MainWindow(object):
       current_selection = self.ui.tvwActivities.get_path_at_pos(
         int(event.x), int(event.y))
       if current_selection:
-        self.ui.menuFilter.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
+        self.ui.menuFilterActivities.popup(None, None, None, 0, 0,
+          Gtk.get_current_event_time())
 
   def check_for_filtered_syscall(self, model, iter, data):
     """Check if the sycall name should be filtered"""
@@ -397,3 +405,10 @@ class MainWindow(object):
       title = _("Select a program to execute"))
     if program:
       self.ui.txtProgram.set_text(program)
+
+  def on_menuitemListInCounts_toggled(self, widget):
+    """Set visibility of syscalls in counts section"""
+    if self.ui.menuitemListInCounts.get_active():
+      self.ui.tvwCounts.set_model(self.ui.filterCounts)
+    else:
+      self.ui.tvwCounts.set_model(self.ui.storeCounts)
