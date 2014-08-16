@@ -55,36 +55,57 @@ msgid "Unignore (intercept) the selected syscall"
 msgstr "De-ignora (intercetta) la syscall selezionata"
 
 #: ui/main.glade.h:10
+msgid "Show only called syscalls in counts"
+msgstr "Mostra solo le syscall chiamate nei conteggi"
+
+#: ui/main.glade.h:11
 msgid "Program to execute:"
 msgstr "Programma da eseguire:"
 
-#: ui/main.glade.h:11
+#: ui/main.glade.h:12
 msgid "Timestamp"
 msgstr "Marcatore orario"
 
-#: ui/main.glade.h:12
+#: ui/main.glade.h:13
 msgid "Time"
 msgstr "Orario"
 
-#: ui/main.glade.h:13
+#: ui/main.glade.h:14
 msgid "Syscall"
 msgstr "Syscall"
 
-#: ui/main.glade.h:14
+#: ui/main.glade.h:15
 msgid "Format"
 msgstr "Formato"
 
-#: ui/main.glade.h:15
+#: ui/main.glade.h:16
 msgid "PID"
 msgstr "ID processo"
 
-#: ui/main.glade.h:16
+#: ui/main.glade.h:17
 msgid "Instruction pointer"
 msgstr "Puntatore all'istruzione"
 
-#: ui/main.glade.h:17 ui/main.glade.h:20
+#: ui/main.glade.h:18
+msgid "Activities"
+msgstr "Attività"
+
+#: ui/main.glade.h:19
+msgid "Calls count"
+msgstr "Conteggio chiamate"
+
+#: ui/main.glade.h:20
+msgid "Counts"
+msgstr "Conteggi"
+
+#: ui/main.glade.h:21
 msgid "Checked"
 msgstr "Spuntata"
+
+#: ui/main.glade.h:23
+#, no-c-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Syscall intercettate selezionate (%(selected)d of %(total)d)"
 
 #: ui/appmenu.ui.h:1
 msgid "_About gpTrace"
@@ -94,23 +115,6 @@ msgstr "_Informazioni su gpTrace"
 msgid "_Quit"
 msgstr "_Esci"
 
-#: gptrace/ui/main.py:392 gptrace/ui/main.py:397
+#: gptrace/ui/main.py:405
 msgid "Select a program to execute"
 msgstr "Scegliere un programma da eseguire"
-
-#: ui/main.glade.h:19 ui/main.glade.h:22
-#, no-c-format
-msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
-msgstr "Syscall intercettate selezionate (%(selected)d of %(total)d)"
-
-#: ui/main.glade.h:17
-msgid "Activities"
-msgstr "Attività"
-
-#: ui/main.glade.h:18
-msgid "Calls count"
-msgstr "Conteggio chiamate"
-
-#: ui/main.glade.h:19
-msgid "Counts"
-msgstr "Conteggi"
