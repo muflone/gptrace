@@ -105,7 +105,7 @@ class Settings(object):
     self.config.set(SECTION_APPLICATION, 'intercepted syscalls', 
       ','.join(model.syscalls))
 
-  def get_visible_columns(self):
+  def get_activities_visible_columns(self):
     """Get the visible column list"""
     results = None
     if self.config.has_option(SECTION_ACTIVITIES, 'visible columns'):
@@ -113,7 +113,7 @@ class Settings(object):
         SECTION_ACTIVITIES, 'visible columns').split(',')
     return results
 
-  def set_visible_columns(self, columns_list):
+  def set_activities_visible_columns(self, columns_list):
     """Save the visible column list"""
     if not self.config.has_section(SECTION_ACTIVITIES):
       self.config.add_section(SECTION_ACTIVITIES)
