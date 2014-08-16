@@ -62,6 +62,7 @@ class MainWindow(object):
     self.ui.menuitemShowOnlyExistingFiles.set_active(self.settings.get_boolean(
       'only existing', self.ui.menuitemShowOnlyExistingFiles.get_active()))
     self.on_menuitemShowOnlyExistingFiles_toggled(None)
+    self.ui.infobarInformation.set_visible(False)
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
@@ -442,5 +443,13 @@ class MainWindow(object):
     self.ui.colFilesPath.set_clickable(not state)
     if state:
       self.ui.tvwFiles.set_model(self.ui.filterFiles)
+      self.ui.lblInfoBarContent.set_markup(
+        _('When <i><b>Show only existing files</b></i> is selected the sorting by '
+        'click on the column headers is disabled'))
     else:
       self.ui.tvwFiles.set_model(self.ui.storeFiles)
+    self.ui.infobarInformation.set_visible(state)
+
+  def on_infobar1_response(self, widget, response):
+    if response == Gtk.ResponseType.CLOSE:
+      self.ui.infobarInformation.set_visible(False)
