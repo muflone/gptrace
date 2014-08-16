@@ -54,9 +54,14 @@ class MainWindow(object):
     # Restore the options from settings
     self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
       'autoclear', self.ui.menuitemAutoClear.get_active()))
+    # Update the Show only called syscalls in counts status
     self.ui.menuitemListInCounts.set_active(self.settings.get_boolean(
       'countsall', self.ui.menuitemListInCounts.get_active()))
     self.on_menuitemListInCounts_toggled(None)
+    # Update the Show only existing files status
+    self.ui.menuitemShowOnlyExistingFiles.set_active(self.settings.get_boolean(
+      'only existing', self.ui.menuitemShowOnlyExistingFiles.get_active()))
+    self.on_menuitemShowOnlyExistingFiles_toggled(None)
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
       prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
@@ -98,6 +103,9 @@ class MainWindow(object):
     # Set counts filter
     self.ui.filterCounts.set_visible_column(self.modelCounts.COL_VISIBILITY)
     self.ui.filterCounts.refilter()
+    # Set counts filter
+    self.ui.filterFiles.set_visible_column(self.modelFiles.COL_EXISTING)
+    self.ui.filterFiles.refilter()
     # Load the others dialogs
     self.about = AboutWindow(self.ui.winMain, False)
     self.thread_loader = None
@@ -165,6 +173,7 @@ class MainWindow(object):
       [column for column, menuitem in self.dict_column_headers.values()])
     self.settings.set_boolean('autoclear', self.ui.menuitemAutoClear.get_active())
     self.settings.set_boolean('countsall', self.ui.menuitemListInCounts.get_active())
+    self.settings.set_boolean('only existing', self.ui.menuitemShowOnlyExistingFiles.get_active())
     self.settings.save()
     self.ui.winMain.destroy()
     self.application.quit()
@@ -423,3 +432,15 @@ class MainWindow(object):
       self.ui.tvwCounts.set_model(self.ui.filterCounts)
     else:
       self.ui.tvwCounts.set_model(self.ui.storeCounts)
+
+  def on_menuitemShowOnlyExistingFiles_toggled(self, widget):
+    """Set visibility of only existing files in files section"""
+    state = self.ui.menuitemShowOnlyExistingFiles.get_active()
+    self.ui.colFilesExisting.set_clickable(not state)
+    self.ui.colFilesPID.set_clickable(not state)
+    self.ui.colFilesName.set_clickable(not state)
+    self.ui.colFilesPath.set_clickable(not state)
+    if state:
+      self.ui.tvwFiles.set_model(self.ui.filterFiles)
+    else:
+      self.ui.tvwFiles.set_model(self.ui.storeFiles)

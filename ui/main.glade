@@ -191,6 +191,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="toggled" handler="on_menuitemListInCounts_toggled" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="menuitemShowOnlyExistingFiles">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Show only existing files</property>
+        <property name="use_underline">True</property>
+        <signal name="toggled" handler="on_menuitemShowOnlyExistingFiles_toggled" swapped="no"/>
+      </object>
+    </child>
   </object>
   <object class="GtkListStore" id="storeActivities">
     <columns>
@@ -235,6 +244,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <!-- column-name Existing -->
       <column type="gboolean"/>
     </columns>
+  </object>
+  <object class="GtkTreeModelFilter" id="filterFiles">
+    <property name="child_model">storeFiles</property>
   </object>
   <object class="GtkListStore" id="storeInterceptedSyscalls">
     <columns>
