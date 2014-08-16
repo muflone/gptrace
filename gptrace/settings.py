@@ -29,6 +29,9 @@ from gptrace.constants import *
 
 SECTION_MAINWIN = 'main window'
 SECTION_APPLICATION = 'application'
+SECTION_ACTIVITIES = 'activities'
+SECTION_COUNTS = 'counts'
+SECTION_FILES = 'files'
 
 class Settings(object):
   def __init__(self):
@@ -105,34 +108,34 @@ class Settings(object):
   def get_visible_columns(self):
     """Get the visible column list"""
     results = None
-    if self.config.has_option(SECTION_APPLICATION, 'visible columns'):
+    if self.config.has_option(SECTION_ACTIVITIES, 'visible columns'):
       results = self.config.get(
-        SECTION_APPLICATION, 'visible columns').split(',')
+        SECTION_ACTIVITIES, 'visible columns').split(',')
     return results
 
   def set_visible_columns(self, columns_list):
     """Save the visible column list"""
-    if not self.config.has_section(SECTION_APPLICATION):
-      self.config.add_section(SECTION_APPLICATION)
+    if not self.config.has_section(SECTION_ACTIVITIES):
+      self.config.add_section(SECTION_ACTIVITIES)
     names_list = []
     for column in columns_list:
       if column.get_visible():
         names_list.append(column.get_name())
-    self.config.set(SECTION_APPLICATION, 'visible columns', 
+    self.config.set(SECTION_ACTIVITIES, 'visible columns', 
       ','.join(names_list))
 
-  def get_boolean(self, name, default=None):
-    """Get a boolean option"""
-    if self.config.has_option(SECTION_APPLICATION, name):
-      return self.config.get(SECTION_APPLICATION, name) == '1'
+  def get_boolean(self, section, name, default=None):
+    """Get a boolean option from a specific section"""
+    if self.config.has_option(section, name):
+      return self.config.get(section, name) == '1'
     else:
       return default
 
-  def set_boolean(self, name, value):
-    """Save a boolean option"""
-    if not self.config.has_section(SECTION_APPLICATION):
-      self.config.add_section(SECTION_APPLICATION)
-    self.config.set(SECTION_APPLICATION, name, value and '1' or '0')
+  def set_boolean(self, section, name, value):
+    """Save a boolean option in a specific section"""
+    if not self.config.has_section(section):
+      self.config.add_section(section)
+    self.config.set(section, name, value and '1' or '0')
     
   def save(self):
     """Save the whole configuration"""

@@ -31,7 +31,7 @@ from .about import AboutWindow
 
 from gptrace.constants import *
 from gptrace.functions import *
-from gptrace.settings import Settings
+from gptrace.settings import Settings, SECTION_APPLICATION, SECTION_ACTIVITIES, SECTION_COUNTS, SECTION_FILES
 from gptrace.models.activities import ModelActivities
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.models.counts import ModelCounts
@@ -53,14 +53,17 @@ class MainWindow(object):
     saved_syscalls = settings.get_intercepted_syscalls()
     # Restore the options from settings
     self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
-      'autoclear', self.ui.menuitemAutoClear.get_active()))
+      SECTION_APPLICATION, 'autoclear',
+      self.ui.menuitemAutoClear.get_active()))
     # Update the Show only called syscalls in counts status
     self.ui.menuitemListInCounts.set_active(self.settings.get_boolean(
-      'countsall', self.ui.menuitemListInCounts.get_active()))
+      SECTION_COUNTS, 'only called',
+      self.ui.menuitemListInCounts.get_active()))
     self.on_menuitemListInCounts_toggled(None)
     # Update the Show only existing files status
     self.ui.menuitemShowOnlyExistingFiles.set_active(self.settings.get_boolean(
-      'only existing', self.ui.menuitemShowOnlyExistingFiles.get_active()))
+      SECTION_FILES, 'only existing',
+      self.ui.menuitemShowOnlyExistingFiles.get_active()))
     self.on_menuitemShowOnlyExistingFiles_toggled(None)
     self.ui.infobarInformation.set_visible(False)
     # Load all the available syscall names
@@ -172,9 +175,12 @@ class MainWindow(object):
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
     self.settings.set_visible_columns(
       [column for column, menuitem in self.dict_column_headers.values()])
-    self.settings.set_boolean('autoclear', self.ui.menuitemAutoClear.get_active())
-    self.settings.set_boolean('countsall', self.ui.menuitemListInCounts.get_active())
-    self.settings.set_boolean('only existing', self.ui.menuitemShowOnlyExistingFiles.get_active())
+    self.settings.set_boolean(SECTION_APPLICATION, 'autoclear',
+      self.ui.menuitemAutoClear.get_active())
+    self.settings.set_boolean(SECTION_COUNTS, 'only called',
+      self.ui.menuitemListInCounts.get_active())
+    self.settings.set_boolean(SECTION_FILES, 'only existing',
+      self.ui.menuitemShowOnlyExistingFiles.get_active())
     self.settings.save()
     self.ui.winMain.destroy()
     self.application.quit()
