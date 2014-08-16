@@ -31,7 +31,7 @@ msgid "Clear automatically"
 msgstr ""
 
 #: ui/main.glade.h:4
-msgid "Filter items"
+msgid "Filter activities"
 msgstr ""
 
 #: ui/main.glade.h:5

@@ -31,8 +31,8 @@ msgid "Clear automatically"
 msgstr "Clear automatically"
 
 #: ui/main.glade.h:4
-msgid "Filter items"
-msgstr "Filter items"
+msgid "Filter activities"
+msgstr "Filter activities"
 
 #: ui/main.glade.h:5
 msgid "Hide the selected syscall"
