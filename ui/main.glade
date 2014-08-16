@@ -224,6 +224,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   <object class="GtkTreeModelFilter" id="filterCounts">
     <property name="child_model">storeCounts</property>
   </object>
+  <object class="GtkTreeStore" id="storeFiles">
+    <columns>
+      <!-- column-name PID -->
+      <column type="gchararray"/>
+      <!-- column-name File -->
+      <column type="gchararray"/>
+      <!-- column-name File1 -->
+      <column type="gchararray"/>
+      <!-- column-name Existing -->
+      <column type="gboolean"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="storeInterceptedSyscalls">
     <columns>
       <!-- column-name colChecked -->
@@ -527,6 +539,94 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                   </object>
                   <packing>
                     <property name="position">1</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrollSectionFiles">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <object class="GtkTreeView" id="tvwFiles">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="model">storeFiles</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection" id="treeview-selection4"/>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colFilesExisting">
+                            <property name="sizing">autosize</property>
+                            <property name="title" translatable="yes">Existing</property>
+                            <property name="reorderable">True</property>
+                            <property name="sort_column_id">3</property>
+                            <child>
+                              <object class="GtkCellRendererToggle" id="cellFilesExisting"/>
+                              <attributes>
+                                <attribute name="active">3</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colFilesPID">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">PID</property>
+                            <property name="reorderable">True</property>
+                            <property name="sort_indicator">True</property>
+                            <property name="sort_column_id">0</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellFilesPID"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colFilesName">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">File name</property>
+                            <property name="reorderable">True</property>
+                            <property name="sort_column_id">1</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellFilesName"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="colFilesPath">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">File path</property>
+                            <property name="reorderable">True</property>
+                            <property name="sort_column_id">2</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cellFilesPath"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="lblSectionFiles">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Files</property>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
                     <property name="tab_fill">False</property>
                   </packing>
                 </child>

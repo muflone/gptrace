@@ -35,6 +35,7 @@ from gptrace.settings import Settings
 from gptrace.models.activities import ModelActivities
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.models.counts import ModelCounts
+from gptrace.models.files import ModelFiles
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.daemon_thread import DaemonThread
 from gptrace.syscall_tracer import SyscallTracer
@@ -112,6 +113,7 @@ class MainWindow(object):
     self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
       self.ui.storeInterceptedSyscalls)
     self.modelCounts = ModelCounts(self.ui.storeCounts)
+    self.modelFiles = ModelFiles(self.ui.storeFiles)
 
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
@@ -213,6 +215,14 @@ class MainWindow(object):
       formatAddress(syscall.instr_pointer)
     ))
     GObject.idle_add(self.modelCounts.increment_count, syscall.name)
+    # Check if the syscall has any filename or pathname argument
+    for argument in syscall.arguments:
+      if argument.name in FILENAME_ARGUMENTS:
+        GObject.idle_add(self.modelFiles.add, (
+          str(syscall.process.pid),
+          os.path.basename(argument.text[1:-1]),
+          argument.text[1:-1],
+          os.path.exists(argument.text[1:-1])))
 
   def event_callback(self, event):
     print 'event', type(event), event
@@ -324,6 +334,7 @@ class MainWindow(object):
     """Clear the syscalls list"""
     self.modelActivities.clear()
     self.modelCounts.clear_values()
+    self.modelFiles.clear()
 
   def on_menuitemFilterHideSyscall_activate(self, widget):
     """Hide the selected syscall from the results"""

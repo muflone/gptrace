@@ -47,7 +47,7 @@ class SyscallTracer(Application):
       write_argname=True,
       replace_socketcall=False,
       string_max_length=300,
-      write_address=True,
+      write_address=False,
       max_array_count=20,
     )
     self.syscall_options.instr_pointer = self.options.show_ip

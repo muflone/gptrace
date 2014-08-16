@@ -47,7 +47,10 @@ class ModelBase(object):
 
   def add(self, items):
     """Add a new treerow to the model"""
-    self.model.append(items)
+    if isinstance(self.model, Gtk.ListStore):
+      self.model.append(items)
+    else:
+      self.model.append(None, items)
     return False
 
   def remove(self, treeiter):
@@ -65,3 +68,7 @@ class ModelBase(object):
   def __iter__(self):
     """Iter over the model rows"""
     return iter(self.model)
+
+  def add_node(self, parent, items):
+    """Add a new child treerow to the model"""
+    return self.model.append(parent, items)
