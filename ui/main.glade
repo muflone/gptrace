@@ -26,73 +26,73 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkMenuItem" id="menuitemVisibleColumns">
+      <object class="GtkMenuItem" id="menuitemActivitiesVisibleColumns">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Visible columns</property>
+        <property name="label" translatable="yes">Visible columns for Activities</property>
         <property name="use_underline">True</property>
         <child type="submenu">
-          <object class="GtkMenu" id="menuVisibleColumns">
+          <object class="GtkMenu" id="menuActivitiesVisibleColumns">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsTimestamp">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsTimestamp">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C Timestamp</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsTime">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsTime">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C Time</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsSyscall">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C Syscall</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsFormat">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsFormat">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C Format</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsPID">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsPID">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C PID</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkCheckMenuItem" id="menuitemVisibleColumnsIP">
+              <object class="GtkCheckMenuItem" id="menuitemActivitiesVisibleColumnsIP">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">C Instruction Pointer</property>
                 <property name="use_underline">True</property>
                 <property name="active">True</property>
-                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
               </object>
             </child>
           </object>
@@ -118,64 +118,64 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
-      <object class="GtkMenuItem" id="menuitemFilterActivities">
+      <object class="GtkMenuItem" id="menuitemActivitiesFilter">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Filter activities</property>
         <property name="use_underline">True</property>
         <child type="submenu">
-          <object class="GtkMenu" id="menuFilterActivities">
+          <object class="GtkMenu" id="menuActivitiesFilter">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkMenuItem" id="menuitemFilterHideSyscall">
+              <object class="GtkMenuItem" id="menuitemActivitiesFilterHideSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Hide the selected syscall</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="on_menuitemFilterHideSyscall_activate" swapped="no"/>
+                <signal name="activate" handler="on_menuitemActivitiesFilterHideSyscall_activate" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitemFilterShowOnlySyscall">
+              <object class="GtkMenuItem" id="menuitemActivitiesFilterShowOnlySyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Show only the selected syscall</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="on_menuitemFilterShowOnlySyscall_activate" swapped="no"/>
+                <signal name="activate" handler="on_menuitemActivitiesFilterShowOnlySyscall_activate" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitemFilterReset">
+              <object class="GtkMenuItem" id="menuitemActivitiesFilterReset">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Reset filter</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="on_menuitemFilterReset_activate" swapped="no"/>
+                <signal name="activate" handler="on_menuitemActivitiesFilterReset_activate" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkSeparatorMenuItem" id="menuitemFilterSeparator">
+              <object class="GtkSeparatorMenuItem" id="menuitemActivitiesFilterSeparator">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitemIgnoreSyscall">
+              <object class="GtkMenuItem" id="menuitemActivitiesIgnoreSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Ignore (don't intercept) the selected syscall</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="on_menuitemIgnoreSyscall_activate" swapped="no"/>
+                <signal name="activate" handler="on_menuitemActivitiesIgnoreSyscall_activate" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitemUnignoreSyscall">
+              <object class="GtkMenuItem" id="menuitemActivitiesUnignoreSyscall">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Unignore (intercept) the selected syscall</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="on_menuitemUnignoreSyscall_activate" swapped="no"/>
+                <signal name="activate" handler="on_menuitemActivitiesUnignoreSyscall_activate" swapped="no"/>
               </object>
             </child>
           </object>
@@ -183,21 +183,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
-      <object class="GtkCheckMenuItem" id="menuitemListInCounts">
+      <object class="GtkCheckMenuItem" id="menuitemCountsOnlyCalled">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Show only called syscalls in counts</property>
         <property name="use_underline">True</property>
-        <signal name="toggled" handler="on_menuitemListInCounts_toggled" swapped="no"/>
+        <signal name="toggled" handler="on_menuitemCountsOnlyCalled_toggled" swapped="no"/>
       </object>
     </child>
     <child>
-      <object class="GtkCheckMenuItem" id="menuitemShowOnlyExistingFiles">
+      <object class="GtkCheckMenuItem" id="menuitemFilesShowOnlyExisting">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Show only existing files</property>
         <property name="use_underline">True</property>
-        <signal name="toggled" handler="on_menuitemShowOnlyExistingFiles_toggled" swapped="no"/>
+        <signal name="toggled" handler="on_menuitemFilesShowOnlyExisting_toggled" swapped="no"/>
       </object>
     </child>
   </object>

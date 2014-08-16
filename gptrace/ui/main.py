@@ -56,15 +56,15 @@ class MainWindow(object):
       SECTION_APPLICATION, 'autoclear',
       self.ui.menuitemAutoClear.get_active()))
     # Update the Show only called syscalls in counts status
-    self.ui.menuitemListInCounts.set_active(self.settings.get_boolean(
+    self.ui.menuitemCountsOnlyCalled.set_active(self.settings.get_boolean(
       SECTION_COUNTS, 'only called',
-      self.ui.menuitemListInCounts.get_active()))
-    self.on_menuitemListInCounts_toggled(None)
+      self.ui.menuitemCountsOnlyCalled.get_active()))
+    self.on_menuitemCountsOnlyCalled_toggled(None)
     # Update the Show only existing files status
-    self.ui.menuitemShowOnlyExistingFiles.set_active(self.settings.get_boolean(
+    self.ui.menuitemFilesShowOnlyExisting.set_active(self.settings.get_boolean(
       SECTION_FILES, 'only existing',
-      self.ui.menuitemShowOnlyExistingFiles.get_active()))
-    self.on_menuitemShowOnlyExistingFiles_toggled(None)
+      self.ui.menuitemFilesShowOnlyExisting.get_active()))
+    self.on_menuitemFilesShowOnlyExisting_toggled(None)
     self.ui.infobarInformation.set_visible(False)
     # Load all the available syscall names
     for syscall in sorted(SYSCALL_NAMES.values()):
@@ -130,12 +130,12 @@ class MainWindow(object):
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
-        ('tvwcolActivitiesTimestamp', 'menuitemVisibleColumnsTimestamp'),
-        ('tvwcolActivitiesTime', 'menuitemVisibleColumnsTime'),
-        ('tvwcolActivitiesSyscall', 'menuitemVisibleColumnsSyscall'),
-        ('tvwcolActivitiesFormat', 'menuitemVisibleColumnsFormat'),
-        ('tvwcolActivitiesPID', 'menuitemVisibleColumnsPID'),
-        ('tvwcolActivitiesIP', 'menuitemVisibleColumnsIP')):
+        ('tvwcolActivitiesTimestamp', 'menuitemActivitiesVisibleColumnsTimestamp'),
+        ('tvwcolActivitiesTime', 'menuitemActivitiesVisibleColumnsTime'),
+        ('tvwcolActivitiesSyscall', 'menuitemActivitiesVisibleColumnsSyscall'),
+        ('tvwcolActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
+        ('tvwcolActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
+        ('tvwcolActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')):
       self._associate_column_to_menuitem(
         self.ui.get_object(column), self.ui.get_object(menuitem))
     # Set cellrenderers alignment
@@ -178,9 +178,9 @@ class MainWindow(object):
     self.settings.set_boolean(SECTION_APPLICATION, 'autoclear',
       self.ui.menuitemAutoClear.get_active())
     self.settings.set_boolean(SECTION_COUNTS, 'only called',
-      self.ui.menuitemListInCounts.get_active())
+      self.ui.menuitemCountsOnlyCalled.get_active())
     self.settings.set_boolean(SECTION_FILES, 'only existing',
-      self.ui.menuitemShowOnlyExistingFiles.get_active())
+      self.ui.menuitemFilesShowOnlyExisting.get_active())
     self.settings.save()
     self.ui.winMain.destroy()
     self.application.quit()
@@ -300,7 +300,7 @@ class MainWindow(object):
     """Show the options popup menu"""
     show_popup_menu(self.ui.menuOptions)
 
-  def on_menuitemVisibleColumns_toggled(self, widget):
+  def on_menuitemActivitiesVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
     for column, menuitem in self.dict_column_headers.values():
       # If both column and menuitem have the same label set column visibility
@@ -311,7 +311,7 @@ class MainWindow(object):
   def on_tvwcolumn_button_release_event(self, widget, event):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      show_popup_menu(self.ui.menuVisibleColumns)
+      show_popup_menu(self.ui.menuActivitiesVisibleColumns)
 
   def _associate_column_to_menuitem(self, column, menuitem):
     """Associate each column to the MenuItem used to set column visibility"""
@@ -352,7 +352,7 @@ class MainWindow(object):
     self.modelCounts.clear_values()
     self.modelFiles.clear()
 
-  def on_menuitemFilterHideSyscall_activate(self, widget):
+  def on_menuitemActivitiesFilterHideSyscall_activate(self, widget):
     """Hide the selected syscall from the results"""
     selection = self.ui.tvwActivities.get_selection()
     if selection:
@@ -364,7 +364,7 @@ class MainWindow(object):
         # Filter the results
         self.ui.filterActivities.refilter()
 
-  def on_menuitemFilterShowOnlySyscall_activate(self, widget):
+  def on_menuitemActivitiesFilterShowOnlySyscall_activate(self, widget):
     """Show only the selected syscall from the results"""
     selection = self.ui.tvwActivities.get_selection()
     if selection:
@@ -380,15 +380,15 @@ class MainWindow(object):
         # Filter the results
         self.ui.filterActivities.refilter()
 
-  def on_menuitemIgnoreSyscall_activate(self, widget):
+  def on_menuitemActivitiesIgnoreSyscall_activate(self, widget):
     """Remove the selected syscall name from the intercepted syscalls model"""
-    self.on_menuitemIgnoreUnignoreSyscall(False)
+    self.on_menuitemActivitiesIgnoreUnignoreSyscall(False)
 
-  def on_menuitemUnignoreSyscall_activate(self, widget):
+  def on_menuitemActivitiesUnignoreSyscall_activate(self, widget):
     """Add the selected syscall name to the intercepted syscalls model"""
-    self.on_menuitemIgnoreUnignoreSyscall(True)
+    self.on_menuitemActivitiesIgnoreUnignoreSyscall(True)
 
-  def on_menuitemIgnoreUnignoreSyscall(self, status):
+  def on_menuitemActivitiesIgnoreUnignoreSyscall(self, status):
     """Add or remove the selected syscall name from the intercepted syscalls model"""
     selection = self.ui.tvwActivities.get_selection()
     if selection:
@@ -406,7 +406,7 @@ class MainWindow(object):
         # Update the intercepted syscalls count
         self.update_InterceptedSyscalls_count()
     
-  def on_menuitemFilterReset_activate(self, widget):
+  def on_menuitemActivitiesFilterReset_activate(self, widget):
     """Clear the filtered syscalls list including all"""
     while len(self.filtered_items):
       self.filtered_items.pop()
@@ -418,7 +418,7 @@ class MainWindow(object):
       current_selection = self.ui.tvwActivities.get_path_at_pos(
         int(event.x), int(event.y))
       if current_selection:
-        show_popup_menu(self.ui.menuFilterActivities)
+        show_popup_menu(self.ui.menuActivitiesFilter)
 
   def check_for_filtered_syscall(self, model, iter, data):
     """Check if the sycall name should be filtered"""
@@ -432,16 +432,16 @@ class MainWindow(object):
     if program:
       self.ui.txtProgram.set_text(program)
 
-  def on_menuitemListInCounts_toggled(self, widget):
+  def on_menuitemCountsOnlyCalled_toggled(self, widget):
     """Set visibility of syscalls in counts section"""
-    if self.ui.menuitemListInCounts.get_active():
+    if self.ui.menuitemCountsOnlyCalled.get_active():
       self.ui.tvwCounts.set_model(self.ui.filterCounts)
     else:
       self.ui.tvwCounts.set_model(self.ui.storeCounts)
 
-  def on_menuitemShowOnlyExistingFiles_toggled(self, widget):
+  def on_menuitemFilesShowOnlyExisting_toggled(self, widget):
     """Set visibility of only existing files in files section"""
-    state = self.ui.menuitemShowOnlyExistingFiles.get_active()
+    state = self.ui.menuitemFilesShowOnlyExisting.get_active()
     self.ui.colFilesExisting.set_clickable(not state)
     self.ui.colFilesPID.set_clickable(not state)
     self.ui.colFilesName.set_clickable(not state)
