@@ -457,7 +457,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeSelection" id="treeview-selection2"/>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesTimestamp">
+                          <object class="GtkTreeViewColumn" id="colActivitiesTimestamp">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Timestamp</property>
                             <property name="clickable">True</property>
@@ -471,7 +471,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           </object>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesTime">
+                          <object class="GtkTreeViewColumn" id="colActivitiesTime">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Time</property>
                             <property name="clickable">True</property>
@@ -485,7 +485,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           </object>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesSyscall">
+                          <object class="GtkTreeViewColumn" id="colActivitiesSyscall">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Syscall</property>
                             <property name="expand">True</property>
@@ -500,7 +500,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           </object>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesFormat">
+                          <object class="GtkTreeViewColumn" id="colActivitiesFormat">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Format</property>
                             <property name="clickable">True</property>
@@ -516,7 +516,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           </object>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesPID">
+                          <object class="GtkTreeViewColumn" id="colActivitiesPID">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">PID</property>
                             <property name="clickable">True</property>
@@ -530,7 +530,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           </object>
                         </child>
                         <child>
-                          <object class="GtkTreeViewColumn" id="tvwcolActivitiesIP">
+                          <object class="GtkTreeViewColumn" id="colActivitiesIP">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Instruction pointer</property>
                             <property name="clickable">True</property>
@@ -611,7 +611,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow" id="scrollSectionFiles">
+                  <object class="GtkScrolledWindow" id="scrollFiles">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="shadow_type">in</property>

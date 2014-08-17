@@ -130,12 +130,12 @@ class MainWindow(object):
     # Associate each TreeViewColumn to the MenuItem used to show/hide
     self.dict_column_headers = {}
     for column, menuitem in (
-        ('tvwcolActivitiesTimestamp', 'menuitemActivitiesVisibleColumnsTimestamp'),
-        ('tvwcolActivitiesTime', 'menuitemActivitiesVisibleColumnsTime'),
-        ('tvwcolActivitiesSyscall', 'menuitemActivitiesVisibleColumnsSyscall'),
-        ('tvwcolActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
-        ('tvwcolActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
-        ('tvwcolActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')):
+        ('colActivitiesTimestamp', 'menuitemActivitiesVisibleColumnsTimestamp'),
+        ('colActivitiesTime', 'menuitemActivitiesVisibleColumnsTime'),
+        ('colActivitiesSyscall', 'menuitemActivitiesVisibleColumnsSyscall'),
+        ('colActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
+        ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
+        ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')):
       self._associate_column_to_menuitem(
         self.ui.get_object(column), self.ui.get_object(menuitem))
     # Set cellrenderers alignment
