@@ -37,9 +37,9 @@ class ModelActivities(ModelBase):
     """Get the timestamp of a row"""
     return self.get_model_data(treepath, self.COL_TIMESTAMP)
 
-  def get_relative_time(self, treepath):
+  def get_time(self, treepath):
     """Get the relative time of a row"""
-    return self.get_model_data(treepath, self.COL_RELATIVE_TIME)
+    return self.get_model_data(treepath, self.COL_TIME)
 
   def get_syscall(self, treepath):
     """Get the syscall of a row"""
