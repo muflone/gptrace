@@ -449,8 +449,8 @@ class MainWindow(object):
     if state:
       self.ui.tvwFiles.set_model(self.ui.filterFiles)
       self.ui.lblInfoBarContent.set_markup(
-        _('When <i><b>Show only existing files</b></i> is selected the sorting by '
-        'click on the column headers is disabled'))
+        _('When <i><b>Show only existing files</b></i> is selected the sorting '
+          'by click on the column headers is disabled'))
     else:
       self.ui.tvwFiles.set_model(self.ui.storeFiles)
     self.ui.infobarInformation.set_visible(state)
