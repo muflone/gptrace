@@ -119,10 +119,18 @@ msgid "Files"
 msgstr "Files"
 
 #: ui/main.glade.h:26
+msgid "Information"
+msgstr "Information"
+
+#: ui/main.glade.h:27
+msgid "Processes"
+msgstr "Processes"
+
+#: ui/main.glade.h:28
 msgid "Checked"
 msgstr "Checked"
 
-#: ui/main.glade.h:28
+#: ui/main.glade.h:30
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr "Selected intercepted syscalls (%(selected)d of %(total)d)"
@@ -135,11 +143,85 @@ msgstr "_About gpTrace"
 msgid "_Quit"
 msgstr "_Quit"
 
-#: gptrace/ui/main.py:431
+#: gptrace/ui/main.py:292
+msgid "Process execution"
+msgstr "Process execution"
+
+#: gptrace/ui/main.py:294
+msgid "Process exit"
+msgstr "Process exit"
+
+#: gptrace/ui/main.py:296
+#, python-format
+msgid "Process signal: %s"
+msgstr "Process signal: %s"
+
+#: gptrace/ui/main.py:301
+#, python-format
+msgid "Event: %s"
+msgstr "Event: %s"
+
+#: gptrace/ui/main.py:304
+msgid "Command line"
+msgstr "Command line"
+
+#: gptrace/ui/main.py:306
+msgid "Current working directory"
+msgstr "Current working directory"
+
+#: gptrace/ui/main.py:310
+msgid "Parent PID"
+msgstr "Parent PID"
+
+#: gptrace/ui/main.py:314
+msgid "User ID"
+msgstr "User ID"
+
+#: gptrace/ui/main.py:315
+msgid "User name"
+msgstr "User name"
+
+#: gptrace/ui/main.py:316
+msgid "User real name"
+msgstr "User real name"
+
+#: gptrace/ui/main.py:318
+msgid "Effective user ID"
+msgstr "Effective user ID"
+
+#: gptrace/ui/main.py:319
+msgid "Effective user name"
+msgstr "Effective user name"
+
+#: gptrace/ui/main.py:320
+msgid "Effective user real name"
+msgstr "Effective user real name"
+
+#: gptrace/ui/main.py:322
+msgid "Group ID"
+msgstr "Group ID"
+
+#: gptrace/ui/main.py:323
+msgid "Group name"
+msgstr "Group name"
+
+#: gptrace/ui/main.py:325
+msgid "Effective group ID"
+msgstr "Effective group ID"
+
+#: gptrace/ui/main.py:326
+msgid "Effective group name"
+msgstr "Effective group name"
+
+#: gptrace/ui/main.py:328
+msgid "Status"
+msgstr "Status"
+
+#: gptrace/ui/main.py:516
 msgid "Select a program to execute"
 msgstr "Select a program to execute"
 
-#: gptrace/ui/main.py:452
+#: gptrace/ui/main.py:537
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"

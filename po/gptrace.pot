@@ -119,10 +119,18 @@ msgid "Files"
 msgstr ""
 
 #: ui/main.glade.h:26
-msgid "Checked"
+msgid "Information"
+msgstr ""
+
+#: ui/main.glade.h:27
+msgid "Processes"
 msgstr ""
 
 #: ui/main.glade.h:28
+msgid "Checked"
+msgstr ""
+
+#: ui/main.glade.h:30
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr ""
@@ -135,11 +143,85 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: gptrace/ui/main.py:431
+#: gptrace/ui/main.py:292
+msgid "Process execution"
+msgstr ""
+
+#: gptrace/ui/main.py:294
+msgid "Process exit"
+msgstr ""
+
+#: gptrace/ui/main.py:296
+#, python-format
+msgid "Process signal: %s"
+msgstr ""
+
+#: gptrace/ui/main.py:301
+#, python-format
+msgid "Event: %s"
+msgstr ""
+
+#: gptrace/ui/main.py:304
+msgid "Command line"
+msgstr ""
+
+#: gptrace/ui/main.py:306
+msgid "Current working directory"
+msgstr ""
+
+#: gptrace/ui/main.py:310
+msgid "Parent PID"
+msgstr ""
+
+#: gptrace/ui/main.py:314
+msgid "User ID"
+msgstr ""
+
+#: gptrace/ui/main.py:315
+msgid "User name"
+msgstr ""
+
+#: gptrace/ui/main.py:316
+msgid "User real name"
+msgstr ""
+
+#: gptrace/ui/main.py:318
+msgid "Effective user ID"
+msgstr ""
+
+#: gptrace/ui/main.py:319
+msgid "Effective user name"
+msgstr ""
+
+#: gptrace/ui/main.py:320
+msgid "Effective user real name"
+msgstr ""
+
+#: gptrace/ui/main.py:322
+msgid "Group ID"
+msgstr ""
+
+#: gptrace/ui/main.py:323
+msgid "Group name"
+msgstr ""
+
+#: gptrace/ui/main.py:325
+msgid "Effective group ID"
+msgstr ""
+
+#: gptrace/ui/main.py:326
+msgid "Effective group name"
+msgstr ""
+
+#: gptrace/ui/main.py:328
+msgid "Status"
+msgstr ""
+
+#: gptrace/ui/main.py:516
 msgid "Select a program to execute"
 msgstr ""
 
-#: gptrace/ui/main.py:452
+#: gptrace/ui/main.py:537
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"
