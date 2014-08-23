@@ -233,12 +233,13 @@ class MainWindow(object):
     GObject.idle_add(self.modelCounts.increment_count, syscall.name)
     # Check if the syscall has any filename or pathname argument
     for argument in syscall.arguments:
-      if argument.name in FILENAME_ARGUMENTS:
+      argument_text = argument.getText()
+      if argument.name in FILENAME_ARGUMENTS and argument_text != "''...": 
         GObject.idle_add(self.modelFiles.add, (
           str(syscall.process.pid),
-          os.path.basename(argument.text[1:-1]),
-          argument.text[1:-1],
-          os.path.exists(argument.text[1:-1])))
+          os.path.basename(argument_text[1:-1]),
+          argument_text[1:-1],
+          os.path.exists(argument_text[1:-1])))
 
   def event_callback(self, event):
     print 'event', type(event), event

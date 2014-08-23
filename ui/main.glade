@@ -572,6 +572,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn" id="colCountsSyscall">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Syscall</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsSyscall"/>
@@ -583,6 +584,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         </child>
                         <child>
                           <object class="GtkTreeViewColumn" id="colCountsCount">
+                            <property name="resizable">True</property>
                             <property name="title" translatable="yes">Calls count</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsCount"/>

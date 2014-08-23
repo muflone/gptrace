@@ -28,22 +28,6 @@ from gettext import gettext as _
 
 from gptrace.constants import *
 
-def show_message_dialog_yesno(winParent, message, title, default_response):
-  """Show a GtkMessageDialog with yes and no buttons"""
-  dialog = Gtk.MessageDialog(
-    parent=winParent,
-    flags=Gtk.DialogFlags.MODAL,
-    type=Gtk.MessageType.QUESTION,
-    buttons=Gtk.ButtonsType.YES_NO,
-    message_format=message
-  )
-  dialog.set_title(title)
-  if default_response:
-    dialog.set_default_response(default_response)
-  response = dialog.run()
-  dialog.destroy()
-  return response
-
 def show_dialog_fileopen(parent, title):
   """Show a FileChooserDialog with open and cancel buttons"""
   dialog = Gtk.FileChooserDialog(
@@ -105,7 +89,6 @@ def show_popup_menu(menu):
   return menu.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
   
 __all__ = [
-  'show_message_dialog_yesno',
   'show_dialog_fileopen',
   'readlines',
   'process_events',
