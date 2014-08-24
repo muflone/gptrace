@@ -55,11 +55,6 @@ class SyscallTracer(Application):
 
   def displaySyscall(self, syscall):
     self.syscall_callback(syscall)
-    #name = syscall.name
-    #text = syscall.format()
-    #if syscall.result is not None:
-    #    text = "%-40s = %s" % (text, syscall.result_text)
-    #error(text)
 
   def syscall(self, process):
     state = process.syscall_state

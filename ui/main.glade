@@ -476,6 +476,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="title" translatable="yes">Timestamp</property>
                             <property name="clickable">True</property>
                             <property name="alignment">0.5</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesTimestamp"/>
                               <attributes>
@@ -490,6 +491,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="title" translatable="yes">Time</property>
                             <property name="clickable">True</property>
                             <property name="alignment">0.5</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesTime"/>
                               <attributes>
@@ -505,6 +507,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="expand">True</property>
                             <property name="clickable">True</property>
                             <property name="alignment">0.5</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesSyscall"/>
                               <attributes>
@@ -519,6 +522,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="title" translatable="yes">Format</property>
                             <property name="clickable">True</property>
                             <property name="alignment">0.5</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesFormat">
                                 <property name="ellipsize">end</property>
@@ -535,6 +539,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="title" translatable="yes">PID</property>
                             <property name="clickable">True</property>
                             <property name="alignment">0.5</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesPID"/>
                               <attributes>
@@ -548,6 +553,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Instruction pointer</property>
                             <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellActivitiesIP"/>
                               <attributes>
@@ -588,6 +594,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colCountsSyscall">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Syscall</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsSyscall"/>
                               <attributes>
@@ -600,6 +607,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colCountsCount">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Calls count</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsCount"/>
                               <attributes>
@@ -732,6 +740,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colProcessesPID">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">PID</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellProcessesPID"/>
                               <attributes>
@@ -744,6 +754,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colProcessesTimestamp">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Timestamp</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellProcessesTimestamp"/>
                               <attributes>
@@ -756,6 +768,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colProcessesTime">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Time</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellProcessesTime"/>
                               <attributes>
@@ -768,6 +782,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colProcessesInformation">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Information</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellProcessesInformation"/>
                               <attributes>

@@ -53,7 +53,6 @@ from ptrace.os_tools import RUNNING_LINUX
 if RUNNING_LINUX:
   from ptrace.linux_proc import readProcessCmdline, readProcessLink, openProc
 
-
 class MainWindow(object):
   def __init__(self, application, settings):
     self.application = application
@@ -148,7 +147,7 @@ class MainWindow(object):
         ('colActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
         ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
         ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')):
-      self._associate_column_to_menuitem(
+      self.dict_column_headers[self.ui.get_object(column).get_name()] = (
         self.ui.get_object(column), self.ui.get_object(menuitem))
     # Set cellrenderers alignment
     self.ui.cellActivitiesTimestamp.set_property('xalign', 1.0)
@@ -396,10 +395,6 @@ class MainWindow(object):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
       show_popup_menu(self.ui.menuActivitiesVisibleColumns)
-
-  def _associate_column_to_menuitem(self, column, menuitem):
-    """Associate each column to the MenuItem used to set column visibility"""
-    self.dict_column_headers[column.get_name()] = (column, menuitem)
 
   def on_btnStartStop_toggled(self, widget):
     """Start and stop program tracing"""
