@@ -32,7 +32,7 @@ from .main_column_headers import ShowHideColumnHeaders
 
 from gptrace.constants import *
 from gptrace.functions import *
-from gptrace.settings import Settings, SECTION_APPLICATION, SECTION_ACTIVITIES, SECTION_COUNTS, SECTION_FILES
+from gptrace.settings import Settings, SECTION_APPLICATION, SECTION_ACTIVITIES, SECTION_COUNTS, SECTION_FILES, SECTION_PROCESSES
 from gptrace.models.activities import ModelActivities
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.models.counts import ModelCounts
@@ -144,7 +144,14 @@ class MainWindow(object):
           ('colFilesPID', 'menuitemFilesVisibleColumnsPID'),
           ('colFilesExisting', 'menuitemFilesVisibleColumnsExisting'),
           ('colFilesPath', 'menuitemFilesVisibleColumnsPath'),
-        ))):
+        )),
+        ('menuProcessesVisibleColumns', SECTION_PROCESSES, (
+          ('colProcessesPID', 'menuitemProcessesVisibleColumnsPID'),
+          ('colProcessesTimestamp', 'menuitemProcessesVisibleColumnsTimestamp'),
+          ('colProcessesTime', 'menuitemProcessesVisibleColumnsTime'),
+          ('colProcessesInformation', 'menuitemProcessesVisibleColumnsInformation'),
+        )),
+      ):
       for column, menuitem in items:
         self.column_headers.add_columns_to_section(section, column, menu, menuitem)
     # Set cellrenderers alignment

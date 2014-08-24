@@ -269,6 +269,74 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
+      <object class="GtkMenuItem" id="menuitemProcesses">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Processes</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menuProcesses">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="menuitemProcessesVisibleColumns">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Visible columns</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menuProcessesVisibleColumns">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemProcessesVisibleColumnsPID">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C PID</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemProcessesVisibleColumnsTimestamp">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C Timestamp</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemProcessesVisibleColumnsTime">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C Time</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemProcessesVisibleColumnsInformation">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C Information</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
       <object class="GtkMenuItem" id="menuitemClear">
         <property name="visible">True</property>
         <property name="can_focus">False</property>

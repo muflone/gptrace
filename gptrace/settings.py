@@ -32,6 +32,7 @@ SECTION_APPLICATION = 'application'
 SECTION_ACTIVITIES = 'activities'
 SECTION_COUNTS = 'counts'
 SECTION_FILES = 'files'
+SECTION_PROCESSES = 'processes'
 
 class Settings(object):
   def __init__(self):
