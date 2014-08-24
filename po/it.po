@@ -19,118 +19,114 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ui/main.glade.h:1
-msgid "Visible columns in activities"
-msgstr "Colonne visibili in attività"
-
-#: ui/main.glade.h:2
-msgid "Clear list now"
-msgstr "Svuota lista adesso"
-
-#: ui/main.glade.h:3
-msgid "Clear automatically"
-msgstr "Svuota automaticamente"
-
-#: ui/main.glade.h:4
-msgid "Filter activities"
-msgstr "Filtro attività"
-
-#: ui/main.glade.h:5
-msgid "Hide the selected syscall"
-msgstr "Nascondi la syscall selezionata"
-
-#: ui/main.glade.h:6
-msgid "Show only the selected syscall"
-msgstr "Mostra solo la syscall selezionata"
-
-#: ui/main.glade.h:7
-msgid "Reset filter"
-msgstr "Resetta il filtro"
-
-#: ui/main.glade.h:8
-msgid "Ignore (don't intercept) the selected syscall"
-msgstr "Ignora (non intercettare) la syscall selezionata"
-
-#: ui/main.glade.h:9
-msgid "Unignore (intercept) the selected syscall"
-msgstr "De-ignora (intercetta) la syscall selezionata"
-
-#: ui/main.glade.h:10
-msgid "Show only called syscalls in counts"
-msgstr "Mostra solo le syscall chiamate nei conteggi"
-
-#: ui/main.glade.h:11
-msgid "Show only existing files"
-msgstr "Mostra solo file esistenti"
-
-#: ui/main.glade.h:12
-msgid "Program to execute:"
-msgstr "Programma da eseguire:"
-
-#: ui/main.glade.h:13
-msgid "Timestamp"
-msgstr "Marcatore orario"
-
-#: ui/main.glade.h:14
-msgid "Time"
-msgstr "Orario"
-
-#: ui/main.glade.h:15
-msgid "Syscall"
-msgstr "Syscall"
-
-#: ui/main.glade.h:16
-msgid "Format"
-msgstr "Formato"
-
-#: ui/main.glade.h:17
-msgid "PID"
-msgstr "ID processo"
-
-#: ui/main.glade.h:18
-msgid "Instruction pointer"
-msgstr "Puntatore all'istruzione"
-
-#: ui/main.glade.h:19
 msgid "Activities"
 msgstr "Attività"
 
-#: ui/main.glade.h:20
-msgid "Calls count"
-msgstr "Conteggio chiamate"
+#: ui/main.glade.h:2
+msgid "Visible columns"
+msgstr "Colonne visibili"
 
-#: ui/main.glade.h:21
+#: ui/main.glade.h:3
+msgid "Filter activities"
+msgstr "Filtro attività"
+
+#: ui/main.glade.h:4
+msgid "Hide the selected syscall"
+msgstr "Nascondi la syscall selezionata"
+
+#: ui/main.glade.h:5
+msgid "Show only the selected syscall"
+msgstr "Mostra solo la syscall selezionata"
+
+#: ui/main.glade.h:6
+msgid "Reset filter"
+msgstr "Resetta il filtro"
+
+#: ui/main.glade.h:7
+msgid "Ignore (don't intercept) the selected syscall"
+msgstr "Ignora (non intercettare) la syscall selezionata"
+
+#: ui/main.glade.h:8
+msgid "Unignore (intercept) the selected syscall"
+msgstr "De-ignora (intercetta) la syscall selezionata"
+
+#: ui/main.glade.h:9
 msgid "Counts"
 msgstr "Conteggi"
 
+#: ui/main.glade.h:10
+msgid "Show only called syscalls"
+msgstr "Mostra solo le syscall chiamate"
+
+#: ui/main.glade.h:11
+msgid "Files"
+msgstr "File"
+
+#: ui/main.glade.h:12
+msgid "Show only existing files"
+msgstr "Mostra solo file esistenti"
+
+#: ui/main.glade.h:13
+msgid "Processes"
+msgstr "Processi"
+
+#: ui/main.glade.h:14
+msgid "Clear list now"
+msgstr "Svuota lista adesso"
+
+#: ui/main.glade.h:15
+msgid "Clear automatically"
+msgstr "Svuota automaticamente"
+
+#: ui/main.glade.h:16
+msgid "Program to execute:"
+msgstr "Programma da eseguire:"
+
+#: ui/main.glade.h:17
+msgid "Timestamp"
+msgstr "Marcatore orario"
+
+#: ui/main.glade.h:18
+msgid "Time"
+msgstr "Orario"
+
+#: ui/main.glade.h:19
+msgid "Syscall"
+msgstr "Syscall"
+
+#: ui/main.glade.h:20
+msgid "Format"
+msgstr "Formato"
+
+#: ui/main.glade.h:21
+msgid "PID"
+msgstr "ID processo"
+
 #: ui/main.glade.h:22
+msgid "Instruction pointer"
+msgstr "Puntatore all'istruzione"
+
+#: ui/main.glade.h:23
+msgid "Calls count"
+msgstr "Conteggio chiamate"
+
+#: ui/main.glade.h:24
 msgid "Existing"
 msgstr "Esistente"
 
-#: ui/main.glade.h:23
-msgid "File name"
-msgstr "Nome del file"
-
-#: ui/main.glade.h:24
+#: ui/main.glade.h:25
 msgid "File path"
 msgstr "Percorso del file"
-
-#: ui/main.glade.h:25
-msgid "Files"
-msgstr "File"
 
 #: ui/main.glade.h:26
 msgid "Information"
 msgstr "Informazioni"
 
 #: ui/main.glade.h:27
-msgid "Processes"
-msgstr "Processi"
-
-#: ui/main.glade.h:28
 msgid "Checked"
 msgstr "Spuntata"
 
-#: ui/main.glade.h:30
+#: ui/main.glade.h:29
 #, no-c-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr "Syscall intercettate selezionate (%(selected)d of %(total)d)"
@@ -217,11 +213,11 @@ msgstr "Nome gruppo effettivo"
 msgid "Status"
 msgstr "Stato"
 
-#: gptrace/ui/main.py:438
+#: gptrace/ui/main.py:457
 msgid "Select a program to execute"
 msgstr "Scegliere un programma da eseguire"
 
-#: gptrace/ui/main.py:459
+#: gptrace/ui/main.py:484
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"

@@ -259,7 +259,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       <object class="GtkCheckMenuItem" id="menuitemFilesVisibleColumnsPID">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">C PID</property>
+                        <property name="label">C PID</property>
                         <property name="use_underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
