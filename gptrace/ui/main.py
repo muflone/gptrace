@@ -140,7 +140,11 @@ class MainWindow(object):
           ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
           ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')
         )),
-      ):
+        ('menuFilesVisibleColumns', SECTION_FILES, (
+          ('colFilesPID', 'menuitemFilesVisibleColumnsPID'),
+          ('colFilesExisting', 'menuitemFilesVisibleColumnsExisting'),
+          ('colFilesPath', 'menuitemFilesVisibleColumnsPath'),
+        ))):
       for column, menuitem in items:
         self.column_headers.add_columns_to_section(section, column, menu, menuitem)
     # Set cellrenderers alignment
