@@ -140,6 +140,10 @@ class MainWindow(object):
           ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
           ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')
         )),
+        ('menuCountsVisibleColumns', SECTION_COUNTS, (
+          ('colCountsSyscall', 'menuitemCountsVisibleColumnsSyscall'),
+          ('colCountsCount', 'menuitemCountsVisibleColumnsCount'),
+        )),
         ('menuFilesVisibleColumns', SECTION_FILES, (
           ('colFilesPID', 'menuitemFilesVisibleColumnsPID'),
           ('colFilesExisting', 'menuitemFilesVisibleColumnsExisting'),

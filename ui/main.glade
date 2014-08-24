@@ -189,6 +189,40 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
+              <object class="GtkMenuItem" id="menuitemCountsVisibleColumns">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Visible columns</property>
+                <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menuCountsVisibleColumns">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemCountsVisibleColumnsSyscall">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C Syscall</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="menuitemCountsVisibleColumnsCount">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label">C Count</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <signal name="toggled" handler="on_menuitemActivitiesVisibleColumns_toggled" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="GtkCheckMenuItem" id="menuitemCountsOnlyCalled">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -752,6 +786,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colCountsSyscall">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Syscall</property>
+                            <property name="clickable">True</property>
                             <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsSyscall"/>
@@ -765,6 +800,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colCountsCount">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">Calls count</property>
+                            <property name="clickable">True</property>
                             <property name="reorderable">True</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellCountsCount"/>
