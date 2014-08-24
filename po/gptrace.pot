@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues \n"
-"POT-Creation-Date: 2014-07-13 13:21:30 +0200\n"
+"POT-Creation-Date: 2014-08-24 17:09:29 +0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: https://www.transifex.com/projects/p/gptrace/ \n"
@@ -143,85 +143,85 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: gptrace/ui/main.py:292
+#: gptrace/event_tracer.py:54
 msgid "Process execution"
 msgstr ""
 
-#: gptrace/ui/main.py:294
+#: gptrace/event_tracer.py:56
 msgid "Process exit"
 msgstr ""
 
-#: gptrace/ui/main.py:296
+#: gptrace/event_tracer.py:58
 #, python-format
 msgid "Process signal: %s"
 msgstr ""
 
-#: gptrace/ui/main.py:301
+#: gptrace/event_tracer.py:63
 #, python-format
 msgid "Event: %s"
 msgstr ""
 
-#: gptrace/ui/main.py:304
+#: gptrace/event_tracer.py:68
 msgid "Command line"
 msgstr ""
 
-#: gptrace/ui/main.py:306
+#: gptrace/event_tracer.py:70
 msgid "Current working directory"
 msgstr ""
 
-#: gptrace/ui/main.py:310
+#: gptrace/event_tracer.py:74
 msgid "Parent PID"
 msgstr ""
 
-#: gptrace/ui/main.py:314
+#: gptrace/event_tracer.py:78
 msgid "User ID"
 msgstr ""
 
-#: gptrace/ui/main.py:315
+#: gptrace/event_tracer.py:79
 msgid "User name"
 msgstr ""
 
-#: gptrace/ui/main.py:316
+#: gptrace/event_tracer.py:80
 msgid "User real name"
 msgstr ""
 
-#: gptrace/ui/main.py:318
+#: gptrace/event_tracer.py:82
 msgid "Effective user ID"
 msgstr ""
 
-#: gptrace/ui/main.py:319
+#: gptrace/event_tracer.py:83
 msgid "Effective user name"
 msgstr ""
 
-#: gptrace/ui/main.py:320
+#: gptrace/event_tracer.py:84
 msgid "Effective user real name"
 msgstr ""
 
-#: gptrace/ui/main.py:322
+#: gptrace/event_tracer.py:86
 msgid "Group ID"
 msgstr ""
 
-#: gptrace/ui/main.py:323
+#: gptrace/event_tracer.py:87
 msgid "Group name"
 msgstr ""
 
-#: gptrace/ui/main.py:325
+#: gptrace/event_tracer.py:89
 msgid "Effective group ID"
 msgstr ""
 
-#: gptrace/ui/main.py:326
+#: gptrace/event_tracer.py:90
 msgid "Effective group name"
 msgstr ""
 
-#: gptrace/ui/main.py:328
+#: gptrace/event_tracer.py:91
 msgid "Status"
 msgstr ""
 
-#: gptrace/ui/main.py:516
+#: gptrace/ui/main.py:438
 msgid "Select a program to execute"
 msgstr ""
 
-#: gptrace/ui/main.py:537
+#: gptrace/ui/main.py:459
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"

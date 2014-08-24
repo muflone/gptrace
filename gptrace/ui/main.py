@@ -163,16 +163,6 @@ class MainWindow(object):
 
   def on_winMain_delete_event(self, widget, event):
     """Close the application"""
-    # Immediately hide the main window and let the events process to handle
-    # an instantly close instead of slowly let GTK to empty the model before
-    # the window is effectively destroyed
-    self.ui.winMain.hide()
-    process_events()
-    # Cancel the running thread
-    if self.thread_loader and self.thread_loader.isAlive():
-      self.thread_loader.cancel()
-      self.thread_loader.join()
-    self.about.destroy()
     # Save settings for window size, intercepted syscalls and visible columns
     self.settings.set_sizes(self.ui.winMain)
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
@@ -185,6 +175,16 @@ class MainWindow(object):
     self.settings.set_boolean(SECTION_FILES, 'only existing',
       self.ui.menuitemFilesShowOnlyExisting.get_active())
     self.settings.save()
+    # Immediately hide the main window and let the events process to handle
+    # an instantly close instead of slowly let GTK to empty the model before
+    # the window is effectively destroyed
+    self.ui.winMain.hide()
+    process_events()
+    # Cancel the running thread
+    if self.thread_loader and self.thread_loader.isAlive():
+      self.thread_loader.cancel()
+      self.thread_loader.join()
+    self.about.destroy()
     self.ui.winMain.destroy()
     self.application.quit()
 
