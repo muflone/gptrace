@@ -24,9 +24,8 @@ from .base import ModelBase
 
 class ModelFiles(ModelBase):
   COL_PID = 0
-  COL_FILENAME = 1
-  COL_FILEPATH = 2
-  COL_EXISTING = 3
+  COL_FILEPATH = 1
+  COL_EXISTING = 2
   
   KEY_ITER = 'iter'
   KEY_FILES = 'files'
@@ -41,7 +40,7 @@ class ModelFiles(ModelBase):
     if not items[self.COL_PID] in self.dictProcesses.keys():
       # Add a new row as process ID
       super(self.__class__, self).add(
-        items=(items[self.COL_PID], None, None, True))
+        items=(items[self.COL_PID], None, True))
       self.dictProcesses[items[self.COL_PID]] = {
         self.KEY_ITER: self.model.get_iter(self.count() - 1),
         self.KEY_FILES: []
@@ -55,10 +54,6 @@ class ModelFiles(ModelBase):
       # therefore it will be appended under the PID node
       self.add_node(pid_process[self.KEY_ITER], items=subitems)
       pid_process[self.KEY_FILES].append(items[self.COL_FILEPATH])
-
-  def get_filename(self, treepath):
-    """Get the filename of a row"""
-    return self.get_model_data(treepath, self.COL_FILENAME)
 
   def get_filepath(self, treepath):
     """Get the filepath of a row"""

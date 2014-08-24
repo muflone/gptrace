@@ -237,8 +237,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <columns>
       <!-- column-name PID -->
       <column type="gchararray"/>
-      <!-- column-name FileName -->
-      <column type="gchararray"/>
       <!-- column-name FilePath -->
       <column type="gchararray"/>
       <!-- column-name Existing -->
@@ -671,21 +669,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <child>
                               <object class="GtkCellRendererToggle" id="cellFilesExisting"/>
                               <attributes>
-                                <attribute name="active">3</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colFilesName">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">File name</property>
-                            <property name="reorderable">True</property>
-                            <property name="sort_column_id">1</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellFilesName"/>
-                              <attributes>
-                                <attribute name="text">1</attribute>
+                                <attribute name="active">2</attribute>
                               </attributes>
                             </child>
                           </object>
@@ -699,7 +683,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <child>
                               <object class="GtkCellRendererText" id="cellFilesPath"/>
                               <attributes>
-                                <attribute name="text">2</attribute>
+                                <attribute name="text">1</attribute>
                               </attributes>
                             </child>
                           </object>

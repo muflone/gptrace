@@ -249,7 +249,6 @@ class MainWindow(object):
       if argument.name in FILENAME_ARGUMENTS and argument_text != "''...": 
         GObject.idle_add(self.modelFiles.add, (
           str(syscall.process.pid),
-          os.path.basename(argument_text[1:-1]),
           argument_text[1:-1],
           os.path.exists(argument_text[1:-1])))
 
@@ -451,7 +450,6 @@ class MainWindow(object):
     state = self.ui.menuitemFilesShowOnlyExisting.get_active()
     self.ui.colFilesExisting.set_clickable(not state)
     self.ui.colFilesPID.set_clickable(not state)
-    self.ui.colFilesName.set_clickable(not state)
     self.ui.colFilesPath.set_clickable(not state)
     if state:
       self.ui.tvwFiles.set_model(self.ui.filterFiles)
