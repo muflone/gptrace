@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="label" translatable="yes">Activities</property>
         <property name="use_underline">True</property>
         <child type="submenu">
-          <object class="GtkMenu" id="menu1">
+          <object class="GtkMenu" id="menuActivities">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -185,7 +185,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="label" translatable="yes">Counts</property>
         <property name="use_underline">True</property>
         <child type="submenu">
-          <object class="GtkMenu" id="menu2">
+          <object class="GtkMenu" id="menuCounts">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -208,7 +208,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="label" translatable="yes">Files</property>
         <property name="use_underline">True</property>
         <child type="submenu">
-          <object class="GtkMenu" id="menu3">
+          <object class="GtkMenu" id="menuFiles">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>

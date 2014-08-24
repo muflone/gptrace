@@ -49,8 +49,8 @@ class MainWindow(object):
   def __init__(self, application, settings):
     self.application = application
     self.ui = GtkBuilderLoader(FILE_UI_MAIN)
-    self.loadUI()
     self.settings = settings
+    self.loadUI()
     # Restore the intercepted syscalls list from settings
     saved_syscalls = settings.get_intercepted_syscalls()
     # Restore the options from settings
