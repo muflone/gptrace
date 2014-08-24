@@ -337,6 +337,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
+      <object class="GtkSeparatorMenuItem" id="menuitemSeparator1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkMenuItem" id="menuitemClear">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
