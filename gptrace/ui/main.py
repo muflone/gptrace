@@ -21,8 +21,6 @@
 import optparse
 import datetime
 import shlex
-import grp
-import pwd
 
 from gi.repository import Gtk
 from gi.repository import Gio
@@ -42,16 +40,10 @@ from gptrace.models.processes import ModelProcesses
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.daemon_thread import DaemonThread
 from gptrace.syscall_tracer import SyscallTracer
+from gptrace.event_tracer import EventTracer
 
 from ptrace.syscall import SYSCALL_NAMES, SYSCALL_PROTOTYPES, FILENAME_ARGUMENTS, SOCKET_SYSCALL_NAMES
 from ptrace.ctypes_tools import formatAddress
-from ptrace.debugger.process_event import NewProcessEvent, ProcessExecution, ProcessExit
-from ptrace.debugger.ptrace_signal import ProcessSignal
-from ptrace.debugger.child import ChildError
-from ptrace.os_tools import RUNNING_LINUX
-
-if RUNNING_LINUX:
-  from ptrace.linux_proc import readProcessCmdline, readProcessLink, openProc
 
 class MainWindow(object):
   def __init__(self, application, settings):
@@ -211,6 +203,15 @@ class MainWindow(object):
 
   def thread_debug_process(self, program):
     """Debug the requested program to trace the syscalls"""
+    def add_process(pid, information, value):
+      """Add a process information"""
+      now = datetime.datetime.now()
+      GObject.idle_add(self.modelProcesses.add, (
+        str(pid),
+        (now - self.debug_start_time).total_seconds(),
+        now.strftime('%H:%M:%S.%f'),
+        information,
+        str(value).strip()))
     self.debug_start_time = datetime.datetime.now()
     self.debugger = SyscallTracer(
       options=optparse.Values({
@@ -225,7 +226,7 @@ class MainWindow(object):
       program=program,
       ignore_syscall_callback=self.ignore_syscall_callback,
       syscall_callback=self.syscall_callback,
-      event_callback=self.event_callback,
+      event_callback=EventTracer(add_process).handle_event,
       quit_callback=self.quit_callback)
     self.debugger.main()
     return True
@@ -251,80 +252,6 @@ class MainWindow(object):
           os.path.basename(argument_text[1:-1]),
           argument_text[1:-1],
           os.path.exists(argument_text[1:-1])))
-
-  def event_callback(self, event):
-    """Handle external events like new process execution or child close"""
-    def add_process(information, value):
-      """Add a process information"""
-      now = datetime.datetime.now()
-      GObject.idle_add(self.modelProcesses.add, (
-        str(event.process.pid),
-        (now - self.debug_start_time).total_seconds(),
-        now.strftime('%H:%M:%S.%f'),
-        information, str(value).strip()))
-    
-    def add_process_information(item):
-      if ':' in item:
-        add_process(*item.split(':', 1))
-
-    def get_process_status_details(pid):
-      """Get details from process status"""
-      dict_result = {}
-      status_file = openProc('%s/status' % pid)
-      for line in status_file:
-        if line.startswith('Uid:'):
-          dict_result['uid'] = pwd.getpwuid(int(line[5:].split('\t')[0]))
-          dict_result['euid'] = pwd.getpwuid(int(line[5:].split('\t')[1]))
-        elif line.startswith('Gid:'):
-          dict_result['gid'] = grp.getgrgid(int(line[5:].split('\t')[0]))
-          dict_result['egid'] = grp.getgrgid(int(line[5:].split('\t')[1]))
-      status_file.close()
-      return dict_result
-
-    if isinstance(event, NewProcessEvent):
-      # Under Linux the new process phase first fork a new process with the same
-      # command line of the starting process then changes its command line
-      # Therefore here I skip the NewProcessEvent event and after I add a new
-      # process during the ProcessExecution event
-      status = None
-    elif isinstance(event, ProcessExecution):
-      status = _('Process execution')
-    elif isinstance(event, ProcessExit):
-      status = _('Process exit')
-    elif isinstance(event, ProcessSignal):
-      status = _('Process signal: %s') % event
-    elif isinstance(event, ChildError):
-      status = None
-      print event
-    else:
-      status = _('Event: %s') % event
-    
-    if RUNNING_LINUX and isinstance(event, ProcessExecution):
-      add_process(_('Command line'),
-        ' '.join(readProcessCmdline(event.process.pid)))
-      add_process(_('Current working directory'),
-        readProcessLink(event.process.pid, 'cwd'))
-      # If the process has a parent PID include it in the details
-      if event.process.parent:
-        add_process(_('Parent PID'), str(event.process.parent.pid))
-      # Add process details
-      status_details = get_process_status_details(event.process.pid)
-      if status_details.has_key('uid'):
-        add_process(_('User ID'), status_details['uid'].pw_uid)
-        add_process(_('User name'), status_details['uid'].pw_name)
-        add_process(_('User real name'), status_details['uid'].pw_gecos)
-      if status_details.has_key('euid'):
-        add_process(_('Effective user ID'), status_details['euid'].pw_uid)
-        add_process(_('Effective user name'), status_details['euid'].pw_name)
-        add_process(_('Effective user real name'), status_details['euid'].pw_gecos)
-      if status_details.has_key('gid'):
-        add_process(_('Group ID'), status_details['gid'].gr_gid)
-        add_process(_('Group name'), status_details['gid'].gr_name)
-      if status_details.has_key('egid'):
-        add_process(_('Effective group ID'), status_details['egid'].gr_gid)
-        add_process(_('Effective group name'), status_details['egid'].gr_name)
-    if status:
-      add_process(information=_('Status'), value=status)
 
   def ignore_syscall_callback(self, syscall):
     """Determine if to ignore a callback before it's processed"""
