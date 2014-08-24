@@ -328,7 +328,7 @@ class MainWindow(object):
     """Show the options popup menu"""
     show_popup_menu(self.ui.menuOptions)
 
-  def on_menuitemActivitiesVisibleColumns_toggled(self, widget):
+  def on_menuitemVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
     for section in self.column_headers.get_sections():
       for (column, menu, menuitem) in self.column_headers.get_values(section):
