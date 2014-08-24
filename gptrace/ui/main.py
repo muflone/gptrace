@@ -448,9 +448,16 @@ class MainWindow(object):
   def on_menuitemFilesShowOnlyExisting_toggled(self, widget):
     """Set visibility of only existing files in files section"""
     state = self.ui.menuitemFilesShowOnlyExisting.get_active()
-    self.ui.colFilesExisting.set_clickable(not state)
-    self.ui.colFilesPID.set_clickable(not state)
-    self.ui.colFilesPath.set_clickable(not state)
+    # Configure column sort order ID for each column in order to allow the sort
+    # if the show only existing files setting is set
+    self.ui.colFilesExisting.set_sort_column_id(state and -1 or self.modelFiles.COL_EXISTING)
+    self.ui.colFilesPID.set_sort_column_id(state and -1 or self.modelFiles.COL_PID)
+    self.ui.colFilesPath.set_sort_column_id(state and -1 or self.modelFiles.COL_FILEPATH)
+    # BUG: GTK+ seems to not react if the sort column ID is changed
+    # Set the clickable property again after setting the sort column ID
+    self.ui.colFilesExisting.set_clickable(True)
+    self.ui.colFilesPID.set_clickable(True)
+    self.ui.colFilesPath.set_clickable(True)
     if state:
       self.ui.tvwFiles.set_model(self.ui.filterFiles)
       self.ui.lblInfoBarContent.set_markup(

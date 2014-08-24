@@ -692,9 +692,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colFilesPID">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">PID</property>
+                            <property name="clickable">True</property>
                             <property name="reorderable">True</property>
-                            <property name="sort_indicator">True</property>
-                            <property name="sort_column_id">0</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellFilesPID"/>
                               <attributes>
@@ -706,8 +705,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <child>
                           <object class="GtkTreeViewColumn" id="colFilesExisting">
                             <property name="title" translatable="yes">Existing</property>
+                            <property name="clickable">True</property>
                             <property name="reorderable">True</property>
-                            <property name="sort_column_id">3</property>
                             <child>
                               <object class="GtkCellRendererToggle" id="cellFilesExisting"/>
                               <attributes>
@@ -720,8 +719,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                           <object class="GtkTreeViewColumn" id="colFilesPath">
                             <property name="resizable">True</property>
                             <property name="title" translatable="yes">File path</property>
+                            <property name="clickable">True</property>
                             <property name="reorderable">True</property>
-                            <property name="sort_column_id">2</property>
                             <child>
                               <object class="GtkCellRendererText" id="cellFilesPath"/>
                               <attributes>
