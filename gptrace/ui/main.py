@@ -28,6 +28,7 @@ from gi.repository import GObject
 from gi.repository import Gdk
 
 from .about import AboutWindow
+from .main_column_headers import ShowHideColumnHeaders
 
 from gptrace.constants import *
 from gptrace.functions import *
@@ -98,10 +99,8 @@ class MainWindow(object):
         self.settings.get_value('left', 0),
         self.settings.get_value('top', 0))
     # Restore visible columns
-    saved_visible_columns = self.settings.get_activities_visible_columns()
-    if saved_visible_columns is not None:
-      for key, (column, menuitem) in self.dict_column_headers.items():
-        menuitem.set_active(key in saved_visible_columns)
+    for current_section in self.column_headers.get_sections():
+      self.column_headers.load_visible_columns(current_section)
     # Set ModelFilter
     self.filtered_items = []
     self.ui.filterActivities.set_visible_func(self.check_for_filtered_syscall,
@@ -131,28 +130,33 @@ class MainWindow(object):
     self.modelProcesses = ModelProcesses(self.ui.storeProcesses)
 
     # Associate each TreeViewColumn to the MenuItem used to show/hide
-    self.dict_column_headers = {}
-    for column, menuitem in (
-        ('colActivitiesTimestamp', 'menuitemActivitiesVisibleColumnsTimestamp'),
-        ('colActivitiesTime', 'menuitemActivitiesVisibleColumnsTime'),
-        ('colActivitiesSyscall', 'menuitemActivitiesVisibleColumnsSyscall'),
-        ('colActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
-        ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
-        ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')):
-      self.dict_column_headers[self.ui.get_object(column).get_name()] = (
-        self.ui.get_object(column), self.ui.get_object(menuitem))
+    self.column_headers = ShowHideColumnHeaders(self.ui.get_object, self.settings)
+    for menu, section, items in (
+        ('menuActivitiesVisibleColumns', SECTION_ACTIVITIES, (
+          ('colActivitiesTimestamp', 'menuitemActivitiesVisibleColumnsTimestamp'),
+          ('colActivitiesTime', 'menuitemActivitiesVisibleColumnsTime'),
+          ('colActivitiesSyscall', 'menuitemActivitiesVisibleColumnsSyscall'),
+          ('colActivitiesFormat', 'menuitemActivitiesVisibleColumnsFormat'),
+          ('colActivitiesPID', 'menuitemActivitiesVisibleColumnsPID'),
+          ('colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')
+        )),
+      ):
+      for column, menuitem in items:
+        self.column_headers.add_columns_to_section(section, column, menu, menuitem)
     # Set cellrenderers alignment
     self.ui.cellActivitiesTimestamp.set_property('xalign', 1.0)
     self.ui.cellActivitiesTime.set_property('xalign', 1.0)
     # Set options menu items value as their column headers
-    for key, (tvwcolumn, menuitem) in self.dict_column_headers.items():
-      # Set the MenuItem label as the TreeViewColumn header
-      menuitem.set_label(tvwcolumn.get_title())
-      # Set button-press-event to the Button contained inside the TreeViewColumn
-      button = find_button_from_gtktreeviewcolumn(tvwcolumn)
-      if button:
-        # Set a signal callback to the Button
-        button.connect('button-press-event', self.on_tvwcolumn_button_release_event)
+    for section in self.column_headers.get_sections():
+      for (column, menu, menuitem) in self.column_headers.get_values(section):
+        # Set the MenuItem label as the TreeViewColumn header
+        menuitem.set_label(column.get_title())
+        # Set button-press-event to the Button contained inside the TreeViewColumn
+        button = find_button_from_gtktreeviewcolumn(column)
+        if button:
+          # Set a signal callback to the Button
+          button.connect('button-press-event',
+            self.on_tvwcolumn_button_release_event, menu)
     # Set various properties
     self.ui.winMain.set_title(APP_NAME)
     self.ui.winMain.set_icon_from_file(FILE_ICON)
@@ -166,8 +170,8 @@ class MainWindow(object):
     # Save settings for window size, intercepted syscalls and visible columns
     self.settings.set_sizes(self.ui.winMain)
     self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
-    self.settings.set_activities_visible_columns(
-      [column for column, menuitem in self.dict_column_headers.values()])
+    for section in self.column_headers.get_sections():
+      self.column_headers.save_visible_columns(section)
     self.settings.set_boolean(SECTION_APPLICATION, 'autoclear',
       self.ui.menuitemAutoClear.get_active())
     self.settings.set_boolean(SECTION_COUNTS, 'only called',
@@ -311,16 +315,17 @@ class MainWindow(object):
 
   def on_menuitemActivitiesVisibleColumns_toggled(self, widget):
     """Hide or show a column header"""
-    for column, menuitem in self.dict_column_headers.values():
-      # If both column and menuitem have the same label set column visibility
-      if column.get_title() == widget.get_label():
-        column.set_visible(widget.get_active())
-        break
+    for section in self.column_headers.get_sections():
+      for (column, menu, menuitem) in self.column_headers.get_values(section):
+        # Set column visibility
+        if widget is menuitem:
+          column.set_visible(widget.get_active())
+          break
 
-  def on_tvwcolumn_button_release_event(self, widget, event):
+  def on_tvwcolumn_button_release_event(self, widget, event, menu):
     """Show columns visibility menu on right click"""
     if event.button == Gdk.BUTTON_SECONDARY:
-      show_popup_menu(self.ui.menuActivitiesVisibleColumns)
+      show_popup_menu(menu)
 
   def on_btnStartStop_toggled(self, widget):
     """Start and stop program tracing"""

@@ -105,24 +105,22 @@ class Settings(object):
     self.config.set(SECTION_APPLICATION, 'intercepted syscalls', 
       ','.join(model.syscalls))
 
-  def get_activities_visible_columns(self):
+  def get_visible_columns(self, section):
     """Get the visible column list"""
     results = None
-    if self.config.has_option(SECTION_ACTIVITIES, 'visible columns'):
-      results = self.config.get(
-        SECTION_ACTIVITIES, 'visible columns').split(',')
+    if self.config.has_option(section, 'visible columns'):
+      results = self.config.get(section, 'visible columns').split(',')
     return results
 
-  def set_activities_visible_columns(self, columns_list):
+  def set_visible_columns(self, section, columns_list):
     """Save the visible column list"""
-    if not self.config.has_section(SECTION_ACTIVITIES):
-      self.config.add_section(SECTION_ACTIVITIES)
+    if not self.config.has_section(section):
+      self.config.add_section(section)
     names_list = []
     for column in columns_list:
       if column.get_visible():
         names_list.append(column.get_name())
-    self.config.set(SECTION_ACTIVITIES, 'visible columns', 
-      ','.join(names_list))
+    self.config.set(section, 'visible columns', ','.join(names_list))
 
   def get_boolean(self, section, name, default=None):
     """Get a boolean option from a specific section"""
