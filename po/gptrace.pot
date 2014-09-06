@@ -1,9 +1,11 @@
 # gpTrace
 # Trace the activities of an external application.
-# Copyright (C) 2014 Fabio Castelli (Muflone) <webreg(at)vbsimple.net>
-# This file is distributed under the same license as the gpTrace package.
+# Copyright (C) 2014 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
+# Website: http://www.muflone.com/gptrace/
+# This file is distributed under the same license of gpTrace.
 # X translation for gpTrace.
-#
+# 
+# Translators:
 #, fuzzy
 msgid ""
 msgstr ""
@@ -218,7 +220,5 @@ msgid "Select a program to execute"
 msgstr ""
 
 #: gptrace/ui/main.py:484
-msgid ""
-"When <i><b>Show only existing files</b></i> is selected the sorting by click "
-"on the column headers is disabled"
+msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr ""
