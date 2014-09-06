@@ -1,8 +1,14 @@
-gptrace 0.4.1
+gptrace 0.4.2
 
   * New Bulgarian translation by sahwar
 
  -- Fabio Castelli <muflone@vbsimple.net>  Sat, 06 Sep 2014 18:43:15 +0200
+
+gptrace 0.4.1
+
+  * Interface cleanup
+
+ -- Fabio Castelli <muflone@vbsimple.net>  Sun, 24 Aug 2014 21:08:12 +0200
 
 gptrace 0.4.0
 
