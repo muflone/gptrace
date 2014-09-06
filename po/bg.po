@@ -1,0 +1,225 @@
+# gpTrace
+# Trace the activities of an external application.
+# Copyright (C) 2014 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
+# Website: http://www.muflone.com/gptrace/
+# This file is distributed under the same license of gpTrace.
+# Bulgarian translation for gpTrace.
+# 
+# Translators:
+# sahwar <ve4ernik(at)gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: gpTrace\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
+"POT-Creation-Date: 2014-08-24 17:09:29 +0200\n"
+"PO-Revision-Date: 2014-08-31 00:41+0000\n"
+"Last-Translator: sahwar <ve4ernik(at)gmail.com>\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/gptrace/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ui/main.glade.h:1
+msgid "Activities"
+msgstr "Действия"
+
+#: ui/main.glade.h:2
+msgid "Visible columns"
+msgstr "Видими колони"
+
+#: ui/main.glade.h:3
+msgid "Filter activities"
+msgstr "Филтриране на действията"
+
+#: ui/main.glade.h:4
+msgid "Hide the selected syscall"
+msgstr "Скриване на избрания syscall"
+
+#: ui/main.glade.h:5
+msgid "Show only the selected syscall"
+msgstr "Показване само на избрания syscall"
+
+#: ui/main.glade.h:6
+msgid "Reset filter"
+msgstr "Нулиране на филтъра"
+
+#: ui/main.glade.h:7
+msgid "Ignore (don't intercept) the selected syscall"
+msgstr "Пренебрегвай (не прехващай) избрания syscall"
+
+#: ui/main.glade.h:8
+msgid "Unignore (intercept) the selected syscall"
+msgstr "Премахни пренебрегването (прехващането) на избрания syscall"
+
+#: ui/main.glade.h:9
+msgid "Counts"
+msgstr "Броения"
+
+#: ui/main.glade.h:10
+msgid "Show only called syscalls"
+msgstr "Показване само на извиканите syscalls"
+
+#: ui/main.glade.h:11
+msgid "Files"
+msgstr "Файлове"
+
+#: ui/main.glade.h:12
+msgid "Show only existing files"
+msgstr "Показване само на съществуващи файлове"
+
+#: ui/main.glade.h:13
+msgid "Processes"
+msgstr "Процеси"
+
+#: ui/main.glade.h:14
+msgid "Clear list now"
+msgstr "Изчистване на списъка сега"
+
+#: ui/main.glade.h:15
+msgid "Clear automatically"
+msgstr "Автоматично изчистване"
+
+#: ui/main.glade.h:16
+msgid "Program to execute:"
+msgstr "Програма за изпълнение:"
+
+#: ui/main.glade.h:17
+msgid "Timestamp"
+msgstr "Времеви печат"
+
+#: ui/main.glade.h:18
+msgid "Time"
+msgstr "Време"
+
+#: ui/main.glade.h:19
+msgid "Syscall"
+msgstr "Syscall"
+
+#: ui/main.glade.h:20
+msgid "Format"
+msgstr "Формат"
+
+#: ui/main.glade.h:21
+msgid "PID"
+msgstr "PID"
+
+#: ui/main.glade.h:22
+msgid "Instruction pointer"
+msgstr "Инструкционен указател (instruction pointer)"
+
+#: ui/main.glade.h:23
+msgid "Calls count"
+msgstr "Брояч на извикванията"
+
+#: ui/main.glade.h:24
+msgid "Existing"
+msgstr "Съществуващ"
+
+#: ui/main.glade.h:25
+msgid "File path"
+msgstr "Пътека на файла"
+
+#: ui/main.glade.h:26
+msgid "Information"
+msgstr "Информация"
+
+#: ui/main.glade.h:27
+msgid "Checked"
+msgstr "Проверен/отбелязан"
+
+#: ui/main.glade.h:29
+#, no-c-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Избрани прехванати syscalls (%(selected)d от %(total)d)"
+
+#: ui/appmenu.ui.h:1
+msgid "_About gpTrace"
+msgstr "_За gpTrace"
+
+#: ui/appmenu.ui.h:2
+msgid "_Quit"
+msgstr "_Изход"
+
+#: gptrace/event_tracer.py:54
+msgid "Process execution"
+msgstr "Изпълнение на процеса"
+
+#: gptrace/event_tracer.py:56
+msgid "Process exit"
+msgstr "Изход от процеса"
+
+#: gptrace/event_tracer.py:58
+#, python-format
+msgid "Process signal: %s"
+msgstr "Сигнал на процеса: %s"
+
+#: gptrace/event_tracer.py:63
+#, python-format
+msgid "Event: %s"
+msgstr "Събитие: %s"
+
+#: gptrace/event_tracer.py:68
+msgid "Command line"
+msgstr "Команден ред"
+
+#: gptrace/event_tracer.py:70
+msgid "Current working directory"
+msgstr "Настояща работна директория"
+
+#: gptrace/event_tracer.py:74
+msgid "Parent PID"
+msgstr "Родителски PID"
+
+#: gptrace/event_tracer.py:78
+msgid "User ID"
+msgstr "Потребителски PID"
+
+#: gptrace/event_tracer.py:79
+msgid "User name"
+msgstr "Потребителско име"
+
+#: gptrace/event_tracer.py:80
+msgid "User real name"
+msgstr "Истинско име на потребителя"
+
+#: gptrace/event_tracer.py:82
+msgid "Effective user ID"
+msgstr "Действаща потребителска ID"
+
+#: gptrace/event_tracer.py:83
+msgid "Effective user name"
+msgstr "Действащо потребителско име"
+
+#: gptrace/event_tracer.py:84
+msgid "Effective user real name"
+msgstr "Действащо реално име на потребителя"
+
+#: gptrace/event_tracer.py:86
+msgid "Group ID"
+msgstr "ID на групата"
+
+#: gptrace/event_tracer.py:87
+msgid "Group name"
+msgstr "Име на групата"
+
+#: gptrace/event_tracer.py:89
+msgid "Effective group ID"
+msgstr "Действаща ID на групата"
+
+#: gptrace/event_tracer.py:90
+msgid "Effective group name"
+msgstr "Действащо име на групата"
+
+#: gptrace/event_tracer.py:91
+msgid "Status"
+msgstr "Статус"
+
+#: gptrace/ui/main.py:457
+msgid "Select a program to execute"
+msgstr "Избор на програма за изпълнение"
+
+#: gptrace/ui/main.py:484
+msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+msgstr "Когато опцията <i><b>Показване само на съществуващи файлове</b></i> е избрана, сортирането чрез щракване на колоните е изключено"
