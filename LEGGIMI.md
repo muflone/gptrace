@@ -2,7 +2,7 @@ gpTrace
 =======
 **Descrizione:** Traccia le attivita di un'applicazione esterna.
 
-**Copyright:** 2014 Fabio Castelli (Muflone) <webreg(at)vbsimple.net>
+**Copyright:** 2014 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
 
 **Licenza:** GPL-2+
 

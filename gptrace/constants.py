@@ -1,7 +1,7 @@
 ##
 #     Project: gpTrace
 # Description: Trace the activities of an external application
-#      Author: Fabio Castelli (Muflone) <webreg@vbsimple.net>
+#      Author: Fabio Castelli (Muflone) <muflone@vbsimple.net>
 #   Copyright: 2014 Fabio Castelli
 #     License: GPL-2+
 #  This program is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@ APP_DESCRIPTION = 'Trace the activities of an external application.'
 APP_ID = 'gptrace.muflone.com'
 APP_URL = 'http://www.muflone.com/gptrace/'
 APP_AUTHOR = 'Fabio Castelli'
-APP_AUTHOR_EMAIL = 'webreg@vbsimple.net'
+APP_AUTHOR_EMAIL = 'muflone@vbsimple.net'
 APP_COPYRIGHT = 'Copyright 2014 %s' % APP_AUTHOR
 # Other constants
 DOMAIN_NAME = 'gptrace'
