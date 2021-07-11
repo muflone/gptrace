@@ -26,9 +26,8 @@ class ShowHideColumnHeaders(object):
 
     def add_columns_to_section(self, section, column, menu, menuitem):
         """Add a GtkTreeViewColumn, a GtkMenu and a GtkMenuItem to a section"""
-        columns = {}
-        columns[column] = (self.get_object(column),
-                           self.get_object(menu), self.get_object(menuitem))
+        columns = {column: (self.get_object(column),
+                            self.get_object(menu), self.get_object(menuitem))}
         if section not in self.column_headers:
             self.column_headers[section] = []
         self.column_headers[section].append(columns)

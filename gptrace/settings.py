@@ -54,14 +54,14 @@ class Settings(object):
         # Determine which filename to use for settings
         self.filename = FILE_SETTINGS_NEW
         if self.filename:
-            self.logText('Loading settings from %s' % self.filename,
-                         VERBOSE_LEVEL_MAX)
+            self.log_text('Loading settings from %s' % self.filename,
+                          VERBOSE_LEVEL_MAX)
             self.config.read(self.filename)
 
     def load(self):
         """Load window settings"""
         if self.config.has_section(SECTION_MAINWIN):
-            self.logText('Retrieving window settings', VERBOSE_LEVEL_MAX)
+            self.log_text('Retrieving window settings', VERBOSE_LEVEL_MAX)
             # Retrieve window position and size
             if self.config.has_option(SECTION_MAINWIN, 'left'):
                 self.settings['left'] = self.config.getint(SECTION_MAINWIN,
@@ -79,18 +79,18 @@ class Settings(object):
     def get_value(self, name, default=None):
         return self.settings.get(name, default)
 
-    def set_sizes(self, winParent):
+    def set_sizes(self, win_parent):
         """Save configuration for main window"""
         # Main window settings section
-        self.logText('Saving window settings', VERBOSE_LEVEL_MAX)
+        self.log_text('Saving window settings', VERBOSE_LEVEL_MAX)
         if not self.config.has_section(SECTION_MAINWIN):
             self.config.add_section(SECTION_MAINWIN)
         # Window position
-        position = winParent.get_position()
+        position = win_parent.get_position()
         self.config.set(SECTION_MAINWIN, 'left', position[0])
         self.config.set(SECTION_MAINWIN, 'top', position[1])
         # Window size
-        size = winParent.get_size()
+        size = win_parent.get_size()
         self.config.set(SECTION_MAINWIN, 'width', size[0])
         self.config.set(SECTION_MAINWIN, 'height', size[1])
 
@@ -143,12 +143,12 @@ class Settings(object):
         """Save the whole configuration"""
         # Always save the settings in the new configuration file
         file_settings = open(FILE_SETTINGS_NEW, mode='w')
-        self.logText('Saving settings to %s' % FILE_SETTINGS_NEW,
-                     VERBOSE_LEVEL_MAX)
+        self.log_text('Saving settings to %s' % FILE_SETTINGS_NEW,
+                      VERBOSE_LEVEL_MAX)
         self.config.write(file_settings)
         file_settings.close()
 
-    def logText(self, text, verbose_level=VERBOSE_LEVEL_NORMAL):
+    def log_text(self, text, verbose_level=VERBOSE_LEVEL_NORMAL):
         """Print a text with current date and time based on verbose level"""
         if verbose_level <= self.options.verbose_level:
             print('[%s] %s' % (time.strftime('%Y/%m/%d %H:%M:%S'), text))

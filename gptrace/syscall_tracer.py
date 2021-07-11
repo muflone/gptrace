@@ -114,7 +114,7 @@ class SyscallTracer(Application):
         # Display syscall which has not exited
         state = event.process.syscall_state
         if (state.next_event == "exit") and (
-        not self.options.enter) and state.syscall:
+                not self.options.enter) and state.syscall:
             self.displaySyscall(state.syscall)
         self.event_callback(event)
 
@@ -142,8 +142,9 @@ class SyscallTracer(Application):
 
     def _handle_exceptions_during_quit(self, exception, context):
         if isinstance(exception, KeyError):
-            # When the debugger is waiting for a syscall and the debugger process
-            # is closed with quit() a KeyError Exception for missing PID is fired
+            # When the debugger is waiting for a syscall and the debugger
+            # process is closed with quit() a KeyError Exception for missing
+            # PID is fired
             pass
         elif isinstance(exception, PtraceError):
             print("PtraceError from %s" % context, exception)

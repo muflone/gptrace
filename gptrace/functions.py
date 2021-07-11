@@ -44,7 +44,9 @@ def show_dialog_fileopen(parent, title):
 
 
 def readlines(filename, empty_lines=False):
-    """Read all the text in the specified filename, allowing to skip empty lines"""
+    """
+    Read all the text in the specified filename, allowing to skip empty lines
+    """
     result = []
     with open(filename) as f:
         for line in f.readlines():
@@ -83,7 +85,7 @@ def GTK30_(message, context=None):
     """Get a translated message from GTK+ 3 domain"""
     return gettext_with_domain('gtk30',
                                context and '%s\x04%s' % (
-                               context, message) or message)
+                                   context, message) or message)
 
 
 def show_popup_menu(menu):

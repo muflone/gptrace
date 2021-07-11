@@ -48,10 +48,11 @@ class EventTracer(object):
     def handle_event(self, event):
         """Handle external events like new process execution or child close"""
         if isinstance(event, NewProcessEvent):
-            # Under Linux the new process phase first fork a new process with the same
-            # command line of the starting process then changes its command line
-            # Therefore here I skip the NewProcessEvent event and after I add a new
-            # process during the ProcessExecution event
+            # Under Linux the new process phase first fork a new process with
+            # the same command line of the starting process then changes its
+            # command line
+            # Therefore here I skip the NewProcessEvent event and after I add
+            # a new process during the ProcessExecution event
             status = None
         elif isinstance(event, ProcessExecution):
             status = _('Process execution')
@@ -93,7 +94,8 @@ class EventTracer(object):
                     self.event_callback(pid, _('Effective user real name'),
                                         details[EUID].pw_gecos)
                 if GID in details:
-                    self.event_callback(pid, _('Group ID'), details[GID].gr_gid)
+                    self.event_callback(pid, _('Group ID'),
+                                        details[GID].gr_gid)
                     self.event_callback(pid, _('Group name'),
                                         details[GID].gr_name)
                 if EGID in details:

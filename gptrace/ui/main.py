@@ -20,6 +20,7 @@
 
 import datetime
 import optparse
+import os.path
 import shlex
 
 from gi.repository import GObject
@@ -56,7 +57,7 @@ class MainWindow(object):
         self.application = application
         self.ui = GtkBuilderLoader(FILE_UI_MAIN)
         self.settings = settings
-        self.loadUI()
+        self.load_ui()
         # Restore the intercepted syscalls list from settings
         saved_syscalls = settings.get_intercepted_syscalls()
         # Restore the options from settings
@@ -77,10 +78,10 @@ class MainWindow(object):
         self.ui.infobarInformation.set_visible(False)
         # Load all the available syscall names
         for syscall in sorted(SYSCALL_NAMES.values()):
-            prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ( )))
+            prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ()))
             self.modelInterceptedSyscalls.add(items=(
-                # If the configuration file has a list of intercepted syscalls then
-                # set each syscall status accordingly
+                # If the configuration file has a list of intercepted syscalls
+                # then set each syscall status accordingly
                 saved_syscalls is None and True or syscall in saved_syscalls,
                 # Add syscall name
                 syscall,
@@ -102,8 +103,8 @@ class MainWindow(object):
             self.ui.winMain.set_default_size(
                 self.settings.get_value('width', -1),
                 self.settings.get_value('height', -1))
-        if self.settings.get_value('left', 0) and self.settings.get_value('top',
-                                                                          0):
+        if (self.settings.get_value('left', 0) and
+                self.settings.get_value('top', 0)):
             self.ui.winMain.move(
                 self.settings.get_value('left', 0),
                 self.settings.get_value('top', 0))
@@ -130,7 +131,7 @@ class MainWindow(object):
         """Show the UI"""
         self.ui.winMain.show_all()
 
-    def loadUI(self):
+    def load_ui(self):
         """Load the interface UI"""
         self.modelActivities = ModelActivities(self.ui.storeActivities)
         self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
@@ -154,13 +155,14 @@ class MainWindow(object):
                          'menuitemActivitiesVisibleColumnsFormat'),
                         ('colActivitiesPID',
                          'menuitemActivitiesVisibleColumnsPID'),
-                        (
-                        'colActivitiesIP', 'menuitemActivitiesVisibleColumnsIP')
+                        ('colActivitiesIP',
+                         'menuitemActivitiesVisibleColumnsIP')
                 )),
                 ('menuCountsVisibleColumns', SECTION_COUNTS, (
                         ('colCountsSyscall',
                          'menuitemCountsVisibleColumnsSyscall'),
-                        ('colCountsCount', 'menuitemCountsVisibleColumnsCount'),
+                        ('colCountsCount',
+                         'menuitemCountsVisibleColumnsCount'),
                 )),
                 ('menuFilesVisibleColumns', SECTION_FILES, (
                         ('colFilesPID', 'menuitemFilesVisibleColumnsPID'),
@@ -191,23 +193,28 @@ class MainWindow(object):
                     section):
                 # Set the MenuItem label as the TreeViewColumn header
                 menuitem.set_label(column.get_title())
-                # Set button-press-event to the Button contained inside the TreeViewColumn
+                # Set button-press-event to the Button contained inside the
+                # TreeViewColumn
                 button = find_button_from_gtktreeviewcolumn(column)
                 if button:
                     # Set a signal callback to the Button
                     button.connect('button-press-event',
-                                   self.on_tvwcolumn_button_release_event, menu)
+                                   self.on_tvwcolumn_button_release_event,
+                                   menu)
         # Set various properties
         self.ui.winMain.set_title(APP_NAME)
         self.ui.winMain.set_icon_from_file(FILE_ICON)
         self.ui.winMain.set_application(self.application)
-        self.lblInterceptedSyscalls_descr = self.ui.lblInterceptedSyscalls.get_text()
-        # Connect signals from the glade file to the functions with the same name
+        self.lblInterceptedSyscalls_descr = (
+            self.ui.lblInterceptedSyscalls.get_text())
+        # Connect signals from the glade file to the functions with the
+        # same name
         self.ui.connect_signals(self)
 
     def on_winMain_delete_event(self, widget, event):
         """Close the application"""
-        # Save settings for window size, intercepted syscalls and visible columns
+        # Save settings for window size, intercepted syscalls and visible
+        # columns
         self.settings.set_sizes(self.ui.winMain)
         self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
         for section in self.column_headers.get_sections():
@@ -220,8 +227,8 @@ class MainWindow(object):
                                   self.ui.menuitemFilesShowOnlyExisting.get_active())
         self.settings.save()
         # Immediately hide the main window and let the events process to handle
-        # an instantly close instead of slowly let GTK to empty the model before
-        # the window is effectively destroyed
+        # an instantly close instead of slowly let GTK to empty the model
+        # before the window is effectively destroyed
         self.ui.winMain.hide()
         process_events()
         # Cancel the running thread
@@ -293,7 +300,8 @@ class MainWindow(object):
         # Check if the syscall has any filename or pathname argument
         for argument in syscall.arguments:
             argument_text = argument.getText()
-            if argument.name in FILENAME_ARGUMENTS and argument_text != "''...":
+            if (argument.name in FILENAME_ARGUMENTS and
+                    argument_text != "''..."):
                 GObject.idle_add(self.modelFiles.add, (
                     str(syscall.process.pid),
                     argument_text[1:-1],
@@ -301,13 +309,11 @@ class MainWindow(object):
 
     def ignore_syscall_callback(self, syscall):
         """Determine if to ignore a callback before it's processed"""
-        name = syscall.name
         if syscall.name in self.modelInterceptedSyscalls.syscalls:
             # Process the syscall
             return False
         else:
             # Ignore the syscall
-            # print('ignored syscall %s' % name)
             return True
 
     def quit_callback(self):
@@ -390,7 +396,8 @@ class MainWindow(object):
                 )
                 self.thread_loader.start()
             else:
-                # If no filename was selected then set button status as unpressed
+                # If no filename was selected then set button status as
+                # unpressed
                 self.ui.btnStartStop.set_active(False)
         else:
             # Cancel running debugger
@@ -432,14 +439,17 @@ class MainWindow(object):
                     self.filtered_items.pop()
                 # First include every syscall names to the filtered syscalls
                 self.filtered_items.extend(SYSCALL_NAMES.values())
-                # Then remove the selected syscall from the filtered syscalls list
+                # Then remove the selected syscall from the filtered syscalls
+                # list
                 self.filtered_items.remove(self.modelActivities.get_syscall(
                     self.ui.filterActivities.convert_iter_to_child_iter(iter)))
                 # Filter the results
                 self.ui.filterActivities.refilter()
 
     def on_menuitemActivitiesIgnoreSyscall_activate(self, widget):
-        """Remove the selected syscall name from the intercepted syscalls model"""
+        """
+        Remove the selected syscall name from the intercepted syscalls model
+        """
         self.on_menuitemActivitiesIgnoreUnignoreSyscall(False)
 
     def on_menuitemActivitiesUnignoreSyscall_activate(self, widget):
@@ -447,7 +457,10 @@ class MainWindow(object):
         self.on_menuitemActivitiesIgnoreUnignoreSyscall(True)
 
     def on_menuitemActivitiesIgnoreUnignoreSyscall(self, status):
-        """Add or remove the selected syscall name from the intercepted syscalls model"""
+        """
+        Add or remove the selected syscall name from the intercepted syscalls
+        model
+        """
         selection = self.ui.tvwActivities.get_selection()
         if selection:
             model, iter = selection.get_selected()
@@ -457,7 +470,8 @@ class MainWindow(object):
                     self.ui.filterActivities.convert_iter_to_child_iter(iter))
                 # Cycle each row in the intercepted syscalls model
                 for row in self.modelInterceptedSyscalls:
-                    # If the syscall name for the row is the same then ignore/unignore
+                    # If the syscall name for the row is the same then
+                    # ignore/unignore
                     if self.modelInterceptedSyscalls.get_syscall(
                             row) == selected_syscall:
                         self.modelInterceptedSyscalls.set_checked(row, status)
@@ -481,7 +495,8 @@ class MainWindow(object):
 
     def check_for_filtered_syscall(self, model, iter, data):
         """Check if the sycall name should be filtered"""
-        return self.modelActivities.get_syscall(iter) not in self.filtered_items
+        return (self.modelActivities.get_syscall(iter) not in
+                self.filtered_items)
 
     def on_btnProgramOpen_clicked(self, widget):
         """Select the program to open"""
@@ -501,8 +516,8 @@ class MainWindow(object):
     def on_menuitemFilesShowOnlyExisting_toggled(self, widget):
         """Set visibility of only existing files in files section"""
         state = self.ui.menuitemFilesShowOnlyExisting.get_active()
-        # Configure column sort order ID for each column in order to allow the sort
-        # if the show only existing files setting is set
+        # Configure column sort order ID for each column in order to allow
+        # the sort if the show only existing files setting is set
         self.ui.colFilesExisting.set_sort_column_id(
             state and -1 or self.modelFiles.COL_EXISTING)
         self.ui.colFilesPID.set_sort_column_id(
@@ -517,8 +532,8 @@ class MainWindow(object):
         if state:
             self.ui.tvwFiles.set_model(self.ui.filterFiles)
             self.ui.lblInfoBarContent.set_markup(
-                _('When <i><b>Show only existing files</b></i> is selected the sorting '
-                  'by click on the column headers is disabled'))
+                _('When <i><b>Show only existing files</b></i> is selected '
+                  'the sorting by click on the column headers is disabled'))
         else:
             self.ui.tvwFiles.set_model(self.ui.storeFiles)
         self.ui.infobarInformation.set_visible(state)

@@ -49,8 +49,8 @@ class ModelFiles(ModelBase):
         subitems.extend(items[1:])
         pid_process = self.dictProcesses[items[self.COL_PID]]
         if not items[self.COL_FILEPATH] in pid_process[self.KEY_FILES]:
-            # The requested filepath doesn't exist in the saved list of processes
-            # therefore it will be appended under the PID node
+            # The requested filepath doesn't exist in the saved list of
+            # processes therefore it will be appended under the PID node
             self.add_node(pid_process[self.KEY_ITER], items=subitems)
             pid_process[self.KEY_FILES].append(items[self.COL_FILEPATH])
 

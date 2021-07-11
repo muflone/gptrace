@@ -26,7 +26,7 @@ from gptrace.gtkbuilder_loader import GtkBuilderLoader
 
 
 class AboutWindow(object):
-    def __init__(self, winParent, show=False):
+    def __init__(self, win_parent, show=False):
         # Retrieve the translators list
         translators = []
         for line in readlines(FILE_TRANSLATORS, False):
@@ -56,16 +56,16 @@ class AboutWindow(object):
                                                    (resource_url,))
         icon_logo = Pixbuf.new_from_file(FILE_ICON)
         self.ui.dialogAbout.set_logo(icon_logo)
-        self.ui.dialogAbout.set_transient_for(winParent)
+        self.ui.dialogAbout.set_transient_for(win_parent)
         # Optionally show the dialog
         if show:
             self.show()
 
     def show(self):
-        "Show the About dialog"
+        """Show the About dialog"""
         self.ui.dialogAbout.run()
         self.ui.dialogAbout.hide()
 
     def destroy(self):
-        "Destroy the About dialog"
+        """Destroy the About dialog"""
         self.ui.dialogAbout.destroy()

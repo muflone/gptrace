@@ -26,33 +26,34 @@ from distutils.command.install_data import install_data
 from distutils.command.install_scripts import install_scripts
 from distutils.core import setup
 from distutils.log import info
-from glob import glob
-from itertools import chain
+import glob
+import itertools
 
 from gptrace.constants import *
 
 
-class Install_Scripts(install_scripts):
+class InstallScripts(install_scripts):
     def run(self):
         install_scripts.run(self)
         self.rename_python_scripts()
 
     def rename_python_scripts(self):
-        "Rename main executable python script without .py extension"
+        """Rename main executable python script without .py extension"""
         for script in self.get_outputs():
             if script.endswith(".py"):
                 info('renaming the python script %s -> %s' % (
-                script, script[:-3]))
+                    script, script[:-3]))
                 shutil.move(script, script[:-3])
 
 
-class Install_Data(install_data):
+class InstallData(install_data):
     def run(self):
         self.install_icons()
         self.install_translations()
         install_data.run(self)
 
     def install_icons(self):
+        """Add icons to the data files"""
         info('Installing icons...')
         DIR_ICONS = 'icons'
         for icon_format in os.listdir(DIR_ICONS):
@@ -96,12 +97,13 @@ setup(
     data_files=[
         ('share/gptrace/data', ['data/gptrace.png']),
         ('share/applications', ['data/gptrace.desktop']),
-        ('share/doc/gptrace', list(chain(glob('doc/*'), glob('*.md')))),
+        ('share/doc/gptrace', list(itertools.chain(glob.glob('doc/*'),
+                                                   glob.glob('*.md')))),
         ('share/man/man1', ['man/gptrace.1']),
-        ('share/gptrace/ui', glob('ui/*')),
+        ('share/gptrace/ui', glob.glob('ui/*')),
     ],
     cmdclass={
         'install_scripts': Install_Scripts,
-        'install_data': Install_Data
+        'install_data': InstallData
     }
 )

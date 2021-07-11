@@ -37,7 +37,8 @@ class ModelInterceptedSyscalls(ModelBase):
     def add(self, items):
         """Add a new row in the model"""
         super(self.__class__, self).add(items)
-        # If the checked status is True add the syscall name to the syscalls list
+        # If the checked status is True add the syscall name to the
+        # syscalls list
         if items[self.COL_CHECKED]:
             self.syscalls.append(items[self.COL_SYSCALL])
         return False
