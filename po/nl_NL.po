@@ -1,0 +1,227 @@
+# gpTrace
+# Trace the activities of an external application.
+# Copyright (C) 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
+# Website: https://www.muflone.com/gptrace/
+# This file is distributed under the same license of gpTrace.
+# Dutch translation for gpTrace.
+# 
+# Translators:
+# Heimen Stoffels <vistausss(at)fastmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: gpTrace\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
+"POT-Creation-Date: 2014-08-24 17:09:29 +0200\n"
+"PO-Revision-Date: 2017-09-22 01:04+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/muflone/gptrace/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ui/main.glade.h:1
+msgid "Activities"
+msgstr "Activiteiten"
+
+#: ui/main.glade.h:2
+msgid "Visible columns"
+msgstr "Zichtbare kolommen"
+
+#: ui/main.glade.h:3
+msgid "Filter activities"
+msgstr "Activiteiten filteren"
+
+#: ui/main.glade.h:4
+msgid "Hide the selected syscall"
+msgstr "De geselecteerde systeemoproep verbergen"
+
+#: ui/main.glade.h:5
+msgid "Show only the selected syscall"
+msgstr "Alleen de geselecteerde systeemoproep weergeven"
+
+#: ui/main.glade.h:6
+msgid "Reset filter"
+msgstr "Filter herstellen"
+
+#: ui/main.glade.h:7
+msgid "Ignore (don't intercept) the selected syscall"
+msgstr "De geselecteerde systeemoproep negeren (dus niet onderscheppen)"
+
+#: ui/main.glade.h:8
+msgid "Unignore (intercept) the selected syscall"
+msgstr "De geselecteerde systeemoproep niet meer negeren (dus onderscheppen)"
+
+#: ui/main.glade.h:9
+msgid "Counts"
+msgstr "Tellers"
+
+#: ui/main.glade.h:10
+msgid "Show only called syscalls"
+msgstr "Alleen aangeroepen systeemoproepen weergeven"
+
+#: ui/main.glade.h:11
+msgid "Files"
+msgstr "Bestanden"
+
+#: ui/main.glade.h:12
+msgid "Show only existing files"
+msgstr "Alleen bestaande bestanden weergeven"
+
+#: ui/main.glade.h:13
+msgid "Processes"
+msgstr "Processen"
+
+#: ui/main.glade.h:14
+msgid "Clear list now"
+msgstr "Lijst nu wissen"
+
+#: ui/main.glade.h:15
+msgid "Clear automatically"
+msgstr "Automatisch wissen"
+
+#: ui/main.glade.h:16
+msgid "Program to execute:"
+msgstr "Applicatie om uit te voeren:"
+
+#: ui/main.glade.h:17
+msgid "Timestamp"
+msgstr "Tijdstempel"
+
+#: ui/main.glade.h:18
+msgid "Time"
+msgstr "Tijd"
+
+#: ui/main.glade.h:19
+msgid "Syscall"
+msgstr "Systeemoproep"
+
+#: ui/main.glade.h:20
+msgid "Format"
+msgstr "Type"
+
+#: ui/main.glade.h:21
+msgid "PID"
+msgstr "PID"
+
+#: ui/main.glade.h:22
+msgid "Instruction pointer"
+msgstr "Instructiepointer"
+
+#: ui/main.glade.h:23
+msgid "Calls count"
+msgstr "Aanroepteller"
+
+#: ui/main.glade.h:24
+msgid "Existing"
+msgstr "Bestaande"
+
+#: ui/main.glade.h:25
+msgid "File path"
+msgstr "Bestandspad"
+
+#: ui/main.glade.h:26
+msgid "Information"
+msgstr "Informatie"
+
+#: ui/main.glade.h:27
+msgid "Checked"
+msgstr "Gecontroleerd"
+
+#: ui/main.glade.h:29
+#, no-c-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Geselecteerde onderschepte systeemoproepen (%(selected)d of %(total)d)"
+
+#: ui/appmenu.ui.h:1
+msgid "_About gpTrace"
+msgstr "_Over gpTrace"
+
+#: ui/appmenu.ui.h:2
+msgid "_Quit"
+msgstr "Af_sluiten"
+
+#: gptrace/event_tracer.py:54
+msgid "Process execution"
+msgstr "Procesuitvoering"
+
+#: gptrace/event_tracer.py:56
+msgid "Process exit"
+msgstr "Procesafsluiting"
+
+#: gptrace/event_tracer.py:58
+#, python-format
+msgid "Process signal: %s"
+msgstr "Processignaal: %s"
+
+#: gptrace/event_tracer.py:63
+#, python-format
+msgid "Event: %s"
+msgstr "Bezig met: %s"
+
+#: gptrace/event_tracer.py:68
+msgid "Command line"
+msgstr "Opdrachtregel (terminal)"
+
+#: gptrace/event_tracer.py:70
+msgid "Current working directory"
+msgstr "Huidige werkmap"
+
+#: gptrace/event_tracer.py:74
+msgid "Parent PID"
+msgstr "Ouder-PID"
+
+#: gptrace/event_tracer.py:78
+msgid "User ID"
+msgstr "Gebruiker-PID"
+
+#: gptrace/event_tracer.py:79
+msgid "User name"
+msgstr "Gebruikersnaam"
+
+#: gptrace/event_tracer.py:80
+msgid "User real name"
+msgstr "Echte naam van gebruiker"
+
+#: gptrace/event_tracer.py:82
+msgid "Effective user ID"
+msgstr "Effectieve gebruiker-ID"
+
+#: gptrace/event_tracer.py:83
+msgid "Effective user name"
+msgstr "Effectieve gebruikersnaam"
+
+#: gptrace/event_tracer.py:84
+msgid "Effective user real name"
+msgstr "Effectieve echte naam van gebruiker"
+
+#: gptrace/event_tracer.py:86
+msgid "Group ID"
+msgstr "Groeps-ID"
+
+#: gptrace/event_tracer.py:87
+msgid "Group name"
+msgstr "Groepsnaam"
+
+#: gptrace/event_tracer.py:89
+msgid "Effective group ID"
+msgstr "Effectieve groeps-ID"
+
+#: gptrace/event_tracer.py:90
+msgid "Effective group name"
+msgstr "Effectieve groepsnaam"
+
+#: gptrace/event_tracer.py:91
+msgid "Status"
+msgstr "Status"
+
+#: gptrace/ui/main.py:457
+msgid "Select a program to execute"
+msgstr "Selecteer een applicatie om uit te voeren"
+
+#: gptrace/ui/main.py:484
+msgid ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click"
+" on the column headers is disabled"
+msgstr ""
