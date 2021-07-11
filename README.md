@@ -1,5 +1,8 @@
-gpTrace [![Build Status](https://travis-ci.org/muflone/gptrace.svg?branch=master)](https://travis-ci.org/muflone/gptrace)
-=======
+# gpTrace
+
+[![Travis CI Build Status](https://img.shields.io/travis/muflone/gptrace/master.svg)](https://www.travis-ci.com/github/muflone/gptrace)
+[![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/gptrace/master.svg)](https://circleci.com/gh/muflone/gptrace)
+
 **Description:** Trace the activities of an external application.
 
 **Copyright:** 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
@@ -10,8 +13,7 @@ gpTrace [![Build Status](https://travis-ci.org/muflone/gptrace.svg?branch=master
 
 **Documentation:** https://www.muflone.com/gptrace/
 
-System Requirements
--------------------
+# System Requirements
 
 * Python 3.x (developed and tested for Python 3.9.6)
 * XDG library for Python 3
@@ -20,8 +22,7 @@ System Requirements
 * Distutils library for Python 3 (usually shipped with Python distribution)
 * PTrace library for Python 3 (https://pypi.org/project/python-ptrace/)
 
-Installation
-------------
+# Installation
 
 A distutils installation script is available to install from the sources.
 
@@ -35,8 +36,7 @@ To install the files in another path instead of the standard /usr prefix use:
     cd /path/to/folder
     python setup.py install --root NEW_PATH
 
-Usage
------
+# Usage
 
 If the application is not installed please use:
 

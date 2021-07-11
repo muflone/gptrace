@@ -1,3 +1,9 @@
+gptrace 0.5.0
+
+  * Ported to Python 3
+
+ -- Fabio Castelli <muflone@muflone.com>  Sun, 11 Jul 2021 13:06:44 +0200
+
 gptrace 0.4.2
 
   * New Bulgarian translation by sahwar
