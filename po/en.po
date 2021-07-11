@@ -3,7 +3,7 @@
 # Copyright (C) 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
 # Website: https://www.muflone.com/gptrace/
 # This file is distributed under the same license of gpTrace.
-# X translation for gpTrace.
+# English translation for gpTrace.
 # 
 # Translators:
 # Fabio Castelli (Muflone) <muflone(at)muflone.com>, 2014
