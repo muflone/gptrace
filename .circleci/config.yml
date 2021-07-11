@@ -21,7 +21,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            sudo apt install libgirepository1.0-dev
+            sudo apt install gettext libgirepository1.0-dev
             pip install -r requirements_travis.txt
       - run:
           name: check code

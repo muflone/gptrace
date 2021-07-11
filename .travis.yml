@@ -11,11 +11,12 @@ addons:
     - python3-gi                              # GObject
     - libgirepository1.0-dev                  # GObject
     - gir1.2-gtk-3.0                          # gi.repository.gtk
+    - gettext                                 # msgfmt
 install:
   - pip install -r requirements_travis.txt
 script:
-  - python -m compileall .
-  - python -m pycodestyle .
-  - python -m flake8 .
+  - python -m compileall gptrace.py setup.py gptrace
+  - python -m pycodestyle gptrace.py setup.py gptrace
+  - python -m flake8 gptrace.py setup.py gptrace
   - python setup.py install --optimize=1 --root=build
   - ls -laR build
