@@ -43,8 +43,9 @@ class ShowHideColumnHeaders(object):
     def save_visible_columns(self, section):
         """Save the visible columns to the settings"""
         self.settings.set_visible_columns(section,
-                                          [item.values()[0][0] for item in
-                                           self.column_headers[section]])
+                                          [list(item.values())[0][0]
+                                           for item
+                                           in self.column_headers[section]])
 
     def get_sections(self):
         """Return all the available sections"""
