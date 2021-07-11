@@ -1,6 +1,6 @@
 # gpTrace
 
-[![Travis CI Build Status](https://img.shields.io/travis/muflone/gptrace/master.svg)](https://www.travis-ci.com/github/muflone/gptrace)
+[![Travis CI Build Status](https://img.shields.io/travis/com/muflone/gptrace/master.svg)](https://www.travis-ci.com/github/muflone/gptrace)
 [![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/gptrace/master.svg)](https://circleci.com/gh/muflone/gptrace)
 
 **Description:** Trace the activities of an external application.
