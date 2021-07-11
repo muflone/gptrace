@@ -36,7 +36,7 @@ class AboutWindow(object):
             if line not in translators:
                 translators.append(line)
         # Load the user interface
-        self.ui = GtkBuilderLoader(FILE_UI_ABOUT)
+        self.ui = GtkBuilderLoader(get_ui_file('about.glade'))
         # Set various properties
         self.ui.dialogAbout.set_program_name(APP_NAME)
         self.ui.dialogAbout.set_version('Version %s' % APP_VERSION)

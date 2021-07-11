@@ -55,7 +55,7 @@ from .main_column_headers import ShowHideColumnHeaders
 class MainWindow(object):
     def __init__(self, application, settings):
         self.application = application
-        self.ui = GtkBuilderLoader(FILE_UI_MAIN)
+        self.ui = GtkBuilderLoader(get_ui_file('main.glade'))
         self.settings = settings
         self.load_ui()
         # Restore the intercepted syscalls list from settings

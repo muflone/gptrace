@@ -20,8 +20,11 @@
 
 from gettext import dgettext as gettext_with_domain
 from gettext import gettext as _
+import os.path
 
 from gi.repository import Gtk
+
+from gptrace.constants import DIR_UI
 
 
 def show_dialog_fileopen(parent, title):
@@ -93,6 +96,11 @@ def show_popup_menu(menu):
     return menu.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
 
 
+def get_ui_file(filename):
+    """Return the full path of a Glade/UI file"""
+    return os.path.join(DIR_UI, filename)
+
+
 __all__ = [
     'show_dialog_fileopen',
     'readlines',
@@ -100,5 +108,6 @@ __all__ = [
     'find_button_from_gtktreeviewcolumn',
     '_',
     'GTK30_',
-    'show_popup_menu'
+    'show_popup_menu',
+    'get_ui_file'
 ]

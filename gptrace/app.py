@@ -48,7 +48,7 @@ class Application(Gtk.Application):
         action.connect("activate", self.on_app_quit_activate)
         self.add_action(action)
         # Add the app menu
-        builder = GtkBuilderLoader(FILE_UI_APPMENU)
+        builder = GtkBuilderLoader(get_ui_file('appmenu.ui'))
         self.set_app_menu(builder.app_menu)
 
     def activate(self, application):
