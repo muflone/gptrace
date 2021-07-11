@@ -1,4 +1,4 @@
-gpTrace
+gpTrace [![Build Status](https://travis-ci.org/muflone/gptrace.svg?branch=master)](https://travis-ci.org/muflone/gptrace)
 =======
 **Description:** Trace the activities of an external application.
 
