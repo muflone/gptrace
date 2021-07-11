@@ -1,9 +1,20 @@
-# Ignore Python compiled files
+####################
+# Compiled sources #
+####################
 *.pyc
 __pycache__/
 
-# Ignore .idea directory
-.idea/
+#################
+# PyCharm files #
+#################
+/.idea/
 
-# Ignore backup files
+#########################
+# Language translations #
+#########################
+/locale/
+
+################
+# Backup files #
+################
 *.glade~
