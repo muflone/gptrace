@@ -15,6 +15,12 @@ __pycache__/
 /locale/
 
 ################
+# Local builds #
+################
+/build/
+/root/
+
+################
 # Backup files #
 ################
 *.glade~
