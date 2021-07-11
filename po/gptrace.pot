@@ -1,7 +1,7 @@
 # gpTrace
 # Trace the activities of an external application.
 # Copyright (C) 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
-# Website: http://www.muflone.com/gptrace/
+# Website: https://www.muflone.com/gptrace/
 # This file is distributed under the same license of gpTrace.
 # X translation for gpTrace.
 # 
