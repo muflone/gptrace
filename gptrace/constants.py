@@ -30,8 +30,8 @@ APP_DESCRIPTION = 'Trace the activities of an external application.'
 APP_ID = 'gptrace.muflone.com'
 APP_URL = 'https://www.muflone.com/gptrace/'
 APP_AUTHOR = 'Fabio Castelli'
-APP_AUTHOR_EMAIL = 'muflone@vbsimple.net'
-APP_COPYRIGHT = 'Copyright 2014 %s' % APP_AUTHOR
+APP_AUTHOR_EMAIL = 'muflone@muflone.com'
+APP_COPYRIGHT = 'Copyright 2014-2021 %s' % APP_AUTHOR
 # Other constants
 DOMAIN_NAME = 'gptrace'
 VERBOSE_LEVEL_QUIET = 0
