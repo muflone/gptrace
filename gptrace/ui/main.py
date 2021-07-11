@@ -32,10 +32,15 @@ from ptrace.syscall import (SYSCALL_NAMES,
                             FILENAME_ARGUMENTS,
                             SOCKET_SYSCALL_NAMES)
 
-from gptrace.constants import *
+from gptrace.constants import APP_NAME, FILE_ICON
 from gptrace.daemon_thread import DaemonThread
 from gptrace.event_tracer import EventTracer
-from gptrace.functions import *
+from gptrace.functions import (_,
+                               get_ui_file,
+                               find_button_from_gtktreeviewcolumn,
+                               process_events,
+                               show_dialog_fileopen,
+                               show_popup_menu)
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.models.activities import ModelActivities
 from gptrace.models.counts import ModelCounts

@@ -21,12 +21,13 @@
 import gi
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gio
-from gi.repository import Gtk
+from gi.repository import Gio                                      # noqa: E402
+from gi.repository import Gtk                                      # noqa: E402
 
-from gptrace.constants import *
-from gptrace.gtkbuilder_loader import GtkBuilderLoader
-from gptrace.ui.main import MainWindow
+from gptrace.constants import APP_ID                               # noqa: E402
+from gptrace.functions import get_ui_file                          # noqa: E402
+from gptrace.gtkbuilder_loader import GtkBuilderLoader             # noqa: E402
+from gptrace.ui.main import MainWindow                             # noqa: E402
 
 
 class Application(Gtk.Application):

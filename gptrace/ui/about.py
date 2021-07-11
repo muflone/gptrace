@@ -20,8 +20,18 @@
 
 from gi.repository.GdkPixbuf import Pixbuf
 
-from gptrace.constants import *
-from gptrace.functions import *
+from gptrace.constants import (APP_NAME,
+                               APP_VERSION,
+                               APP_DESCRIPTION,
+                               APP_AUTHOR,
+                               APP_AUTHOR_EMAIL,
+                               APP_URL,
+                               APP_COPYRIGHT,
+                               FILE_ICON,
+                               FILE_LICENSE,
+                               FILE_RESOURCES,
+                               FILE_TRANSLATORS)
+from gptrace.functions import get_ui_file, readlines
 from gptrace.gtkbuilder_loader import GtkBuilderLoader
 
 

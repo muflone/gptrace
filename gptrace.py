@@ -23,7 +23,7 @@ import gettext
 import locale
 
 from gptrace.app import Application
-from gptrace.constants import *
+from gptrace.constants import DOMAIN_NAME, DIR_LOCALE
 from gptrace.settings import Settings
 
 if __name__ == '__main__':

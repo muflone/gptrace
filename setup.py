@@ -29,7 +29,13 @@ from distutils.log import info
 import glob
 import itertools
 
-from gptrace.constants import *
+from gptrace.constants import (APP_NAME,
+                               APP_VERSION,
+                               APP_DESCRIPTION,
+                               APP_AUTHOR,
+                               APP_AUTHOR_EMAIL,
+                               APP_URL,
+                               DOMAIN_NAME)
 
 
 class InstallScripts(install_scripts):

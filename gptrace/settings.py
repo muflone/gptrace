@@ -22,7 +22,10 @@ import configparser
 import optparse
 import time
 
-from gptrace.constants import *
+from gptrace.constants import (FILE_SETTINGS,
+                               VERBOSE_LEVEL_QUIET,
+                               VERBOSE_LEVEL_NORMAL,
+                               VERBOSE_LEVEL_MAX)
 
 SECTION_MAINWIN = 'main window'
 SECTION_APPLICATION = 'application'
