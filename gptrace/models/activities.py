@@ -18,41 +18,40 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gi.repository import Gtk
-
 from .base import ModelBase
 
+
 class ModelActivities(ModelBase):
-  COL_TIMESTAMP = 0
-  COL_TIME = 1
-  COL_SYSCALL = 2
-  COL_FORMAT = 3
-  COL_PID = 3
-  COL_IP = 4
+    COL_TIMESTAMP = 0
+    COL_TIME = 1
+    COL_SYSCALL = 2
+    COL_FORMAT = 3
+    COL_PID = 3
+    COL_IP = 4
 
-  def __init__(self, model):
-    super(self.__class__, self).__init__(model)
+    def __init__(self, model):
+        super(self.__class__, self).__init__(model)
 
-  def get_timestamp(self, treepath):
-    """Get the timestamp of a row"""
-    return self.get_model_data(treepath, self.COL_TIMESTAMP)
+    def get_timestamp(self, treepath):
+        """Get the timestamp of a row"""
+        return self.get_model_data(treepath, self.COL_TIMESTAMP)
 
-  def get_time(self, treepath):
-    """Get the relative time of a row"""
-    return self.get_model_data(treepath, self.COL_TIME)
+    def get_time(self, treepath):
+        """Get the relative time of a row"""
+        return self.get_model_data(treepath, self.COL_TIME)
 
-  def get_syscall(self, treepath):
-    """Get the syscall of a row"""
-    return self.get_model_data(treepath, self.COL_SYSCALL)
+    def get_syscall(self, treepath):
+        """Get the syscall of a row"""
+        return self.get_model_data(treepath, self.COL_SYSCALL)
 
-  def get_format(self, treepath):
-    """Get the format of a row"""
-    return self.get_model_data(treepath, self.COL_FORMAT)
+    def get_format(self, treepath):
+        """Get the format of a row"""
+        return self.get_model_data(treepath, self.COL_FORMAT)
 
-  def get_pid(self, treepath):
-    """Get the PID of a row"""
-    return self.get_model_data(treepath, self.COL_PID)
+    def get_pid(self, treepath):
+        """Get the PID of a row"""
+        return self.get_model_data(treepath, self.COL_PID)
 
-  def get_ip(self, treepath):
-    """Get the instruction pointer of a row"""
-    return self.get_model_data(treepath, self.COL_IP)
+    def get_ip(self, treepath):
+        """Get the instruction pointer of a row"""
+        return self.get_model_data(treepath, self.COL_IP)

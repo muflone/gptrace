@@ -22,20 +22,20 @@
 import gettext
 import locale
 
-from gptrace.settings import Settings
 from gptrace.app import Application
 from gptrace.constants import *
+from gptrace.settings import Settings
 
 if __name__ == '__main__':
-  # Load domain for translation
-  for module in (gettext, locale):
-    module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
-    module.textdomain(DOMAIN_NAME)
+    # Load domain for translation
+    for module in (gettext, locale):
+        module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
+        module.textdomain(DOMAIN_NAME)
 
-  # Load the settings from the configuration file
-  settings = Settings()
-  settings.load()
+    # Load the settings from the configuration file
+    settings = Settings()
+    settings.load()
 
-  # Start the application
-  app = Application(settings)
-  app.run(None)
+    # Start the application
+    app = Application(settings)
+    app.run(None)

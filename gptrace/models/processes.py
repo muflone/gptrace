@@ -18,54 +18,54 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gi.repository import Gtk
-
 from .base import ModelBase
 
+
 class ModelProcesses(ModelBase):
-  COL_PID = 0
-  COL_TIMESTAMP = 1
-  COL_TIME = 2
-  COL_INFORMATION = 3
-  COL_VALUE = 4
+    COL_PID = 0
+    COL_TIMESTAMP = 1
+    COL_TIME = 2
+    COL_INFORMATION = 3
+    COL_VALUE = 4
 
-  def __init__(self, model):
-    super(self.__class__, self).__init__(model)
-    # Store the TreeNodes in a dictionary for faster access
-    self.dictProcesses = {}
+    def __init__(self, model):
+        super(self.__class__, self).__init__(model)
+        # Store the TreeNodes in a dictionary for faster access
+        self.dictProcesses = {}
 
-  def add(self, items):
-    """Add a new row in the model"""
-    if not items[self.COL_PID] in self.dictProcesses.keys():
-      # Add a new row as process ID
-      super(self.__class__, self).add(items=(
-        items[self.COL_PID],
-        items[self.COL_TIMESTAMP],
-        items[self.COL_TIME],
-        items[self.COL_INFORMATION],
-        items[self.COL_VALUE],
-      ))
-      self.dictProcesses[items[self.COL_PID]] = self.model.get_iter(self.count() - 1)
-    else:
-      # Add the items as children of the PID
-      self.add_node(self.dictProcesses[items[self.COL_PID]], items=items)
+    def add(self, items):
+        """Add a new row in the model"""
+        if not items[self.COL_PID] in self.dictProcesses.keys():
+            # Add a new row as process ID
+            super(self.__class__, self).add(items=(
+                items[self.COL_PID],
+                items[self.COL_TIMESTAMP],
+                items[self.COL_TIME],
+                items[self.COL_INFORMATION],
+                items[self.COL_VALUE],
+            ))
+            self.dictProcesses[items[self.COL_PID]] = self.model.get_iter(
+                self.count() - 1)
+        else:
+            # Add the items as children of the PID
+            self.add_node(self.dictProcesses[items[self.COL_PID]], items=items)
 
-  def get_pid(self, treepath):
-    """Get the PID of a row"""
-    return self.get_model_data(treepath, self.COL_PID)
+    def get_pid(self, treepath):
+        """Get the PID of a row"""
+        return self.get_model_data(treepath, self.COL_PID)
 
-  def get_timestamp(self, treepath):
-    """Get the timestamp of a row"""
-    return self.get_model_data(treepath, self.COL_TIMESTAMP)
+    def get_timestamp(self, treepath):
+        """Get the timestamp of a row"""
+        return self.get_model_data(treepath, self.COL_TIMESTAMP)
 
-  def get_time(self, treepath):
-    """Get the time of a row"""
-    return self.get_model_data(treepath, self.COL_TIME)
+    def get_time(self, treepath):
+        """Get the time of a row"""
+        return self.get_model_data(treepath, self.COL_TIME)
 
-  def get_information(self, treepath):
-    """Get the information of a row"""
-    return self.get_model_data(treepath, self.COL_INFORMATION)
+    def get_information(self, treepath):
+        """Get the information of a row"""
+        return self.get_model_data(treepath, self.COL_INFORMATION)
 
-  def get_value(self, treepath):
-    """Get the value of a row"""
-    return self.get_model_data(treepath, self.COL_VALUE)
+    def get_value(self, treepath):
+        """Get the value of a row"""
+        return self.get_model_data(treepath, self.COL_VALUE)
