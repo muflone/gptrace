@@ -1,6 +1,16 @@
+os: linux
+dist: bionic
 language: python
 python:
-  - "3.9"
+  - "3.6"
+virtualenv:
+  system_site_packages: true
+addons:
+  apt:
+    packages:
+    - python3-gi                              # GObject
+    - libgirepository1.0-dev                  # GObject
+    - gir1.2-gtk-3.0                          # gi.repository.gtk
 install:
   - pip install -r requirements_travis.txt
 script:
@@ -9,10 +19,3 @@ script:
   - python -m flake8 .
   - python setup.py install --optimize=1 --root=build
   - ls -laR build
-addons:
-  apt:
-    packages:
-    - python3-gi                              # GObject
-    - gir1.2-gtk-3.0                          # gi.repository.gtk python-xdg
-virtualenv:
-  system_site_packages: true
