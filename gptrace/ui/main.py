@@ -67,18 +67,21 @@ class MainWindow(object):
         saved_syscalls = settings.get_intercepted_syscalls()
         # Restore the options from settings
         self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
-            SECTION_APPLICATION, 'autoclear',
-            self.ui.menuitemAutoClear.get_active()))
+            section=SECTION_APPLICATION,
+            name='autoclear',
+            default=self.ui.menuitemAutoClear.get_active()))
         # Update the Show only called syscalls in counts status
         self.ui.menuitemCountsOnlyCalled.set_active(self.settings.get_boolean(
-            SECTION_COUNTS, 'only called',
-            self.ui.menuitemCountsOnlyCalled.get_active()))
+            section=SECTION_COUNTS,
+            name='only called',
+            default=self.ui.menuitemCountsOnlyCalled.get_active()))
         self.on_menuitemCountsOnlyCalled_toggled(None)
         # Update the Show only existing files status
         self.ui.menuitemFilesShowOnlyExisting.set_active(
             self.settings.get_boolean(
-                SECTION_FILES, 'only existing',
-                self.ui.menuitemFilesShowOnlyExisting.get_active()))
+                section=SECTION_FILES,
+                name='only existing',
+                default=self.ui.menuitemFilesShowOnlyExisting.get_active()))
         self.on_menuitemFilesShowOnlyExisting_toggled(None)
         self.ui.infobarInformation.set_visible(False)
         # Load all the available syscall names
@@ -122,7 +125,8 @@ class MainWindow(object):
             self.check_for_filtered_syscall,
             self.filtered_items)
         # Set counts filter
-        self.ui.filterCounts.set_visible_column(self.modelCounts.COL_VISIBILITY)
+        self.ui.filterCounts.set_visible_column(
+            self.modelCounts.COL_VISIBILITY)
         self.ui.filterCounts.refilter()
         # Set counts filter
         self.ui.filterFiles.set_visible_column(self.modelFiles.COL_EXISTING)
@@ -224,12 +228,18 @@ class MainWindow(object):
         self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
         for section in self.column_headers.get_sections():
             self.column_headers.save_visible_columns(section)
-        self.settings.set_boolean(SECTION_APPLICATION, 'autoclear',
-                                  self.ui.menuitemAutoClear.get_active())
-        self.settings.set_boolean(SECTION_COUNTS, 'only called',
-                                  self.ui.menuitemCountsOnlyCalled.get_active())
-        self.settings.set_boolean(SECTION_FILES, 'only existing',
-                                  self.ui.menuitemFilesShowOnlyExisting.get_active())
+        self.settings.set_boolean(
+            section=SECTION_APPLICATION,
+            name='autoclear',
+            value=self.ui.menuitemAutoClear.get_active())
+        self.settings.set_boolean(
+            section=SECTION_COUNTS,
+            name='only called',
+            value=self.ui.menuitemCountsOnlyCalled.get_active())
+        self.settings.set_boolean(
+            section=SECTION_FILES,
+            name='only existing',
+            value=self.ui.menuitemFilesShowOnlyExisting.get_active())
         self.settings.save()
         # Immediately hide the main window and let the events process to handle
         # an instantly close instead of slowly let GTK to empty the model
