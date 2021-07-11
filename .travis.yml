@@ -9,3 +9,10 @@ script:
   - python -m flake8 .
   - python setup.py install --optimize=1 --root=build
   - ls -laR build
+addons:
+  apt:
+    packages:
+    - python3-gi                              # GObject
+    - gir1.2-gtk-3.0                          # gi.repository.gtk python-xdg
+virtualenv:
+  system_site_packages: true
