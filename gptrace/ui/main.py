@@ -273,6 +273,7 @@ class MainWindow(object):
                 'enter': False,
                 'show_ip': True,
                 'trace_exec': True,
+                'trace_clone': True,
                 'no_stdout': False,
                 'pid': None,
                 'show_pid': True,
