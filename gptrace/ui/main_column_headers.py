@@ -29,7 +29,7 @@ class ShowHideColumnHeaders(object):
         columns = {}
         columns[column] = (self.get_object(column),
                            self.get_object(menu), self.get_object(menuitem))
-        if not self.column_headers.has_key(section):
+        if section not in self.column_headers:
             self.column_headers[section] = []
         self.column_headers[section].append(columns)
 
@@ -53,4 +53,5 @@ class ShowHideColumnHeaders(object):
 
     def get_values(self, section):
         """Return all the widgets for a section"""
-        return [item.values()[0] for item in self.column_headers[section]]
+        return [list(item.values())[0]
+                for item in self.column_headers[section]]

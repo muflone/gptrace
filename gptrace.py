@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 ##
 #     Project: gpTrace
 # Description: Trace the activities of an external application

@@ -79,24 +79,24 @@ class EventTracer(object):
                                         str(event.process.parent.pid))
                 # Add process details
                 details = self._get_process_status_details(event.process.pid)
-                if details.has_key(UID):
+                if UID in details:
                     self.event_callback(pid, _('User ID'), details[UID].pw_uid)
                     self.event_callback(pid, _('User name'),
                                         details[UID].pw_name)
                     self.event_callback(pid, _('User real name'),
                                         details[UID].pw_gecos)
-                if details.has_key(EUID):
+                if EUID in details:
                     self.event_callback(pid, _('Effective user ID'),
                                         details[EUID].pw_uid)
                     self.event_callback(pid, _('Effective user name'),
                                         details[EUID].pw_name)
                     self.event_callback(pid, _('Effective user real name'),
                                         details[EUID].pw_gecos)
-                if details.has_key(GID):
+                if GID in details:
                     self.event_callback(pid, _('Group ID'), details[GID].gr_gid)
                     self.event_callback(pid, _('Group name'),
                                         details[GID].gr_name)
-                if details.has_key(EGID):
+                if EGID in details:
                     self.event_callback(pid, _('Effective group ID'),
                                         details[EGID].gr_gid)
                     self.event_callback(pid, _('Effective group name'),
