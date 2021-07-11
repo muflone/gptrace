@@ -403,8 +403,7 @@ class MainWindow(object):
                 # Disable file chooser and set stop icon
                 self.ui.txtProgram.set_sensitive(False)
                 self.ui.btnProgramOpen.set_sensitive(False)
-                self.ui.imgStartStop.set_from_icon_name(Gtk.STOCK_STOP,
-                                                        Gtk.IconSize.BUTTON)
+                self.ui.btnStartStop.set_image(self.ui.image_stop)
                 # Start debugger
                 self.thread_loader = DaemonThread(
                     target=self.thread_debug_process,
@@ -423,8 +422,7 @@ class MainWindow(object):
                 # Restore file chooser and set execute icon
                 self.ui.txtProgram.set_sensitive(True)
                 self.ui.btnProgramOpen.set_sensitive(True)
-                self.ui.imgStartStop.set_from_icon_name(Gtk.STOCK_EXECUTE,
-                                                        Gtk.IconSize.BUTTON)
+                self.ui.btnStartStop.set_image(self.ui.image_start)
 
     def on_menuitemClear_activate(self, widget):
         """Clear the syscalls list"""

@@ -22,6 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <!-- interface-license-type gplv2 -->
+  <object class="GtkImage" id="image_stop">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="stock">gtk-stop</property>
+  </object>
   <object class="GtkMenu" id="menuOptions">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -540,7 +545,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="receives-default">True</property>
                 <signal name="toggled" handler="on_btnStartStop_toggled" swapped="no"/>
                 <child>
-                  <object class="GtkImage" id="imgStartStop">
+                  <object class="GtkImage" id="image_start">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="stock">gtk-execute</property>
