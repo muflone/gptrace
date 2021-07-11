@@ -1,8 +1,9 @@
-/locale/
+# Ignore Python compiled files
 *.pyc
+__pycache__/
+
+# Ignore .idea directory
+.idea/
+
+# Ignore backup files
 *.glade~
-/build/
-/root/
-__pycache__
-/tmp/
-ui/*.h
