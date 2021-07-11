@@ -52,7 +52,7 @@ class Settings(object):
         # Allow saving in case sensitive (useful for machine names)
         self.config.optionxform = str
         # Determine which filename to use for settings
-        self.filename = FILE_SETTINGS_NEW
+        self.filename = FILE_SETTINGS
         if self.filename:
             self.log_text('Loading settings from %s' % self.filename,
                           VERBOSE_LEVEL_MAX)
@@ -142,8 +142,8 @@ class Settings(object):
     def save(self):
         """Save the whole configuration"""
         # Always save the settings in the new configuration file
-        file_settings = open(FILE_SETTINGS_NEW, mode='w')
-        self.log_text('Saving settings to %s' % FILE_SETTINGS_NEW,
+        file_settings = open(FILE_SETTINGS, mode='w')
+        self.log_text('Saving settings to %s' % FILE_SETTINGS,
                       VERBOSE_LEVEL_MAX)
         self.config.write(file_settings)
         file_settings.close()
