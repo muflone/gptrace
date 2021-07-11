@@ -2,9 +2,9 @@ gpTrace
 =======
 **Description:** Trace the activities of an external application.
 
-**Copyright:** 2014 Fabio Castelli (Muflone) <muflone(at)vbsimple.net>
+**Copyright:** 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
 
-**License:** GPL-2+
+**License:** GPL-3+
 
 **Source code:** https://github.com/muflone/gptrace
 
