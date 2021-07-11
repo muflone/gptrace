@@ -2,8 +2,9 @@ gptrace 0.5.0
 
   * Ported to Python 3
   * Added support for Travis CI and Circle CI
+  * New Lithuanian translation by Moo
 
- -- Fabio Castelli <muflone@muflone.com>  Sun, 11 Jul 2021 13:57:45 +0200
+ -- Fabio Castelli <muflone@muflone.com>  Sun, 11 Jul 2021 14:17:57 +0200
 
 gptrace 0.4.2
 
