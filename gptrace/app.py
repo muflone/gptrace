@@ -21,12 +21,9 @@
 import gi
 gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gio                                      # noqa: E402
 from gi.repository import Gtk                                      # noqa: E402
 
 from gptrace.constants import APP_ID                               # noqa: E402
-from gptrace.functions import get_ui_file                          # noqa: E402
-from gptrace.gtkbuilder_loader import GtkBuilderLoader             # noqa: E402
 from gptrace.ui.main import MainWindow                             # noqa: E402
 
 
@@ -40,26 +37,7 @@ class Application(Gtk.Application):
     def startup(self, application):
         """Configure the application during the startup"""
         self.ui = MainWindow(self, self.settings)
-        # Add the actions related to the app menu
-        action = Gio.SimpleAction(name="about")
-        action.connect("activate", self.on_app_about_activate)
-        self.add_action(action)
-
-        action = Gio.SimpleAction(name="quit")
-        action.connect("activate", self.on_app_quit_activate)
-        self.add_action(action)
-        # Add the app menu
-        builder = GtkBuilderLoader(get_ui_file('appmenu.ui'))
-        self.set_app_menu(builder.app_menu)
 
     def activate(self, application):
         """Execute the application"""
         self.ui.run()
-
-    def on_app_about_activate(self, action, data):
-        """Show the about dialog from the app menu"""
-        self.ui.on_btnAbout_clicked(self)
-
-    def on_app_quit_activate(self, action, data):
-        """Quit the application from the app menu"""
-        self.ui.on_winMain_delete_event(self, None)
