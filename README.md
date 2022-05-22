@@ -5,7 +5,7 @@
 
 **Description:** Trace the activities of an external application.
 
-**Copyright:** 2014-2021 Fabio Castelli (Muflone) <muflone(at)muflone.com>
+**Copyright:** 2014-2022 Fabio Castelli (Muflone) <muflone(at)muflone.com>
 
 **License:** GPL-3+
 
