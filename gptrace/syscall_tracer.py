@@ -102,6 +102,8 @@ class SyscallTracer(Application):
                 process = event.process
                 process.syscall()
                 continue
+            except IndexError:
+                continue
 
             # Process syscall enter or exit
             self.syscall(process)
