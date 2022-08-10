@@ -18,16 +18,17 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-class ShowHideColumnHeaders(object):
-    def __init__(self, get_object, settings):
+class ColumnHeadersVisibility(object):
+    def __init__(self, ui, settings):
         self.column_headers = {}
-        self.get_object = get_object
+        self.ui = ui
         self.settings = settings
 
     def add_columns_to_section(self, section, column, menu, menuitem):
         """Add a GtkTreeViewColumn, a GtkMenu and a GtkMenuItem to a section"""
-        columns = {column: (self.get_object(column),
-                            self.get_object(menu), self.get_object(menuitem))}
+        columns = {column: (self.ui.get_object(column),
+                            self.ui.get_object(menu),
+                            self.ui.get_object(menuitem))}
         if section not in self.column_headers:
             self.column_headers[section] = []
         self.column_headers[section].append(columns)

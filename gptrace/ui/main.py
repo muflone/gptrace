@@ -150,8 +150,8 @@ class MainWindow(object):
         self.modelProcesses = ModelProcesses(self.ui.storeProcesses)
 
         # Associate each TreeViewColumn to the MenuItem used to show/hide
-        self.column_headers = ShowHideColumnHeaders(self.ui.get_object,
-                                                    self.settings)
+        self.column_headers = ColumnHeadersVisibility(ui=self.ui,
+                                                      settings=self.settings)
         for menu, section, items in (
                 ('menuActivitiesVisibleColumns', SECTION_ACTIVITIES, (
                         ('colActivitiesTimestamp',
