@@ -51,6 +51,7 @@ else:
     DIR_DOCS = os.path.join(sys.prefix, 'share', 'doc', 'gptrace')
 # Set the paths for the folders
 DIR_DATA = os.path.join(DIR_PREFIX, 'data')
+DIR_ICONS = os.path.join(DIR_DATA, 'icons')
 DIR_UI = os.path.join(DIR_PREFIX, 'ui')
 DIR_SETTINGS = BaseDirectory.save_config_path(DOMAIN_NAME)
 # Set the paths for the data files

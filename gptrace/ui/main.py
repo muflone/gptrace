@@ -32,58 +32,65 @@ from ptrace.syscall import (SYSCALL_NAMES,
                             FILENAME_ARGUMENTS,
                             SOCKET_SYSCALL_NAMES)
 
-from gptrace.constants import APP_NAME, FILE_ICON
+from gptrace.constants import APP_NAME, FILE_ICON, FILE_SETTINGS
 from gptrace.daemon_thread import DaemonThread
 from gptrace.event_tracer import EventTracer
 from gptrace.functions import (_,
-                               get_ui_file,
                                find_button_from_gtktreeviewcolumn,
                                process_events,
                                show_dialog_fileopen,
                                show_popup_menu)
-from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.models.activities import ModelActivities
 from gptrace.models.counts import ModelCounts
 from gptrace.models.files import ModelFiles
 from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.models.processes import ModelProcesses
-from gptrace.settings import (SECTION_APPLICATION,
+from gptrace.settings import (Settings,
+                              SECTION_APPLICATION,
                               SECTION_ACTIVITIES,
                               SECTION_COUNTS,
                               SECTION_FILES,
                               SECTION_PROCESSES)
 from gptrace.syscall_tracer import SyscallTracer
-from .about import AboutWindow
-from .main_column_headers import ShowHideColumnHeaders
+from gptrace.ui.about import UIAbout
+from gptrace.ui.base import UIBase
+from gptrace.ui.column_headers_visibility import ColumnHeadersVisibility
+from gptrace.ui.shortcuts import UIShortcuts
+
+SECTION_WINDOW_NAME = 'main window'
 
 
-class MainWindow(object):
-    def __init__(self, application, settings):
+class UIMain(UIBase):
+    def __init__(self, application, options):
+        super().__init__(filename='main.ui')
         self.application = application
-        self.ui = GtkBuilderLoader(get_ui_file('main.ui'))
-        self.settings = settings
+        # Load settings
+        self.settings = Settings(FILE_SETTINGS, True)
+        self.options = options
         self.load_ui()
+        self.settings.restore_window_position(window=self.ui.window,
+                                              section=SECTION_WINDOW_NAME)
         # Restore the intercepted syscalls list from settings
-        saved_syscalls = settings.get_intercepted_syscalls()
+        saved_syscalls = self.settings.get_intercepted_syscalls()
         # Restore the options from settings
         self.ui.menuitemAutoClear.set_active(self.settings.get_boolean(
             section=SECTION_APPLICATION,
-            name='autoclear',
+            option='autoclear',
             default=self.ui.menuitemAutoClear.get_active()))
         # Update the Show only called syscalls in counts status
         self.ui.menuitemCountsOnlyCalled.set_active(self.settings.get_boolean(
             section=SECTION_COUNTS,
-            name='only called',
+            option='only called',
             default=self.ui.menuitemCountsOnlyCalled.get_active()))
         self.on_menuitemCountsOnlyCalled_toggled(None)
         # Update the Show only existing files status
         self.ui.menuitemFilesShowOnlyExisting.set_active(
             self.settings.get_boolean(
                 section=SECTION_FILES,
-                name='only existing',
+                option='only existing',
                 default=self.ui.menuitemFilesShowOnlyExisting.get_active()))
         self.on_menuitemFilesShowOnlyExisting_toggled(None)
-        self.ui.infobarInformation.set_visible(False)
+        self.ui.infobar_information.set_visible(False)
         # Load all the available syscall names
         for syscall in sorted(SYSCALL_NAMES.values()):
             prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ()))
@@ -104,98 +111,89 @@ class MainWindow(object):
                 syscall in SOCKET_SYSCALL_NAMES,
             ))
             self.modelCounts.add(items=(syscall, 0, False))
-        self.update_InterceptedSyscalls_count()
-        # Restore the saved size and position
-        if self.settings.get_value('width', 0) and self.settings.get_value(
-                'height', 0):
-            self.ui.winMain.set_default_size(
-                self.settings.get_value('width', -1),
-                self.settings.get_value('height', -1))
-        if (self.settings.get_value('left', 0) and
-                self.settings.get_value('top', 0)):
-            self.ui.winMain.move(
-                self.settings.get_value('left', 0),
-                self.settings.get_value('top', 0))
+        self.update_intercepted_syscalls_count()
         # Restore visible columns
         for current_section in self.column_headers.get_sections():
             self.column_headers.load_visible_columns(current_section)
         # Set ModelFilter
         self.filtered_items = []
-        self.ui.filterActivities.set_visible_func(
+        self.ui.filter_activities.set_visible_func(
             self.check_for_filtered_syscall,
             self.filtered_items)
         # Set counts filter
-        self.ui.filterCounts.set_visible_column(
+        self.ui.filter_counts.set_visible_column(
             self.modelCounts.COL_VISIBILITY)
-        self.ui.filterCounts.refilter()
+        self.ui.filter_counts.refilter()
         # Set counts filter
-        self.ui.filterFiles.set_visible_column(self.modelFiles.COL_EXISTING)
-        self.ui.filterFiles.refilter()
-        # Load the others dialogs
-        self.about = AboutWindow(self.ui.winMain, False)
+        self.ui.filter_files.set_visible_column(self.modelFiles.COL_EXISTING)
+        self.ui.filter_files.refilter()
         self.thread_loader = None
         self.debugger = None
 
     def run(self):
         """Show the UI"""
-        self.ui.winMain.show_all()
+        self.ui.window.show_all()
 
     def load_ui(self):
         """Load the interface UI"""
-        self.modelActivities = ModelActivities(self.ui.storeActivities)
+        self.modelActivities = ModelActivities(self.ui.model_activities)
         self.modelInterceptedSyscalls = ModelInterceptedSyscalls(
-            self.ui.storeInterceptedSyscalls)
-        self.modelCounts = ModelCounts(self.ui.storeCounts)
-        self.modelFiles = ModelFiles(self.ui.storeFiles)
-        self.modelProcesses = ModelProcesses(self.ui.storeProcesses)
+            self.ui.model_intercepted_syscalls)
+        self.modelCounts = ModelCounts(self.ui.model_counts)
+        self.modelFiles = ModelFiles(self.ui.model_files)
+        self.modelProcesses = ModelProcesses(self.ui.model_processes)
 
         # Associate each TreeViewColumn to the MenuItem used to show/hide
         self.column_headers = ColumnHeadersVisibility(ui=self.ui,
                                                       settings=self.settings)
         for menu, section, items in (
                 ('menuActivitiesVisibleColumns', SECTION_ACTIVITIES, (
-                        ('colActivitiesTimestamp',
+                        ('column_activities_timestamp',
                          'menuitemActivitiesVisibleColumnsTimestamp'),
-                        ('colActivitiesTime',
+                        ('column_activities_time',
                          'menuitemActivitiesVisibleColumnsTime'),
-                        ('colActivitiesSyscall',
+                        ('column_activities_syscall',
                          'menuitemActivitiesVisibleColumnsSyscall'),
-                        ('colActivitiesFormat',
+                        ('column_activities_format',
                          'menuitemActivitiesVisibleColumnsFormat'),
-                        ('colActivitiesPID',
+                        ('column_activities_pid',
                          'menuitemActivitiesVisibleColumnsPID'),
-                        ('colActivitiesIP',
+                        ('column_activities_ip',
                          'menuitemActivitiesVisibleColumnsIP')
                 )),
                 ('menuCountsVisibleColumns', SECTION_COUNTS, (
-                        ('colCountsSyscall',
+                        ('column_counts_syscall',
                          'menuitemCountsVisibleColumnsSyscall'),
-                        ('colCountsCount',
+                        ('column_counts_count',
                          'menuitemCountsVisibleColumnsCount'),
                 )),
                 ('menuFilesVisibleColumns', SECTION_FILES, (
-                        ('colFilesPID', 'menuitemFilesVisibleColumnsPID'),
-                        ('colFilesExisting',
+                        ('column_files_pid',
+                         'menuitemFilesVisibleColumnsPID'),
+                        ('column_files_existing',
                          'menuitemFilesVisibleColumnsExisting'),
-                        ('colFilesPath', 'menuitemFilesVisibleColumnsPath'),
+                        ('column_files_path',
+                         'menuitemFilesVisibleColumnsPath'),
                 )),
                 ('menuProcessesVisibleColumns', SECTION_PROCESSES, (
-                        ('colProcessesPID',
+                        ('column_processes_pid',
                          'menuitemProcessesVisibleColumnsPID'),
-                        ('colProcessesTimestamp',
+                        ('column_processes_timestamp',
                          'menuitemProcessesVisibleColumnsTimestamp'),
-                        ('colProcessesTime',
+                        ('column_processes_time',
                          'menuitemProcessesVisibleColumnsTime'),
-                        ('colProcessesInformation',
+                        ('column_processes_information',
                          'menuitemProcessesVisibleColumnsInformation'),
                 )),
         ):
             for column, menuitem in items:
-                self.column_headers.add_columns_to_section(section, column,
-                                                           menu, menuitem)
+                self.column_headers.add_columns_to_section(section=section,
+                                                           column=column,
+                                                           menu=menu,
+                                                           menuitem=menuitem)
         # Set cellrenderers alignment
-        self.ui.cellActivitiesTimestamp.set_property('xalign', 1.0)
-        self.ui.cellActivitiesTime.set_property('xalign', 1.0)
+        self.ui.cell_activities_timestamp.set_property('xalign', 1.0)
+        self.ui.cell_activities_time.set_property('xalign', 1.0)
         # Set options menu items value as their column headers
         for section in self.column_headers.get_sections():
             for (column, menu, menuitem) in self.column_headers.get_values(
@@ -210,63 +208,92 @@ class MainWindow(object):
                     button.connect('button-press-event',
                                    self.on_tvwcolumn_button_release_event,
                                    menu)
+        # Initialize titles and tooltips
+        self.set_titles()
+        # Initialize Gtk.HeaderBar
+        self.ui.header_bar.props.title = self.ui.window.get_title()
+        self.ui.window.set_titlebar(self.ui.header_bar)
+        self.set_buttons_icons(buttons=[self.ui.button_start,
+                                        self.ui.button_stop,
+                                        self.ui.button_about,
+                                        self.ui.button_options])
+        # Set buttons with always show image
+        for button in (self.ui.button_start, ):
+            button.set_always_show_image(True)
+        self.set_buttons_style_suggested_action(
+            buttons=[self.ui.button_start])
         # Set various properties
-        self.ui.winMain.set_title(APP_NAME)
-        self.ui.winMain.set_icon_from_file(FILE_ICON)
-        self.ui.winMain.set_application(self.application)
+        self.ui.window.set_title(APP_NAME)
+        self.ui.window.set_icon_from_file(str(FILE_ICON))
+        self.ui.window.set_application(self.application)
         self.lblInterceptedSyscalls_descr = (
-            self.ui.lblInterceptedSyscalls.get_text())
-        # Connect signals from the glade file to the functions with the
-        # same name
+            self.ui.label_syscalls.get_text())
+        # Connect signals from the UI file to the functions with the same name
         self.ui.connect_signals(self)
 
-    def on_winMain_delete_event(self, widget, event):
-        """Close the application"""
+    def on_window_delete_event(self, widget, event):
+        """Close the application by closing the main window"""
+        self.ui.action_quit.emit('activate')
+
+    def on_action_about_activate(self, widget):
+        """Show the about dialog"""
+        about = UIAbout(parent=self.ui.window,
+                        settings=self.settings,
+                        options=self.options)
+        about.show()
+        about.destroy()
+
+    def on_action_options_menu_activate(self, widget):
+        """Open the options menu"""
+        self.ui.button_options.emit('clicked')
+
+    def on_action_shortcuts_activate(self, action):
+        """Show the shortcuts dialog"""
+        dialog = UIShortcuts(self.ui.window)
+        dialog.show()
+
+    def on_action_quit_activate(self, action):
+        """Quit the application"""
         # Save settings for window size, intercepted syscalls and visible
         # columns
-        self.settings.set_sizes(self.ui.winMain)
+        self.settings.save_window_position(self.ui.window, SECTION_WINDOW_NAME)
         self.settings.set_intercepted_syscalls(self.modelInterceptedSyscalls)
         for section in self.column_headers.get_sections():
             self.column_headers.save_visible_columns(section)
         self.settings.set_boolean(
             section=SECTION_APPLICATION,
-            name='autoclear',
+            option='autoclear',
             value=self.ui.menuitemAutoClear.get_active())
         self.settings.set_boolean(
             section=SECTION_COUNTS,
-            name='only called',
+            option='only called',
             value=self.ui.menuitemCountsOnlyCalled.get_active())
         self.settings.set_boolean(
             section=SECTION_FILES,
-            name='only existing',
+            option='only existing',
             value=self.ui.menuitemFilesShowOnlyExisting.get_active())
         self.settings.save()
         # Immediately hide the main window and let the events process to handle
         # an instantly close instead of slowly let GTK to empty the model
         # before the window is effectively destroyed
-        self.ui.winMain.hide()
+        self.ui.window.hide()
         process_events()
         # Cancel the running thread
         if self.thread_loader and self.thread_loader.is_alive():
             self.thread_loader.cancel()
             self.thread_loader.join()
-        self.about.destroy()
-        self.ui.winMain.destroy()
+        self.ui.window.destroy()
         self.application.quit()
 
-    def on_btnAbout_clicked(self, widget):
-        """Show the about dialog"""
-        self.about.show()
-
-    def on_txtProgram_icon_release(self, widget, icon_position, event):
+    def on_text_program_icon_release(self, widget, icon_position, event):
         """Click an icon next to a Entry"""
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
-            self.ui.txtProgram.set_text('')
+            self.ui.text_program.set_text('')
 
-    def on_txtProgram_changed(self, widget):
+    def on_text_program_changed(self, widget):
         """Enable or disable the button if a program path was set"""
-        self.ui.btnStartStop.set_sensitive(
-            len(self.ui.txtProgram.get_text()) > 0)
+        self.ui.action_start.set_sensitive(
+            len(self.ui.text_program.get_text()) > 0)
 
     def thread_debug_process(self, program):
         """Debug the requested program to trace the syscalls"""
@@ -334,42 +361,42 @@ class MainWindow(object):
 
     def quit_callback(self):
         """The debugger is quitting"""
-        self.ui.btnStartStop.set_active(False)
+        self.ui.action_stop.activate()
 
-    def on_cellInterceptedChecked_toggled(self, widget, treepath):
+    def on_cell_syscalls_checked_toggled(self, widget, treepath):
         """Handle click on the checked column"""
         self.modelInterceptedSyscalls.toggle_checked(treepath)
-        self.update_InterceptedSyscalls_count()
+        self.update_intercepted_syscalls_count()
 
-    def on_btnInterceptedSyscallsSelectAll_clicked(self, widget):
+    def on_action_syscalls_select_all_activate(self, action):
         """Intercept all the syscalls"""
         for row in self.modelInterceptedSyscalls:
             self.modelInterceptedSyscalls.set_checked(row, True)
-        self.update_InterceptedSyscalls_count()
+        self.update_intercepted_syscalls_count()
 
-    def on_btnInterceptedSyscallsClear_clicked(self, widget):
+    def on_action_syscalls_clear_activate(self, action):
         """Disable any syscall to intercept"""
         for row in self.modelInterceptedSyscalls:
             self.modelInterceptedSyscalls.set_checked(row, False)
-        self.update_InterceptedSyscalls_count()
+        self.update_intercepted_syscalls_count()
 
-    def on_btnInterceptedSyscallsSelectForFile_clicked(self, widget):
+    def on_action_syscalls_file_activate(self, action):
         """Intercept all the syscalls that use filenames"""
         for row in self.modelInterceptedSyscalls:
             if self.modelInterceptedSyscalls.get_has_filename_arguments(row):
                 self.modelInterceptedSyscalls.set_checked(row, True)
-        self.update_InterceptedSyscalls_count()
+        self.update_intercepted_syscalls_count()
 
-    def on_btnInterceptedSyscallsSelectForSocket_clicked(self, widget):
+    def on_action_syscalls_socket_activate(self, action):
         """Intercept all the syscalls used by sockets"""
         for row in self.modelInterceptedSyscalls:
             if self.modelInterceptedSyscalls.get_socket_function(row):
                 self.modelInterceptedSyscalls.set_checked(row, True)
-        self.update_InterceptedSyscalls_count()
+        self.update_intercepted_syscalls_count()
 
-    def update_InterceptedSyscalls_count(self):
+    def update_intercepted_syscalls_count(self):
         """Update the intercepted syscalls count label"""
-        self.ui.lblInterceptedSyscalls.set_text(
+        self.ui.label_syscalls.set_text(
             self.lblInterceptedSyscalls_descr % {
                 'selected': len(self.modelInterceptedSyscalls.syscalls),
                 'total': self.modelInterceptedSyscalls.count(),
@@ -394,36 +421,6 @@ class MainWindow(object):
         if event.button == Gdk.BUTTON_SECONDARY:
             show_popup_menu(menu)
 
-    def on_btnStartStop_toggled(self, widget):
-        """Start and stop program tracing"""
-        if self.ui.btnStartStop.get_active():
-            if self.ui.txtProgram.get_text():
-                if self.ui.menuitemAutoClear.get_active():
-                    self.on_menuitemClear_activate(None)
-                # Disable file chooser and set stop icon
-                self.ui.txtProgram.set_sensitive(False)
-                self.ui.btnProgramOpen.set_sensitive(False)
-                self.ui.btnStartStop.set_image(self.ui.image_stop)
-                # Start debugger
-                self.thread_loader = DaemonThread(
-                    target=self.thread_debug_process,
-                    args=(shlex.split(self.ui.txtProgram.get_text()),)
-                )
-                self.thread_loader.start()
-            else:
-                # If no filename was selected then set button status as
-                # unpressed
-                self.ui.btnStartStop.set_active(False)
-        else:
-            # Cancel running debugger
-            if self.thread_loader:
-                self.thread_loader.cancel()
-                self.debugger.quit()
-                # Restore file chooser and set execute icon
-                self.ui.txtProgram.set_sensitive(True)
-                self.ui.btnProgramOpen.set_sensitive(True)
-                self.ui.btnStartStop.set_image(self.ui.image_start)
-
     def on_menuitemClear_activate(self, widget):
         """Clear the syscalls list"""
         self.modelActivities.clear()
@@ -433,19 +430,19 @@ class MainWindow(object):
 
     def on_menuitemActivitiesFilterHideSyscall_activate(self, widget):
         """Hide the selected syscall from the results"""
-        selection = self.ui.tvwActivities.get_selection()
+        selection = self.ui.treeview_activities.get_selection()
         if selection:
             model, iter = selection.get_selected()
             if iter:
                 # Add the selected syscall to the filtered syscalls list
                 self.filtered_items.append(self.modelActivities.get_syscall(
-                    self.ui.filterActivities.convert_iter_to_child_iter(iter)))
+                    self.ui.filter_activities.convert_iter_to_child_iter(iter)))
                 # Filter the results
-                self.ui.filterActivities.refilter()
+                self.ui.filter_activities.refilter()
 
     def on_menuitemActivitiesFilterShowOnlySyscall_activate(self, widget):
         """Show only the selected syscall from the results"""
-        selection = self.ui.tvwActivities.get_selection()
+        selection = self.ui.treeview_activities.get_selection()
         if selection:
             model, iter = selection.get_selected()
             if iter:
@@ -456,9 +453,9 @@ class MainWindow(object):
                 # Then remove the selected syscall from the filtered syscalls
                 # list
                 self.filtered_items.remove(self.modelActivities.get_syscall(
-                    self.ui.filterActivities.convert_iter_to_child_iter(iter)))
+                    self.ui.filter_activities.convert_iter_to_child_iter(iter)))
                 # Filter the results
-                self.ui.filterActivities.refilter()
+                self.ui.filter_activities.refilter()
 
     def on_menuitemActivitiesIgnoreSyscall_activate(self, widget):
         """
@@ -475,13 +472,13 @@ class MainWindow(object):
         Add or remove the selected syscall name from the intercepted syscalls
         model
         """
-        selection = self.ui.tvwActivities.get_selection()
+        selection = self.ui.treeview_activities.get_selection()
         if selection:
             model, iter = selection.get_selected()
             if iter:
                 # Get the syscall name to ignore/unignore
                 selected_syscall = self.modelActivities.get_syscall(
-                    self.ui.filterActivities.convert_iter_to_child_iter(iter))
+                    self.ui.filter_activities.convert_iter_to_child_iter(iter))
                 # Cycle each row in the intercepted syscalls model
                 for row in self.modelInterceptedSyscalls:
                     # If the syscall name for the row is the same then
@@ -491,18 +488,18 @@ class MainWindow(object):
                         self.modelInterceptedSyscalls.set_checked(row, status)
                         break
                 # Update the intercepted syscalls count
-                self.update_InterceptedSyscalls_count()
+                self.update_intercepted_syscalls_count()
 
     def on_menuitemActivitiesFilterReset_activate(self, widget):
         """Clear the filtered syscalls list including all"""
         while len(self.filtered_items):
             self.filtered_items.pop()
-        self.ui.filterActivities.refilter()
+        self.ui.filter_activities.refilter()
 
-    def on_tvwActivities_button_release_event(self, widget, event):
+    def on_treeview_activities_button_release_event(self, widget, event):
         """Show filter menu on right click"""
         if event.button == Gdk.BUTTON_SECONDARY:
-            current_selection = self.ui.tvwActivities.get_path_at_pos(
+            current_selection = self.ui.treeview_activities.get_path_at_pos(
                 int(event.x), int(event.y))
             if current_selection:
                 show_popup_menu(self.ui.menuActivitiesFilter)
@@ -512,46 +509,76 @@ class MainWindow(object):
         return (self.modelActivities.get_syscall(iter) not in
                 self.filtered_items)
 
-    def on_btnProgramOpen_clicked(self, widget):
-        """Select the program to open"""
-        program = show_dialog_fileopen(
-            parent=self.ui.winMain,
-            title=_("Select a program to execute"))
-        if program:
-            self.ui.txtProgram.set_text(program)
-
     def on_menuitemCountsOnlyCalled_toggled(self, widget):
         """Set visibility of syscalls in counts section"""
         if self.ui.menuitemCountsOnlyCalled.get_active():
-            self.ui.tvwCounts.set_model(self.ui.filterCounts)
+            self.ui.treeview_counts.set_model(self.ui.filter_counts)
         else:
-            self.ui.tvwCounts.set_model(self.ui.storeCounts)
+            self.ui.treeview_counts.set_model(self.ui.model_counts)
 
     def on_menuitemFilesShowOnlyExisting_toggled(self, widget):
         """Set visibility of only existing files in files section"""
         state = self.ui.menuitemFilesShowOnlyExisting.get_active()
         # Configure column sort order ID for each column in order to allow
         # the sort if the show only existing files setting is set
-        self.ui.colFilesExisting.set_sort_column_id(
+        self.ui.column_files_existing.set_sort_column_id(
             state and -1 or self.modelFiles.COL_EXISTING)
-        self.ui.colFilesPID.set_sort_column_id(
+        self.ui.column_files_pid.set_sort_column_id(
             state and -1 or self.modelFiles.COL_PID)
-        self.ui.colFilesPath.set_sort_column_id(
+        self.ui.column_files_path.set_sort_column_id(
             state and -1 or self.modelFiles.COL_FILEPATH)
         # BUG: GTK+ seems to not react if the sort column ID is changed
         # Set the clickable property again after setting the sort column ID
-        self.ui.colFilesExisting.set_clickable(True)
-        self.ui.colFilesPID.set_clickable(True)
-        self.ui.colFilesPath.set_clickable(True)
+        self.ui.column_files_existing.set_clickable(True)
+        self.ui.column_files_pid.set_clickable(True)
+        self.ui.column_files_path.set_clickable(True)
         if state:
-            self.ui.tvwFiles.set_model(self.ui.filterFiles)
-            self.ui.lblInfoBarContent.set_markup(
+            self.ui.treeview_files.set_model(self.ui.filter_files)
+            self.ui.label_infobar_content.set_markup(
                 _('When <i><b>Show only existing files</b></i> is selected '
                   'the sorting by click on the column headers is disabled'))
         else:
-            self.ui.tvwFiles.set_model(self.ui.storeFiles)
-        self.ui.infobarInformation.set_visible(state)
+            self.ui.treeview_files.set_model(self.ui.model_files)
+        self.ui.infobar_information.set_visible(state)
 
-    def on_infobar1_response(self, widget, response):
+    def on_infobar_information_response(self, widget, response):
         if response == Gtk.ResponseType.CLOSE:
-            self.ui.infobarInformation.set_visible(False)
+            self.ui.infobar_information.set_visible(False)
+
+    def on_action_start_activate(self, action):
+        """Start debugger"""
+        if self.ui.menuitemAutoClear.get_active():
+            self.on_menuitemClear_activate(None)
+        # Disable file chooser and set stop icon
+        self.ui.text_program.set_sensitive(False)
+        self.ui.action_start.set_sensitive(False)
+        self.ui.action_stop.set_sensitive(True)
+        self.ui.action_browse.set_sensitive(False)
+        # Start debugger
+        self.thread_loader = DaemonThread(
+            target=self.thread_debug_process,
+            args=(shlex.split(self.ui.text_program.get_text()),)
+        )
+        self.thread_loader.start()
+
+    def on_action_stop_activate(self, action):
+        """Stop the running debugger"""
+        if self.thread_loader:
+            self.thread_loader.cancel()
+            try:
+                # Race condition, the debugger may be set to None
+                self.debugger.quit()
+            except AttributeError:
+                pass
+            # Restore file chooser and set execute icon
+            self.ui.text_program.set_sensitive(True)
+            self.ui.action_start.set_sensitive(True)
+            self.ui.action_stop.set_sensitive(False)
+            self.ui.action_browse.set_sensitive(True)
+
+    def on_action_browse_activate(self, action):
+        """Select the program to open"""
+        if program := show_dialog_fileopen(
+                parent=self.ui.window,
+                title=_("Select a program to execute")):
+            self.ui.text_program.set_text(program)

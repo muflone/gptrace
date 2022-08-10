@@ -22,12 +22,220 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <!-- interface-license-type gplv2 -->
-  <object class="GtkImage" id="image_stop">
+  <object class="GtkAccelGroup" id="accelerators"/>
+  <object class="GtkActionGroup" id="actions_application">
+    <property name="accel-group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_quit">
+        <property name="label" context="gtk30">_Quit</property>
+        <property name="short-label" translatable="yes">_Quit</property>
+        <signal name="activate" handler="on_action_quit_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_about">
+        <property name="label" context="gtk30">About</property>
+        <property name="short-label" translatable="yes">About</property>
+        <property name="icon-name">help-about</property>
+        <signal name="activate" handler="on_action_about_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_shortcuts">
+        <property name="label" context="gtk30">Shortcuts</property>
+        <property name="short-label" translatable="yes">Shortcuts</property>
+        <property name="icon-name">help-browser</property>
+        <signal name="activate" handler="on_action_shortcuts_activate" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkActionGroup" id="actions_options">
+    <property name="accel-group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_options">
+        <property name="label" translatable="yes">Open the options menu</property>
+        <property name="short-label" translatable="yes">Open the options menu</property>
+        <property name="icon-name">open-menu</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_options_menu">
+        <property name="label">Open the options menu</property>
+      </object>
+    </child>
+  </object>
+  <object class="GtkActionGroup" id="actions_process">
+    <property name="accel-group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_start">
+        <property name="label" translatable="yes">Start</property>
+        <property name="short-label" translatable="yes">Start</property>
+        <property name="icon-name">system-run</property>
+        <property name="is-important">True</property>
+        <property name="sensitive">False</property>
+        <signal name="activate" handler="on_action_start_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_stop">
+        <property name="label" translatable="yes">Stop</property>
+        <property name="short-label" translatable="yes">Stop</property>
+        <property name="icon-name">process-stop</property>
+        <property name="sensitive">False</property>
+        <signal name="activate" handler="on_action_stop_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_browse">
+        <property name="label" translatable="yes">Browse</property>
+        <property name="short-label" translatable="yes">Browse</property>
+        <property name="icon-name">document-open</property>
+        <signal name="activate" handler="on_action_browse_activate" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="menu_options">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="stock">gtk-stop</property>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_browse">
+        <property name="related-action">action_browse</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label">Clear list</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_start">
+        <property name="related-action">action_start</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label">Start</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_stop">
+        <property name="related-action">action_stop</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label">Stop</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_shortcuts">
+        <property name="related-action">action_shortcuts</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" context="gtk30">Shortcuts</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem_about">
+        <property name="related-action">action_about</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" context="gtk30">About</property>
+      </object>
+    </child>
   </object>
-  <object class="GtkMenu" id="menuOptions">
+  <object class="GtkHeaderBar" id="header_bar">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="title">gpTrace</property>
+    <property name="has-subtitle">False</property>
+    <property name="show-close-button">True</property>
+    <child>
+      <object class="GtkButton" id="button_start">
+        <property name="label">Start</property>
+        <property name="related-action">action_start</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="use-underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_stop">
+        <property name="label">Stop</property>
+        <property name="related-action">action_stop</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="relief">none</property>
+        <property name="use-underline">True</property>
+      </object>
+      <packing>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="button_options">
+        <property name="related-action">action_options</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="focus-on-click">False</property>
+        <property name="receives-default">True</property>
+        <property name="relief">none</property>
+        <property name="popup">menu_options</property>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">end</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_about">
+        <property name="label">About</property>
+        <property name="related-action">action_about</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">True</property>
+        <property name="relief">none</property>
+        <property name="use-underline">True</property>
+      </object>
+      <packing>
+        <property name="pack-type">end</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+  </object>
+  <object class="GtkActionGroup" id="actions_syscalls">
+    <property name="accel-group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_syscalls_select_all">
+        <property name="label">Select All</property>
+        <signal name="activate" handler="on_action_syscalls_select_all_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_file">
+        <property name="label">Filename arguments</property>
+        <signal name="activate" handler="on_action_syscalls_file_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_socket">
+        <property name="label" translatable="yes">Socket functions</property>
+        <signal name="activate" handler="on_action_syscalls_socket_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_clear">
+        <property name="label" translatable="yes">Clear</property>
+        <signal name="activate" handler="on_action_syscalls_clear_activate" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="menu_options2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <child>
@@ -35,7 +243,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Activities</property>
-        <property name="use-underline">True</property>
         <child type="submenu">
           <object class="GtkMenu" id="menuActivities">
             <property name="visible">True</property>
@@ -45,7 +252,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Visible columns</property>
-                <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuActivitiesVisibleColumns">
                     <property name="visible">True</property>
@@ -55,7 +261,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Timestamp</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -65,7 +270,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Time</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -75,7 +279,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Syscall</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -85,7 +288,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Format</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -95,7 +297,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C PID</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -105,7 +306,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Instruction Pointer</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -119,7 +319,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Filter activities</property>
-                <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuActivitiesFilter">
                     <property name="visible">True</property>
@@ -129,7 +328,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Hide the selected syscall</property>
-                        <property name="use-underline">True</property>
                         <signal name="activate" handler="on_menuitemActivitiesFilterHideSyscall_activate" swapped="no"/>
                       </object>
                     </child>
@@ -138,7 +336,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Show only the selected syscall</property>
-                        <property name="use-underline">True</property>
                         <signal name="activate" handler="on_menuitemActivitiesFilterShowOnlySyscall_activate" swapped="no"/>
                       </object>
                     </child>
@@ -147,7 +344,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Reset filter</property>
-                        <property name="use-underline">True</property>
                         <signal name="activate" handler="on_menuitemActivitiesFilterReset_activate" swapped="no"/>
                       </object>
                     </child>
@@ -162,7 +358,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Ignore (don't intercept) the selected syscall</property>
-                        <property name="use-underline">True</property>
                         <signal name="activate" handler="on_menuitemActivitiesIgnoreSyscall_activate" swapped="no"/>
                       </object>
                     </child>
@@ -171,7 +366,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Unignore (intercept) the selected syscall</property>
-                        <property name="use-underline">True</property>
                         <signal name="activate" handler="on_menuitemActivitiesUnignoreSyscall_activate" swapped="no"/>
                       </object>
                     </child>
@@ -188,7 +382,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Counts</property>
-        <property name="use-underline">True</property>
         <child type="submenu">
           <object class="GtkMenu" id="menuCounts">
             <property name="visible">True</property>
@@ -198,7 +391,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Visible columns</property>
-                <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuCountsVisibleColumns">
                     <property name="visible">True</property>
@@ -208,7 +400,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Syscall</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -218,7 +409,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Count</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -232,7 +422,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show only called syscalls</property>
-                <property name="use-underline">True</property>
                 <signal name="toggled" handler="on_menuitemCountsOnlyCalled_toggled" swapped="no"/>
               </object>
             </child>
@@ -245,7 +434,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Files</property>
-        <property name="use-underline">True</property>
         <child type="submenu">
           <object class="GtkMenu" id="menuFiles">
             <property name="visible">True</property>
@@ -255,7 +443,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Visible columns</property>
-                <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuFilesVisibleColumns">
                     <property name="visible">True</property>
@@ -265,7 +452,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C PID</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -275,7 +461,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Existing</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -285,7 +470,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C File Path</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -299,7 +483,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show only existing files</property>
-                <property name="use-underline">True</property>
                 <signal name="toggled" handler="on_menuitemFilesShowOnlyExisting_toggled" swapped="no"/>
               </object>
             </child>
@@ -312,7 +495,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Processes</property>
-        <property name="use-underline">True</property>
         <child type="submenu">
           <object class="GtkMenu" id="menuProcesses">
             <property name="visible">True</property>
@@ -322,7 +504,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Visible columns</property>
-                <property name="use-underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuProcessesVisibleColumns">
                     <property name="visible">True</property>
@@ -332,7 +513,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C PID</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -342,7 +522,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Timestamp</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -352,7 +531,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Time</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -362,7 +540,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">C Information</property>
-                        <property name="use-underline">True</property>
                         <property name="active">True</property>
                         <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
                       </object>
@@ -376,7 +553,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
-      <object class="GtkSeparatorMenuItem" id="menuitemSeparator1">
+      <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
       </object>
@@ -386,7 +563,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Clear list now</property>
-        <property name="use-underline">True</property>
         <signal name="activate" handler="on_menuitemClear_activate" swapped="no"/>
       </object>
     </child>
@@ -395,12 +571,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label" translatable="yes">Clear automatically</property>
-        <property name="use-underline">True</property>
         <property name="active">True</property>
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="storeActivities">
+  <object class="GtkListStore" id="model_activities">
     <columns>
       <!-- column-name Timestamp -->
       <column type="gdouble"/>
@@ -416,10 +591,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkTreeModelFilter" id="filterActivities">
-    <property name="child-model">storeActivities</property>
+  <object class="GtkTreeModelFilter" id="filter_activities">
+    <property name="child-model">model_activities</property>
   </object>
-  <object class="GtkListStore" id="storeCounts">
+  <object class="GtkListStore" id="model_counts">
     <columns>
       <!-- column-name Syscall -->
       <column type="gchararray"/>
@@ -429,10 +604,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gboolean"/>
     </columns>
   </object>
-  <object class="GtkTreeModelFilter" id="filterCounts">
-    <property name="child-model">storeCounts</property>
+  <object class="GtkTreeModelFilter" id="filter_counts">
+    <property name="child-model">model_counts</property>
   </object>
-  <object class="GtkTreeStore" id="storeFiles">
+  <object class="GtkTreeStore" id="model_files">
     <columns>
       <!-- column-name PID -->
       <column type="gchararray"/>
@@ -442,10 +617,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gboolean"/>
     </columns>
   </object>
-  <object class="GtkTreeModelFilter" id="filterFiles">
-    <property name="child-model">storeFiles</property>
+  <object class="GtkTreeModelFilter" id="filter_files">
+    <property name="child-model">model_files</property>
   </object>
-  <object class="GtkListStore" id="storeInterceptedSyscalls">
+  <object class="GtkListStore" id="model_intercepted_syscalls">
     <columns>
       <!-- column-name colChecked -->
       <column type="gboolean"/>
@@ -461,7 +636,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gboolean"/>
     </columns>
   </object>
-  <object class="GtkTreeStore" id="storeProcesses">
+  <object class="GtkTreeStore" id="model_processes">
     <columns>
       <!-- column-name PID -->
       <column type="gchararray"/>
@@ -475,12 +650,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkApplicationWindow" id="winMain">
+  <object class="GtkApplicationWindow" id="window">
     <property name="can-focus">False</property>
     <property name="border-width">6</property>
-    <signal name="delete-event" handler="on_winMain_delete_event" swapped="no"/>
+    <accel-groups>
+      <group name="accelerators"/>
+    </accel-groups>
+    <signal name="delete-event" handler="on_window_delete_event" swapped="no"/>
     <child>
-      <object class="GtkBox" id="box1">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
@@ -491,7 +669,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="can-focus">False</property>
             <property name="spacing">5</property>
             <child>
-              <object class="GtkLabel" id="lblProgram">
+              <object class="GtkLabel" id="label_program">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Program to execute:</property>
@@ -503,12 +681,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="txtProgram">
+              <object class="GtkEntry" id="text_program">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="secondary-icon-stock">gtk-clear</property>
-                <signal name="changed" handler="on_txtProgram_changed" swapped="no"/>
-                <signal name="icon-release" handler="on_txtProgram_icon_release" swapped="no"/>
+                <signal name="changed" handler="on_text_program_changed" swapped="no"/>
+                <signal name="icon-release" handler="on_text_program_icon_release" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -517,67 +695,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnOptions">
+              <object class="GtkButton" id="button_browse">
+                <property name="label" translatable="yes">Browse</property>
+                <property name="related-action">action_browse</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
-                <signal name="clicked" handler="on_btnOptions_clicked" swapped="no"/>
-                <child>
-                  <object class="GtkImage" id="imgGear">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="icon-name">emblem-system-symbolic</property>
-                  </object>
-                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="pack-type">end</property>
                 <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToggleButton" id="btnStartStop">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <signal name="toggled" handler="on_btnStartStop_toggled" swapped="no"/>
-                <child>
-                  <object class="GtkImage" id="image_start">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="stock">gtk-execute</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnProgramOpen">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <signal name="clicked" handler="on_btnProgramOpen_clicked" swapped="no"/>
-                <child>
-                  <object class="GtkImage" id="imgProgramOpen">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="stock">gtk-open</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">4</property>
               </packing>
             </child>
           </object>
@@ -588,14 +717,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           </packing>
         </child>
         <child>
-          <object class="GtkInfoBar" id="infobarInformation">
+          <object class="GtkInfoBar" id="infobar_information">
             <property name="app-paintable">True</property>
             <property name="can-focus">False</property>
             <property name="no-show-all">True</property>
             <property name="show-close-button">True</property>
-            <signal name="response" handler="on_infobar1_response" swapped="no"/>
+            <signal name="response" handler="on_infobar_information_response" swapped="no"/>
             <child internal-child="action_area">
-              <object class="GtkButtonBox" id="infobarInformation-action_area1">
+              <object class="GtkButtonBox">
                 <property name="can-focus">False</property>
                 <property name="layout-style">start</property>
                 <child>
@@ -612,14 +741,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </packing>
             </child>
             <child internal-child="content_area">
-              <object class="GtkBox" id="infobarInformation-content_area1">
+              <object class="GtkBox">
                 <property name="can-focus">False</property>
                 <property name="spacing">16</property>
                 <child>
-                  <object class="GtkLabel" id="lblInfoBarContent">
+                  <object class="GtkLabel" id="label_infobar_content">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label">lblInfoBarContent</property>
+                    <property name="label">label_infobar_content</property>
                     <property name="use-markup">True</property>
                     <property name="ellipsize">end</property>
                   </object>
@@ -644,529 +773,355 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           </packing>
         </child>
         <child>
-          <object class="GtkPaned" id="paned1">
+          <object class="GtkNotebook">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkNotebook" id="noteSections">
+              <object class="GtkScrolledWindow" id="scroll_section_activities">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="scrollActivities">
+                  <object class="GtkTreeView" id="treeview_activities">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
+                    <property name="model">filter_activities</property>
+                    <property name="search-column">2</property>
+                    <signal name="button-release-event" handler="on_treeview_activities_button_release_event" swapped="no"/>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
                     <child>
-                      <object class="GtkTreeView" id="tvwActivities">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="model">filterActivities</property>
-                        <property name="search-column">2</property>
-                        <signal name="button-release-event" handler="on_tvwActivities_button_release_event" swapped="no"/>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection2"/>
-                        </child>
+                      <object class="GtkTreeViewColumn" id="column_activities_timestamp">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Timestamp</property>
+                        <property name="clickable">True</property>
+                        <property name="alignment">0.5</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesTimestamp">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Timestamp</property>
-                            <property name="clickable">True</property>
-                            <property name="alignment">0.5</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesTimestamp"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cell_activities_timestamp"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_activities_time">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Time</property>
+                        <property name="clickable">True</property>
+                        <property name="alignment">0.5</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesTime">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Time</property>
-                            <property name="clickable">True</property>
-                            <property name="alignment">0.5</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesTime"/>
-                              <attributes>
-                                <attribute name="text">1</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cell_activities_time"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_activities_syscall">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Syscall</property>
+                        <property name="expand">True</property>
+                        <property name="clickable">True</property>
+                        <property name="alignment">0.5</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesSyscall">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Syscall</property>
-                            <property name="expand">True</property>
-                            <property name="clickable">True</property>
-                            <property name="alignment">0.5</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesSyscall"/>
-                              <attributes>
-                                <attribute name="text">2</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cell_activities_syscall"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_activities_format">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Format</property>
+                        <property name="clickable">True</property>
+                        <property name="alignment">0.5</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesFormat">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Format</property>
-                            <property name="clickable">True</property>
-                            <property name="alignment">0.5</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesFormat">
-                                <property name="ellipsize">end</property>
-                              </object>
-                              <attributes>
-                                <attribute name="text">3</attribute>
-                              </attributes>
-                            </child>
+                          <object class="GtkCellRendererText" id="cell_activities_format">
+                            <property name="ellipsize">end</property>
                           </object>
+                          <attributes>
+                            <attribute name="text">3</attribute>
+                          </attributes>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_activities_pid">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">PID</property>
+                        <property name="clickable">True</property>
+                        <property name="alignment">0.5</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesPID">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">PID</property>
-                            <property name="clickable">True</property>
-                            <property name="alignment">0.5</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesPID"/>
-                              <attributes>
-                                <attribute name="text">4</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cell_activities_pid"/>
+                          <attributes>
+                            <attribute name="text">4</attribute>
+                          </attributes>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_activities_ip">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Instruction pointer</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="colActivitiesIP">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Instruction pointer</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellActivitiesIP"/>
-                              <attributes>
-                                <attribute name="text">5</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cell_activities_ip"/>
+                          <attributes>
+                            <attribute name="text">5</attribute>
+                          </attributes>
                         </child>
                       </object>
                     </child>
                   </object>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="lblSectionActivities">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Activities</property>
-                  </object>
-                  <packing>
-                    <property name="tab-fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrollCounts">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
-                    <child>
-                      <object class="GtkTreeView" id="tvwCounts">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="model">filterCounts</property>
-                        <property name="search-column">0</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection3"/>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colCountsSyscall">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Syscall</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellCountsSyscall"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colCountsCount">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Calls count</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellCountsCount"/>
-                              <attributes>
-                                <attribute name="text">1</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="lblSectionTotals">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Counts</property>
-                  </object>
-                  <packing>
-                    <property name="position">1</property>
-                    <property name="tab-fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrollFiles">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
-                    <child>
-                      <object class="GtkTreeView" id="tvwFiles">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="model">storeFiles</property>
-                        <property name="search-column">1</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection4"/>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colFilesPID">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">PID</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellFilesPID"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colFilesExisting">
-                            <property name="title" translatable="yes">Existing</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererToggle" id="cellFilesExisting"/>
-                              <attributes>
-                                <attribute name="active">2</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colFilesPath">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">File path</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellFilesPath"/>
-                              <attributes>
-                                <attribute name="text">1</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="lblSectionFiles">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Files</property>
-                  </object>
-                  <packing>
-                    <property name="position">2</property>
-                    <property name="tab-fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrollProcesses">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
-                    <child>
-                      <object class="GtkTreeView" id="tvwProcesses">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="model">storeProcesses</property>
-                        <property name="enable-search">False</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection5"/>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colProcessesPID">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">PID</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellProcessesPID"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colProcessesTimestamp">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Timestamp</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellProcessesTimestamp"/>
-                              <attributes>
-                                <attribute name="text">1</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colProcessesTime">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Time</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellProcessesTime"/>
-                              <attributes>
-                                <attribute name="text">2</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="colProcessesInformation">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes">Information</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellProcessesInformation"/>
-                              <attributes>
-                                <attribute name="text">3</attribute>
-                              </attributes>
-                            </child>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellProcessesValue"/>
-                              <attributes>
-                                <attribute name="text">4</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="lblSectionProcesses">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Processes</property>
-                  </object>
-                  <packing>
-                    <property name="position">3</property>
-                    <property name="tab-fill">False</property>
-                  </packing>
                 </child>
               </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label_section_activities">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Activities</property>
+              </object>
               <packing>
-                <property name="resize">True</property>
-                <property name="shrink">True</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
-              <object class="GtkExpander" id="expInterceptedSyscalls">
+              <object class="GtkScrolledWindow" id="scroll_section_counts">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
                 <child>
-                  <object class="GtkBox" id="boxInterceptedSyscalls">
-                    <property name="height-request">150</property>
+                  <object class="GtkTreeView" id="treeview_counts">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="spacing">5</property>
-                    <child>
-                      <object class="GtkScrolledWindow" id="scrollInterceptedSyscalls">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="shadow-type">in</property>
-                        <child>
-                          <object class="GtkTreeView" id="tvwInterceptedSyscalls">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="model">storeInterceptedSyscalls</property>
-                            <property name="search-column">1</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection" id="treeview-selection"/>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="tvwcolInterceptedChecked">
-                                <property name="title" translatable="yes">Checked</property>
-                                <property name="sort-column-id">0</property>
-                                <child>
-                                  <object class="GtkCellRendererToggle" id="cellInterceptedChecked">
-                                    <signal name="toggled" handler="on_cellInterceptedChecked_toggled" swapped="no"/>
-                                  </object>
-                                  <attributes>
-                                    <attribute name="active">0</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="tvwcolInterceptedSyscalls">
-                                <property name="title" translatable="yes">Syscall</property>
-                                <property name="sort-column-id">1</property>
-                                <child>
-                                  <object class="GtkCellRendererText" id="cellInterceptedSyscalls"/>
-                                  <attributes>
-                                    <attribute name="text">1</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="tvwcolInterceptedFormat">
-                                <property name="sizing">autosize</property>
-                                <property name="title" translatable="yes">Format</property>
-                                <child>
-                                  <object class="GtkCellRendererText" id="cellInterceptedResult"/>
-                                  <attributes>
-                                    <attribute name="text">2</attribute>
-                                  </attributes>
-                                </child>
-                                <child>
-                                  <object class="GtkCellRendererText" id="cellInterceptedArguments"/>
-                                  <attributes>
-                                    <attribute name="text">3</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
+                    <property name="can-focus">True</property>
+                    <property name="model">filter_counts</property>
+                    <property name="search-column">0</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
                     </child>
                     <child>
-                      <object class="GtkBox" id="boxInterceptedSyscallsButtons">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">4</property>
+                      <object class="GtkTreeViewColumn" id="column_counts_syscall">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Syscall</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkButton" id="btnInterceptedSyscallsSelectAll">
-                            <property name="label">gtk-select-all</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="use-stock">True</property>
-                            <signal name="clicked" handler="on_btnInterceptedSyscallsSelectAll_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnInterceptedSyscallsSelectForFile">
-                            <property name="label">Filename arguments</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btnInterceptedSyscallsSelectForFile_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnInterceptedSyscallsSelectForSocket">
-                            <property name="label">Socket functions</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_btnInterceptedSyscallsSelectForSocket_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="btnInterceptedSyscallsClear">
-                            <property name="label">gtk-clear</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="use-stock">True</property>
-                            <signal name="clicked" handler="on_btnInterceptedSyscallsClear_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">3</property>
-                          </packing>
+                          <object class="GtkCellRendererText" id="cell_counts_syscall"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
-                  </object>
-                </child>
-                <child type="label">
-                  <object class="GtkLabel" id="lblInterceptedSyscalls">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Selected intercepted syscalls (%(selected)d of %(total)d)</property>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_counts_count">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Calls count</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_counts_count"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
               <packing>
-                <property name="resize">False</property>
-                <property name="shrink">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label_section_counts">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Counts</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab-fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scroll_section_files">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview_files">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="model">model_files</property>
+                    <property name="search-column">1</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_files_pid">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">PID</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_files_pid"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_files_existing">
+                        <property name="title" translatable="yes">Existing</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererToggle" id="cell_files_existing"/>
+                          <attributes>
+                            <attribute name="active">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_files_path">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">File path</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_files_path"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label_section_files">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Files</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+                <property name="tab-fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scroll_section_processes">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview_processes">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="model">model_processes</property>
+                    <property name="enable-search">False</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_processes_pid">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">PID</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_processes_pid"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_processes_timestamp">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Timestamp</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_processes_timestamp"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_processes_time">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Time</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_processes_time"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="column_processes_information">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes">Information</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_processes_information"/>
+                          <attributes>
+                            <attribute name="text">3</attribute>
+                          </attributes>
+                        </child>
+                        <child>
+                          <object class="GtkCellRendererText" id="cell_processes_value"/>
+                          <attributes>
+                            <attribute name="text">4</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label_section_processes">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Processes</property>
+              </object>
+              <packing>
+                <property name="position">3</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
           </object>
@@ -1174,6 +1129,154 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkExpander" id="expander_syscalls">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="expanded">True</property>
+            <child>
+              <!-- n-columns=2 n-rows=4 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-spacing">3</property>
+                <property name="column-spacing">5</property>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="shadow-type">in</property>
+                    <child>
+                      <object class="GtkTreeView" id="treeview_syscalls">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="model">model_intercepted_syscalls</property>
+                        <property name="search-column">1</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection"/>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="column_syscalls_checked">
+                            <property name="title" translatable="yes">Checked</property>
+                            <property name="sort-column-id">0</property>
+                            <child>
+                              <object class="GtkCellRendererToggle" id="cell_syscalls_checked">
+                                <signal name="toggled" handler="on_cell_syscalls_checked_toggled" swapped="no"/>
+                              </object>
+                              <attributes>
+                                <attribute name="active">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="column_syscalls_name">
+                            <property name="title" translatable="yes">Syscall</property>
+                            <property name="sort-column-id">1</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cell_syscalls_name"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="column_syscalls_format">
+                            <property name="sizing">autosize</property>
+                            <property name="title" translatable="yes">Format</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cell_syscalls_result"/>
+                              <attributes>
+                                <attribute name="text">2</attribute>
+                              </attributes>
+                            </child>
+                            <child>
+                              <object class="GtkCellRendererText" id="cell_syscalls_arguments"/>
+                              <attributes>
+                                <attribute name="text">3</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="height">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_syscalls_select_all">
+                    <property name="use-action-appearance">True</property>
+                    <property name="related-action">action_syscalls_select_all</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_syscalls_file">
+                    <property name="use-action-appearance">True</property>
+                    <property name="related-action">action_syscalls_file</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_syscalls_socket">
+                    <property name="use-action-appearance">True</property>
+                    <property name="related-action">action_syscalls_socket</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button_syscalls_clear">
+                    <property name="use-action-appearance">True</property>
+                    <property name="related-action">action_syscalls_clear</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel" id="label_syscalls">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Selected intercepted syscalls (%(selected)d of %(total)d)</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>

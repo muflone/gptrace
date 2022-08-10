@@ -20,23 +20,28 @@
 
 from gi.repository.GdkPixbuf import Pixbuf
 
-from gptrace.constants import (APP_NAME,
-                               APP_VERSION,
-                               APP_DESCRIPTION,
-                               APP_AUTHOR,
+from gptrace.constants import (APP_AUTHOR,
                                APP_AUTHOR_EMAIL,
-                               APP_URL,
+                               APP_NAME,
                                APP_COPYRIGHT,
+                               APP_DESCRIPTION,
+                               APP_URL,
+                               APP_VERSION,
                                FILE_ICON,
                                FILE_LICENSE,
                                FILE_RESOURCES,
                                FILE_TRANSLATORS)
-from gptrace.functions import get_ui_file, readlines
-from gptrace.gtkbuilder_loader import GtkBuilderLoader
+from gptrace.functions import readlines
+from gptrace.localize import _
+from gptrace.ui.base import UIBase
 
 
-class AboutWindow(object):
-    def __init__(self, win_parent, show=False):
+class UIAbout(UIBase):
+    def __init__(self, parent, settings, options):
+        """Prepare the about dialog"""
+        super().__init__(filename='about.ui')
+        self.settings = settings
+        self.options = options
         # Retrieve the translators list
         translators = []
         for line in readlines(FILE_TRANSLATORS, False):
@@ -45,37 +50,32 @@ class AboutWindow(object):
             line = line.replace('(at)', '@').strip()
             if line not in translators:
                 translators.append(line)
-        # Load the user interface
-        self.ui = GtkBuilderLoader(get_ui_file('about.ui'))
         # Set various properties
-        self.ui.dialogAbout.set_program_name(APP_NAME)
-        self.ui.dialogAbout.set_version('Version %s' % APP_VERSION)
-        self.ui.dialogAbout.set_comments(APP_DESCRIPTION)
-        self.ui.dialogAbout.set_website(APP_URL)
-        self.ui.dialogAbout.set_copyright(APP_COPYRIGHT)
-        self.ui.dialogAbout.set_authors(
-            ['%s <%s>' % (APP_AUTHOR, APP_AUTHOR_EMAIL)])
-        # self.dialog.set_license_type(Gtk.License.GPL_2_0)
-        self.ui.dialogAbout.set_license(
-            '\n'.join(readlines(FILE_LICENSE, True)))
-        self.ui.dialogAbout.set_translator_credits('\n'.join(translators))
+        self.ui.dialog.set_program_name(APP_NAME)
+        self.ui.dialog.set_version(_('Version {VERSION}').format(
+            VERSION=APP_VERSION))
+        self.ui.dialog.set_comments(APP_DESCRIPTION)
+        self.ui.dialog.set_website(APP_URL)
+        self.ui.dialog.set_copyright(APP_COPYRIGHT)
+        # Prepare lists for authors and contributors
+        authors = [f'{APP_AUTHOR} <{APP_AUTHOR_EMAIL}>']
+        self.ui.dialog.set_authors(authors)
+        self.ui.dialog.set_license('\n'.join(readlines(FILE_LICENSE, True)))
+        self.ui.dialog.set_translator_credits('\n'.join(translators))
         # Retrieve the external resources links
         for line in readlines(FILE_RESOURCES, False):
             resource_type, resource_url = line.split(':', 1)
-            self.ui.dialogAbout.add_credit_section(resource_type,
-                                                   (resource_url,))
-        icon_logo = Pixbuf.new_from_file(FILE_ICON)
-        self.ui.dialogAbout.set_logo(icon_logo)
-        self.ui.dialogAbout.set_transient_for(win_parent)
-        # Optionally show the dialog
-        if show:
-            self.show()
+            self.ui.dialog.add_credit_section(resource_type, (resource_url,))
+        icon_logo = Pixbuf.new_from_file(str(FILE_ICON))
+        self.ui.dialog.set_logo(icon_logo)
+        self.ui.dialog.set_transient_for(parent)
 
     def show(self):
         """Show the About dialog"""
-        self.ui.dialogAbout.run()
-        self.ui.dialogAbout.hide()
+        self.ui.dialog.run()
+        self.ui.dialog.hide()
 
     def destroy(self):
         """Destroy the About dialog"""
-        self.ui.dialogAbout.destroy()
+        self.ui.dialog.destroy()
+        self.ui.dialog = None

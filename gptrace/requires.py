@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 ##
 #     Project: gpTrace
 # Description: Trace the activities of an external application
@@ -19,7 +18,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gptrace.main import main
+import gi
 
-if __name__ == '__main__':
-    main()
+if gi.require_version('Gtk', '3.0') is None:
+    from gi.repository import Gtk                                  # noqa: F401
+if gi.require_version('GdkPixbuf', '2.0') is None:
+    from gi.repository import GdkPixbuf                            # noqa: F401

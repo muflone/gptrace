@@ -18,25 +18,22 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-import gi
-gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
-from gi.repository import Gtk                                      # noqa: E402
-
-from gptrace.constants import APP_ID                               # noqa: E402
-from gptrace.ui.main import MainWindow                             # noqa: E402
+from gptrace.constants import APP_ID
+from gptrace.ui.main import UIMain
 
 
 class Application(Gtk.Application):
-    def __init__(self, settings):
+    def __init__(self, options):
         super(self.__class__, self).__init__(application_id=APP_ID)
-        self.settings = settings
-        self.connect("activate", self.activate)
+        self.options = options
+        self.connect('activate', self.activate)
         self.connect('startup', self.startup)
 
     def startup(self, application):
         """Configure the application during the startup"""
-        self.ui = MainWindow(self, self.settings)
+        self.ui = UIMain(self, self.options)
 
     def activate(self, application):
         """Execute the application"""
