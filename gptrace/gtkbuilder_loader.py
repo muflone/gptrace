@@ -36,6 +36,10 @@ class GtkBuilderLoader(object):
             assert self.__widgets[key], f'Missing widget: {key}'
         return self.__widgets[key]
 
+    def get_objects(self):
+        """Get the widgets list from GtkBuilder"""
+        return self.builder.get_objects()
+
     def get_object(self, key):
         """Get a widget from GtkBuilder using a method"""
         return self.__getattr__(key)
