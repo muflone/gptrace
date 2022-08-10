@@ -35,7 +35,7 @@ class ShowHideColumnHeaders(object):
     def load_visible_columns(self, section):
         """Load the visible columns from the settings"""
         visible_columns = self.settings.get_visible_columns(section)
-        if visible_columns is not None:
+        if visible_columns:
             for items in self.column_headers[section]:
                 for column_name, (column, menu, menuitem) in items.items():
                     menuitem.set_active(column_name in visible_columns)

@@ -116,7 +116,9 @@ class Settings(object):
         """Get the visible column list"""
         results = None
         if self.config.has_option(section, 'visible columns'):
+            # Skip empty values
             results = self.config.get(section, 'visible columns').split(',')
+            results = list(filter(len, results))
         return results
 
     def set_visible_columns(self, section, columns_list):
