@@ -40,6 +40,10 @@ class GtkBuilderLoader(object):
         """Get the widgets list from GtkBuilder"""
         return self.builder.get_objects()
 
+    def get_objects_by_type(self, type):
+        """Get the widgets list with a specific type from GtkBuilder"""
+        return [w for w in self.get_objects() if isinstance(w, type)]
+
     def get_object(self, key):
         """Get a widget from GtkBuilder using a method"""
         return self.__getattr__(key)
