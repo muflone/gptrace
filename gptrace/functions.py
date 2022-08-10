@@ -91,11 +91,6 @@ def GTK30_(message, context=None):
                                    context, message) or message)
 
 
-def show_popup_menu(menu):
-    """Show a popup menu at the current position"""
-    return menu.popup(None, None, None, 0, 0, Gtk.get_current_event_time())
-
-
 def get_ui_file(filename):
     """Return the full path of a Glade/UI file"""
     return os.path.join(DIR_UI, filename)
@@ -108,6 +103,5 @@ __all__ = [
     'find_button_from_gtktreeviewcolumn',
     '_',
     'GTK30_',
-    'show_popup_menu',
     'get_ui_file'
 ]

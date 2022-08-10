@@ -38,8 +38,7 @@ from gptrace.event_tracer import EventTracer
 from gptrace.functions import (_,
                                find_button_from_gtktreeviewcolumn,
                                process_events,
-                               show_dialog_fileopen,
-                               show_popup_menu)
+                               show_dialog_fileopen)
 from gptrace.models.activities import ModelActivities
 from gptrace.models.counts import ModelCounts
 from gptrace.models.files import ModelFiles
@@ -404,7 +403,7 @@ class UIMain(UIBase):
 
     def on_btnOptions_clicked(self, widget):
         """Show the options popup menu"""
-        show_popup_menu(self.ui.menuOptions)
+        self.show_popup_menu(self.ui.menuOptions)
 
     def on_menuitemVisibleColumns_toggled(self, widget):
         """Hide or show a column header"""
@@ -419,7 +418,7 @@ class UIMain(UIBase):
     def on_tvwcolumn_button_release_event(self, widget, event, menu):
         """Show columns visibility menu on right click"""
         if event.button == Gdk.BUTTON_SECONDARY:
-            show_popup_menu(menu)
+            self.show_popup_menu(menu)
 
     def on_menuitemClear_activate(self, widget):
         """Clear the syscalls list"""
@@ -502,7 +501,7 @@ class UIMain(UIBase):
             current_selection = self.ui.treeview_activities.get_path_at_pos(
                 int(event.x), int(event.y))
             if current_selection:
-                show_popup_menu(self.ui.menuActivitiesFilter)
+                self.show_popup_menu(self.ui.menuActivitiesFilter)
 
     def check_for_filtered_syscall(self, model, iter, data):
         """Check if the sycall name should be filtered"""

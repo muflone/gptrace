@@ -88,3 +88,15 @@ class UIBase(object):
         """Add the suggested-action style to a widget"""
         for button in buttons:
             button.get_style_context().add_class('suggested-action')
+
+    def show_popup_menu(self, menu: Gtk.Menu):
+        """Show a popup menu at the current position"""
+        if not Gtk.check_version(3, 22, 0):
+            menu.popup_at_pointer(trigger_event=None)
+        else:
+            menu.popup(parent_menu_shell=None,
+                       parent_menu_item=None,
+                       func=None,
+                       data=0,
+                       button=0,
+                       activate_time=Gtk.get_current_event_time())
