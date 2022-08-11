@@ -118,7 +118,7 @@ class UIMain(UIBase):
                 syscall in SOCKET_SYSCALL_NAMES,
             ))
             self.model_counts.add(items=(syscall, 0, False))
-        self.update_intercepted_syscalls_count()
+        self.do_update_intercepted_syscalls_count()
         # Restore visible columns
         for current_section in self.column_headers.get_sections():
             self.column_headers.load_visible_columns(current_section)
@@ -250,10 +250,6 @@ class UIMain(UIBase):
         # Connect signals from the UI file to the functions with the same name
         self.ui.connect_signals(self)
 
-    def on_window_delete_event(self, widget, event):
-        """Close the application by closing the main window"""
-        self.ui.action_quit.activate()
-
     def on_action_about_activate(self, widget):
         """Show the about dialog"""
         about = UIAbout(parent=self.ui.window,
@@ -261,10 +257,6 @@ class UIMain(UIBase):
                         options=self.options)
         about.show()
         about.destroy()
-
-    def on_action_options_menu_activate(self, widget):
-        """Open the options menu"""
-        self.ui.button_options.clicked()
 
     def on_action_shortcuts_activate(self, action):
         """Show the shortcuts dialog"""
@@ -304,17 +296,105 @@ class UIMain(UIBase):
         self.ui.window.destroy()
         self.application.quit()
 
+    def on_action_options_menu_activate(self, widget):
+        """Open the options menu"""
+        self.ui.button_options.clicked()
+
+    def on_action_start_activate(self, action):
+        """Start debugger"""
+        if self.ui.menuitem_auto_clear.get_active():
+            self.on_menuitemClear_activate(None)
+        # Disable file chooser and set stop icon
+        self.ui.text_program.set_sensitive(False)
+        self.ui.action_start.set_sensitive(False)
+        self.ui.action_stop.set_sensitive(True)
+        self.ui.action_browse.set_sensitive(False)
+        self.ui.text_program.set_property('secondary-icon-sensitive', False)
+        self.ui.button_start.set_visible(False)
+        self.ui.button_stop.set_visible(True)
+        # Start debugger
+        self.thread_loader = DaemonThread(
+            target=self.do_debug_process,
+            args=(shlex.split(self.ui.text_program.get_text()),)
+        )
+        self.thread_loader.start()
+
+    def on_action_stop_activate(self, action):
+        """Stop the running debugger"""
+        if self.thread_loader:
+            self.thread_loader.cancel()
+            try:
+                # Race condition, the debugger may be set to None
+                self.debugger.quit()
+            except AttributeError:
+                pass
+            # Restore file chooser and set execute icon
+            self.ui.text_program.set_sensitive(True)
+            self.ui.action_start.set_sensitive(True)
+            self.ui.action_stop.set_sensitive(False)
+            self.ui.action_browse.set_sensitive(True)
+            self.ui.text_program.set_property('secondary-icon-sensitive', True)
+            self.ui.button_start.set_visible(True)
+            self.ui.button_stop.set_visible(False)
+
+    def on_action_browse_activate(self, action):
+        """Select the program to open"""
+        if program := show_dialog_fileopen(
+                parent=self.ui.window,
+                title=_("Select a program to execute")):
+            self.ui.text_program.set_text(program)
+
+    def on_action_syscalls_select_all_activate(self, action):
+        """Intercept all the syscalls"""
+        for row in self.model_intercepted_syscalls:
+            self.model_intercepted_syscalls.set_checked(row, True)
+        self.do_update_intercepted_syscalls_count()
+
+    def on_action_syscalls_file_activate(self, action):
+        """Intercept all the syscalls that use filenames"""
+        for row in self.model_intercepted_syscalls:
+            if self.model_intercepted_syscalls.get_has_filename_arguments(row):
+                self.model_intercepted_syscalls.set_checked(row, True)
+        self.do_update_intercepted_syscalls_count()
+
+    def on_action_syscalls_socket_activate(self, action):
+        """Intercept all the syscalls used by sockets"""
+        for row in self.model_intercepted_syscalls:
+            if self.model_intercepted_syscalls.get_socket_function(row):
+                self.model_intercepted_syscalls.set_checked(row, True)
+        self.do_update_intercepted_syscalls_count()
+
+    def on_action_syscalls_clear_activate(self, action):
+        """Disable any syscall to intercept"""
+        for row in self.model_intercepted_syscalls:
+            self.model_intercepted_syscalls.set_checked(row, False)
+        self.do_update_intercepted_syscalls_count()
+
+    def on_cell_syscalls_checked_toggled(self, widget, treepath):
+        """Handle click on the checked column"""
+        self.model_intercepted_syscalls.toggle_checked(treepath)
+        self.do_update_intercepted_syscalls_count()
+
+    def on_infobar_information_response(self, widget, response):
+        """Click on the infobar buttons"""
+        if response == Gtk.ResponseType.CLOSE:
+            self.ui.infobar_information.set_visible(False)
+
+    def on_text_program_changed(self, widget):
+        """Enable or disable the action if a program path was set"""
+        self.ui.action_start.set_sensitive(
+            len(self.ui.text_program.get_text()) > 0)
+
     def on_text_program_icon_release(self, widget, icon_position, event):
         """Click an icon next to a Entry"""
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
             self.ui.action_browse.activate()
 
-    def on_text_program_changed(self, widget):
-        """Enable or disable the button if a program path was set"""
-        self.ui.action_start.set_sensitive(
-            len(self.ui.text_program.get_text()) > 0)
+    def on_window_delete_event(self, widget, event):
+        """Close the application by closing the main window"""
+        self.ui.action_quit.activate()
 
-    def thread_debug_process(self, program):
+    def do_debug_process(self, program):
         """Debug the requested program to trace the syscalls"""
 
         def add_process(pid, information, value):
@@ -340,14 +420,14 @@ class UIMain(UIBase):
                 'show_pid': True,
             }),
             program=program,
-            ignore_syscall_callback=self.ignore_syscall_callback,
-            syscall_callback=self.syscall_callback,
+            ignore_syscall_callback=self.do_syscall_callback_ignore,
+            syscall_callback=self.do_syscall_callback,
             event_callback=EventTracer(add_process).handle_event,
-            quit_callback=self.quit_callback)
+            quit_callback=self.do_quit_callback)
         self.debugger.main()
         return True
 
-    def syscall_callback(self, syscall):
+    def do_syscall_callback(self, syscall):
         """Add the syscall to the syscalls model"""
         now = datetime.datetime.now()
         GObject.idle_add(self.model_activities.add, (
@@ -369,7 +449,7 @@ class UIMain(UIBase):
                     argument_text[1:-1],
                     os.path.exists(argument_text[1:-1])))
 
-    def ignore_syscall_callback(self, syscall):
+    def do_syscall_callback_ignore(self, syscall):
         """Determine if to ignore a callback before it's processed"""
         if syscall.name in self.model_intercepted_syscalls.syscalls:
             # Process the syscall
@@ -378,42 +458,11 @@ class UIMain(UIBase):
             # Ignore the syscall
             return True
 
-    def quit_callback(self):
+    def do_quit_callback(self):
         """The debugger is quitting"""
         self.ui.action_stop.activate()
 
-    def on_cell_syscalls_checked_toggled(self, widget, treepath):
-        """Handle click on the checked column"""
-        self.model_intercepted_syscalls.toggle_checked(treepath)
-        self.update_intercepted_syscalls_count()
-
-    def on_action_syscalls_select_all_activate(self, action):
-        """Intercept all the syscalls"""
-        for row in self.model_intercepted_syscalls:
-            self.model_intercepted_syscalls.set_checked(row, True)
-        self.update_intercepted_syscalls_count()
-
-    def on_action_syscalls_clear_activate(self, action):
-        """Disable any syscall to intercept"""
-        for row in self.model_intercepted_syscalls:
-            self.model_intercepted_syscalls.set_checked(row, False)
-        self.update_intercepted_syscalls_count()
-
-    def on_action_syscalls_file_activate(self, action):
-        """Intercept all the syscalls that use filenames"""
-        for row in self.model_intercepted_syscalls:
-            if self.model_intercepted_syscalls.get_has_filename_arguments(row):
-                self.model_intercepted_syscalls.set_checked(row, True)
-        self.update_intercepted_syscalls_count()
-
-    def on_action_syscalls_socket_activate(self, action):
-        """Intercept all the syscalls used by sockets"""
-        for row in self.model_intercepted_syscalls:
-            if self.model_intercepted_syscalls.get_socket_function(row):
-                self.model_intercepted_syscalls.set_checked(row, True)
-        self.update_intercepted_syscalls_count()
-
-    def update_intercepted_syscalls_count(self):
+    def do_update_intercepted_syscalls_count(self):
         """Update the intercepted syscalls count label"""
         self.ui.label_syscalls.set_text(
             self.label_syscalls_text % {
@@ -509,7 +558,7 @@ class UIMain(UIBase):
                             value=status)
                         break
                 # Update the intercepted syscalls count
-                self.update_intercepted_syscalls_count()
+                self.do_update_intercepted_syscalls_count()
 
     def on_menuitemActivitiesFilterReset_activate(self, widget):
         """Clear the filtered syscalls list including all"""
@@ -560,51 +609,3 @@ class UIMain(UIBase):
         else:
             self.ui.treeview_files.set_model(self.ui.model_files)
         self.ui.infobar_information.set_visible(state)
-
-    def on_infobar_information_response(self, widget, response):
-        if response == Gtk.ResponseType.CLOSE:
-            self.ui.infobar_information.set_visible(False)
-
-    def on_action_start_activate(self, action):
-        """Start debugger"""
-        if self.ui.menuitem_auto_clear.get_active():
-            self.on_menuitemClear_activate(None)
-        # Disable file chooser and set stop icon
-        self.ui.text_program.set_sensitive(False)
-        self.ui.action_start.set_sensitive(False)
-        self.ui.action_stop.set_sensitive(True)
-        self.ui.action_browse.set_sensitive(False)
-        self.ui.text_program.set_property('secondary-icon-sensitive', False)
-        self.ui.button_start.set_visible(False)
-        self.ui.button_stop.set_visible(True)
-        # Start debugger
-        self.thread_loader = DaemonThread(
-            target=self.thread_debug_process,
-            args=(shlex.split(self.ui.text_program.get_text()),)
-        )
-        self.thread_loader.start()
-
-    def on_action_stop_activate(self, action):
-        """Stop the running debugger"""
-        if self.thread_loader:
-            self.thread_loader.cancel()
-            try:
-                # Race condition, the debugger may be set to None
-                self.debugger.quit()
-            except AttributeError:
-                pass
-            # Restore file chooser and set execute icon
-            self.ui.text_program.set_sensitive(True)
-            self.ui.action_start.set_sensitive(True)
-            self.ui.action_stop.set_sensitive(False)
-            self.ui.action_browse.set_sensitive(True)
-            self.ui.text_program.set_property('secondary-icon-sensitive', True)
-            self.ui.button_start.set_visible(True)
-            self.ui.button_stop.set_visible(False)
-
-    def on_action_browse_activate(self, action):
-        """Select the program to open"""
-        if program := show_dialog_fileopen(
-                parent=self.ui.window,
-                title=_("Select a program to execute")):
-            self.ui.text_program.set_text(program)
