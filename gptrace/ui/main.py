@@ -140,10 +140,19 @@ class UIMain(UIBase):
     def run(self):
         """Show the UI"""
         self.ui.window.show_all()
+        # Set Start/Stop button width as the larger between the two
+        # to avoid being resized during the change
+        max_width = max(self.ui.button_start.get_allocated_width(),
+                        self.ui.button_stop.get_allocated_width())
+        self.ui.button_start.set_property('width-request', max_width)
+        self.ui.button_stop.set_property('width-request', max_width)
+        self.ui.button_stop.set_visible(False)
 
     def load_ui(self):
         """Load the interface UI"""
         # Initialize translations
+        self.ui.action_start.set_label(text_gtk30('_Start'))
+        self.ui.action_stop.set_label(text_gtk30('_Stop'))
         self.ui.action_about.set_label(text_gtk30('About'))
         self.ui.action_shortcuts.set_label(text_gtk30('Shortcuts'))
         # Initialize titles and tooltips
@@ -156,10 +165,15 @@ class UIMain(UIBase):
                                         self.ui.button_about,
                                         self.ui.button_options])
         # Set buttons with always show image
-        for button in (self.ui.button_start, ):
+        for button in (self.ui.button_start, self.ui.button_stop):
             button.set_always_show_image(True)
+        # Set start button as suggested
         self.set_buttons_style_suggested_action(
             buttons=[self.ui.button_start])
+        # Set stop button as destructive
+        self.set_buttons_style_destructive_action(
+            buttons=[self.ui.button_stop])
+        self.ui.button_stop.set_visible(False)
         # Associate each TreeViewColumn to the MenuItem used to show/hide
         self.column_headers = ColumnHeadersVisibility(ui=self.ui,
                                                       settings=self.settings)
@@ -561,6 +575,8 @@ class UIMain(UIBase):
         self.ui.action_stop.set_sensitive(True)
         self.ui.action_browse.set_sensitive(False)
         self.ui.text_program.set_property('secondary-icon-sensitive', False)
+        self.ui.button_start.set_visible(False)
+        self.ui.button_stop.set_visible(True)
         # Start debugger
         self.thread_loader = DaemonThread(
             target=self.thread_debug_process,
@@ -583,6 +599,8 @@ class UIMain(UIBase):
             self.ui.action_stop.set_sensitive(False)
             self.ui.action_browse.set_sensitive(True)
             self.ui.text_program.set_property('secondary-icon-sensitive', True)
+            self.ui.button_start.set_visible(True)
+            self.ui.button_stop.set_visible(False)
 
     def on_action_browse_activate(self, action):
         """Select the program to open"""

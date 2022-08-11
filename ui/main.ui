@@ -87,6 +87,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="label" translatable="yes">Stop</property>
         <property name="short-label" translatable="yes">Stop</property>
         <property name="icon-name">process-stop</property>
+        <property name="is-important">True</property>
         <property name="sensitive">False</property>
         <signal name="activate" handler="on_action_stop_activate" swapped="no"/>
       </object>
@@ -508,7 +509,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>
-        <property name="relief">none</property>
       </object>
       <packing>
         <property name="position">3</property>
