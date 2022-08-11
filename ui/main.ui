@@ -270,12 +270,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitemActivitiesFilter">
+              <object class="GtkMenuItem" id="menuitem_activities_filter">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Filter syscalls</property>
+                <property name="label" translatable="yes">Filter syscalls in the results</property>
                 <child type="submenu">
-                  <object class="GtkMenu" id="menuActivitiesFilter">
+                  <object class="GtkMenu" id="menu_activities_filter">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>

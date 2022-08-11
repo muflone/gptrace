@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2022-08-11 23:01+0200\n"
+"POT-Creation-Date: 2022-08-11 23:12+0200\n"
 "PO-Revision-Date: 2022-08-11 20:57+0200\n"
 "Last-Translator: sahwar <ve4ernik(at)gmail.com>\n"
 "Language-Team: Bulgarian (https://explore.transifex.com/muflone/gptrace/)\n"
@@ -104,7 +104,7 @@ msgstr "Версия {VERSION}"
 msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr "Когато опцията <i><b>Показване само на съществуващи файлове</b></i> е избрана, сортирането чрез щракване на колоните е изключено"
 
-#: gptrace/ui/main.py:391
+#: gptrace/ui/main.py:392
 msgid "Select a program to execute"
 msgstr "Избор на програма за изпълнение"
 
@@ -169,7 +169,7 @@ msgid "Options"
 msgstr ""
 
 #: ui/main.ui:276
-msgid "Filter syscalls"
+msgid "Filter syscalls in the results"
 msgstr ""
 
 #: ui/main.ui:340
