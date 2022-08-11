@@ -44,6 +44,19 @@ not found you can configure in the upper righe options menu.
 In the **Processes** tab you'll the external processes were called from your
 application, along with their information and command line arguments.
 
+# Reliability
+
+gpTrace uses a Python library called *ptrace* which, at the actual stage,
+results unstable and sometimes unreliable. Therefore you are warned the called
+external program can fail, break, stop, hung or result unbearably slow.
+
+In particular the opening and the closing processes are very delicate and
+sometimes a crash could happen when you start an application or when you close a
+running application.
+
+If gpTrace hangs please kill the application using a process manager or the
+terminal command *kill*.
+
 # System Requirements
 
 * Python >= 3.6 (developed and tested for Python 3.9 and 3.10)
