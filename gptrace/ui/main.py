@@ -378,6 +378,12 @@ class UIMain(UIBase):
             self.filtered_items.pop()
         self.ui.filter_activities.refilter()
 
+    def on_action_filter_exclude_syscall_activate(self, action):
+        """
+        Remove the selected syscall name from the intercepted syscalls model
+        """
+        self.do_include_exclude_syscall(False)
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -510,6 +516,31 @@ class UIMain(UIBase):
         self.debugger.main()
         return True
 
+    def do_include_exclude_syscall(self, status):
+        """
+        Add or remove the selected syscall name from the intercepted syscalls
+        model
+        """
+        selection = self.ui.treeview_activities.get_selection()
+        if selection:
+            model, iter = selection.get_selected()
+            if iter:
+                # Get the syscall name to ignore/unignore
+                selected_syscall = self.model_activities.get_syscall(
+                    self.ui.filter_activities.convert_iter_to_child_iter(iter))
+                # Cycle each row in the intercepted syscalls model
+                for row in self.model_intercepted_syscalls:
+                    # If the syscall name for the row is the same then
+                    # ignore/unignore
+                    if self.model_intercepted_syscalls.get_syscall(
+                            row) == selected_syscall:
+                        self.model_intercepted_syscalls.set_checked(
+                            treepath=row,
+                            value=status)
+                        break
+                # Update the intercepted syscalls count
+                self.do_update_intercepted_syscalls_count()
+
     def do_syscall_callback(self, syscall):
         """Add the syscall to the syscalls model"""
         now = datetime.datetime.now()
@@ -563,40 +594,9 @@ class UIMain(UIBase):
                     column.set_visible(widget.get_active())
                     break
 
-    def on_menuitemActivitiesIgnoreSyscall_activate(self, widget):
-        """
-        Remove the selected syscall name from the intercepted syscalls model
-        """
-        self.on_menuitemActivitiesIgnoreUnignoreSyscall(False)
-
     def on_menuitemActivitiesUnignoreSyscall_activate(self, widget):
         """Add the selected syscall name to the intercepted syscalls model"""
-        self.on_menuitemActivitiesIgnoreUnignoreSyscall(True)
-
-    def on_menuitemActivitiesIgnoreUnignoreSyscall(self, status):
-        """
-        Add or remove the selected syscall name from the intercepted syscalls
-        model
-        """
-        selection = self.ui.treeview_activities.get_selection()
-        if selection:
-            model, iter = selection.get_selected()
-            if iter:
-                # Get the syscall name to ignore/unignore
-                selected_syscall = self.model_activities.get_syscall(
-                    self.ui.filter_activities.convert_iter_to_child_iter(iter))
-                # Cycle each row in the intercepted syscalls model
-                for row in self.model_intercepted_syscalls:
-                    # If the syscall name for the row is the same then
-                    # ignore/unignore
-                    if self.model_intercepted_syscalls.get_syscall(
-                            row) == selected_syscall:
-                        self.model_intercepted_syscalls.set_checked(
-                            treepath=row,
-                            value=status)
-                        break
-                # Update the intercepted syscalls count
-                self.do_update_intercepted_syscalls_count()
+        self.do_include_exclude_syscall(True)
 
     def on_treeview_activities_button_release_event(self, widget, event):
         """Show filter menu on right click"""
