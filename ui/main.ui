@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_quit">
         <property name="label" context="gtk30">_Quit</property>
-        <property name="short-label" translatable="yes">_Quit</property>
+        <property name="short-label" context="gtk30">_Quit</property>
         <signal name="activate" handler="on_action_quit_activate" swapped="no"/>
       </object>
       <accelerator key="q" modifiers="GDK_CONTROL_MASK"/>
@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_about">
         <property name="label" context="gtk30">About</property>
-        <property name="short-label" translatable="yes">About</property>
+        <property name="short-label">About</property>
         <property name="icon-name">help-about</property>
         <signal name="activate" handler="on_action_about_activate" swapped="no"/>
       </object>
@@ -45,7 +45,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_shortcuts">
         <property name="label" context="gtk30">Shortcuts</property>
-        <property name="short-label" translatable="yes">Shortcuts</property>
+        <property name="short-label" context="gtk30">Shortcuts</property>
         <property name="icon-name">help-browser</property>
         <signal name="activate" handler="on_action_shortcuts_activate" swapped="no"/>
       </object>
@@ -70,7 +70,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkAction" id="action_clear_results">
-        <property name="label" translatable="yes">Clear results</property>
+        <property name="label" translatable="yes">Clear the results list</property>
         <signal name="activate" handler="on_action_clear_results_activate" swapped="no"/>
       </object>
       <accelerator key="Delete" modifiers="GDK_CONTROL_MASK"/>
@@ -83,7 +83,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkToggleAction" id="action_counts_only_called">
-        <property name="label" translatable="yes">Count only called Syscalls</property>
+        <property name="label" translatable="yes">Count only called syscalls</property>
         <signal name="toggled" handler="on_action_counts_only_called_toggled" swapped="no"/>
       </object>
     </child>
@@ -98,8 +98,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <property name="accel-group">accelerators</property>
     <child>
       <object class="GtkAction" id="action_start">
-        <property name="label" translatable="yes">Start</property>
-        <property name="short-label" translatable="yes">Start</property>
+        <property name="label" context="gtk30">Start</property>
+        <property name="short-label" context="gtk30">Start</property>
         <property name="icon-name">system-run</property>
         <property name="is-important">True</property>
         <property name="sensitive">False</property>
@@ -109,8 +109,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkAction" id="action_stop">
-        <property name="label" translatable="yes">Stop</property>
-        <property name="short-label" translatable="yes">Stop</property>
+        <property name="label" context="gtk30">Stop</property>
+        <property name="short-label" context="gtk30">Stop</property>
         <property name="icon-name">process-stop</property>
         <property name="is-important">True</property>
         <property name="sensitive">False</property>
@@ -138,13 +138,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkAction" id="action_syscalls_file">
-        <property name="label">Filename arguments</property>
+        <property name="label" translatable="yes">Files functions</property>
         <signal name="activate" handler="on_action_syscalls_file_activate" swapped="no"/>
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="action_syscalls_socket">
-        <property name="label" translatable="yes">Socket functions</property>
+      <object class="GtkAction" id="action_syscalls_sockets">
+        <property name="label" translatable="yes">Sockets functions</property>
         <signal name="activate" handler="on_action_syscalls_socket_activate" swapped="no"/>
       </object>
     </child>
@@ -586,7 +586,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkButton" id="button_start">
-        <property name="label">Start</property>
+        <property name="label" context="gtk30">Start</property>
         <property name="related-action">action_start</property>
         <property name="visible">True</property>
         <property name="can-focus">True</property>
@@ -598,7 +598,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkButton" id="button_stop">
-        <property name="label">Stop</property>
+        <property name="label" context="gtk30">Stop</property>
         <property name="related-action">action_stop</property>
         <property name="visible">True</property>
         <property name="can-focus">True</property>
@@ -1252,7 +1252,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <child>
                   <object class="GtkButton" id="button_syscalls_socket">
                     <property name="use-action-appearance">True</property>
-                    <property name="related-action">action_syscalls_socket</property>
+                    <property name="related-action">action_syscalls_sockets</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

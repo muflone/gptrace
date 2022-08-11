@@ -159,6 +159,7 @@ class UIMain(UIBase):
         self.ui.action_stop.set_label(text_gtk30('_Stop'))
         self.ui.action_about.set_label(text_gtk30('About'))
         self.ui.action_shortcuts.set_label(text_gtk30('Shortcuts'))
+        self.ui.action_syscalls_select_all.set_label(text_gtk30('Select _All'))
         # Initialize titles and tooltips
         self.set_titles()
         # Initialize Gtk.HeaderBar

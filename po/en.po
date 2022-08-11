@@ -4,222 +4,275 @@
 # Website: https://www.muflone.com/gptrace/
 # This file is distributed under the same license of gpTrace.
 # English translation for gpTrace.
-# 
+#
 # Translators:
-# Fabio Castelli (Muflone) <muflone(at)muflone.com>, 2014
+# Fabio Castelli (Muflone) <muflone(at)muflone.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2014-08-24 17:09:29 +0200\n"
-"PO-Revision-Date: 2014-08-30 18:47+0000\n"
+"POT-Creation-Date: 2022-08-11 23:01+0200\n"
+"PO-Revision-Date: 2022-08-11 20:56+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
-"Language-Team: English (https://www.transifex.com/projects/p/gptrace/language/en/)\n"
+"Language-Team: English (https://explore.transifex.com/muflone/gptrace/)\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ui/main.glade.h:1
-msgid "Activities"
-msgstr "Activities"
-
-#: ui/main.glade.h:2
-msgid "Visible columns"
-msgstr "Visible columns"
-
-#: ui/main.glade.h:3
-msgid "Filter activities"
-msgstr "Filter activities"
-
-#: ui/main.glade.h:4
-msgid "Hide the selected syscall"
-msgstr "Hide the selected syscall"
-
-#: ui/main.glade.h:5
-msgid "Show only the selected syscall"
-msgstr "Show only the selected syscall"
-
-#: ui/main.glade.h:6
-msgid "Reset filter"
-msgstr "Reset filter"
-
-#: ui/main.glade.h:7
-msgid "Ignore (don't intercept) the selected syscall"
-msgstr "Ignore (don't intercept) the selected syscall"
-
-#: ui/main.glade.h:8
-msgid "Unignore (intercept) the selected syscall"
-msgstr "Unignore (intercept) the selected syscall"
-
-#: ui/main.glade.h:9
-msgid "Counts"
-msgstr "Counts"
-
-#: ui/main.glade.h:10
-msgid "Show only called syscalls"
-msgstr "Show only called syscalls"
-
-#: ui/main.glade.h:11
-msgid "Files"
-msgstr "Files"
-
-#: ui/main.glade.h:12
-msgid "Show only existing files"
-msgstr "Show only existing files"
-
-#: ui/main.glade.h:13
-msgid "Processes"
-msgstr "Processes"
-
-#: ui/main.glade.h:14
-msgid "Clear list now"
-msgstr "Clear list now"
-
-#: ui/main.glade.h:15
-msgid "Clear automatically"
-msgstr "Clear automatically"
-
-#: ui/main.glade.h:16
-msgid "Program to execute:"
-msgstr "Program to execute:"
-
-#: ui/main.glade.h:17
-msgid "Timestamp"
-msgstr "Timestamp"
-
-#: ui/main.glade.h:18
-msgid "Time"
-msgstr "Time"
-
-#: ui/main.glade.h:19
-msgid "Syscall"
-msgstr "Syscall"
-
-#: ui/main.glade.h:20
-msgid "Format"
-msgstr "Format"
-
-#: ui/main.glade.h:21
-msgid "PID"
-msgstr "PID"
-
-#: ui/main.glade.h:22
-msgid "Instruction pointer"
-msgstr "Instruction pointer"
-
-#: ui/main.glade.h:23
-msgid "Calls count"
-msgstr "Calls count"
-
-#: ui/main.glade.h:24
-msgid "Existing"
-msgstr "Existing"
-
-#: ui/main.glade.h:25
-msgid "File path"
-msgstr "File path"
-
-#: ui/main.glade.h:26
-msgid "Information"
-msgstr "Information"
-
-#: ui/main.glade.h:27
-msgid "Checked"
-msgstr "Checked"
-
-#: ui/main.glade.h:29
-#, no-c-format
-msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
-msgstr "Selected intercepted syscalls (%(selected)d of %(total)d)"
-
-#: ui/appmenu.ui.h:1
-msgid "_About gpTrace"
-msgstr "_About gpTrace"
-
-#: ui/appmenu.ui.h:2
-msgid "_Quit"
-msgstr "_Quit"
-
-#: gptrace/event_tracer.py:54
+#: gptrace/event_tracer.py:59
 msgid "Process execution"
 msgstr "Process execution"
 
-#: gptrace/event_tracer.py:56
+#: gptrace/event_tracer.py:61
 msgid "Process exit"
 msgstr "Process exit"
 
-#: gptrace/event_tracer.py:58
+#: gptrace/event_tracer.py:63
 #, python-format
 msgid "Process signal: %s"
 msgstr "Process signal: %s"
 
-#: gptrace/event_tracer.py:63
+#: gptrace/event_tracer.py:68
 #, python-format
 msgid "Event: %s"
 msgstr "Event: %s"
 
-#: gptrace/event_tracer.py:68
+#: gptrace/event_tracer.py:73
 msgid "Command line"
 msgstr "Command line"
 
-#: gptrace/event_tracer.py:70
+#: gptrace/event_tracer.py:76
 msgid "Current working directory"
 msgstr "Current working directory"
 
-#: gptrace/event_tracer.py:74
+#: gptrace/event_tracer.py:80
 msgid "Parent PID"
 msgstr "Parent PID"
 
-#: gptrace/event_tracer.py:78
+#: gptrace/event_tracer.py:85
 msgid "User ID"
 msgstr "User ID"
 
-#: gptrace/event_tracer.py:79
+#: gptrace/event_tracer.py:86
 msgid "User name"
 msgstr "User name"
 
-#: gptrace/event_tracer.py:80
+#: gptrace/event_tracer.py:88
 msgid "User real name"
 msgstr "User real name"
 
-#: gptrace/event_tracer.py:82
+#: gptrace/event_tracer.py:91
 msgid "Effective user ID"
 msgstr "Effective user ID"
 
-#: gptrace/event_tracer.py:83
+#: gptrace/event_tracer.py:93
 msgid "Effective user name"
 msgstr "Effective user name"
 
-#: gptrace/event_tracer.py:84
+#: gptrace/event_tracer.py:95
 msgid "Effective user real name"
 msgstr "Effective user real name"
 
-#: gptrace/event_tracer.py:86
+#: gptrace/event_tracer.py:98
 msgid "Group ID"
 msgstr "Group ID"
 
-#: gptrace/event_tracer.py:87
+#: gptrace/event_tracer.py:100
 msgid "Group name"
 msgstr "Group name"
 
-#: gptrace/event_tracer.py:89
+#: gptrace/event_tracer.py:103
 msgid "Effective group ID"
 msgstr "Effective group ID"
 
-#: gptrace/event_tracer.py:90
+#: gptrace/event_tracer.py:105
 msgid "Effective group name"
 msgstr "Effective group name"
 
-#: gptrace/event_tracer.py:91
+#: gptrace/event_tracer.py:107
 msgid "Status"
 msgstr "Status"
 
-#: gptrace/ui/main.py:457
+#: gptrace/ui/about.py:58
+#, python-brace-format
+msgid "Version {VERSION}"
+msgstr "Version {VERSION}"
+
+#: gptrace/ui/main.py:343
+msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+msgstr "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+
+#: gptrace/ui/main.py:391
 msgid "Select a program to execute"
 msgstr "Select a program to execute"
 
-#: gptrace/ui/main.py:484
-msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
-msgstr "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+#: ui/main.ui:59 ui/main.ui:60 ui/shortcuts.ui:28
+msgid "Open the options menu"
+msgstr "Open the options menu"
+
+#: ui/main.ui:73 ui/shortcuts.ui:86
+msgid "Clear the results list"
+msgstr "Clear the results list"
+
+#: ui/main.ui:80
+msgid "Automatically clear results"
+msgstr "Automatically clear results"
+
+#: ui/main.ui:86
+msgid "Count only called syscalls"
+msgstr "Count only called syscalls"
+
+#: ui/main.ui:92
+msgid "Show only existing files"
+msgstr "Show only existing files"
+
+#: ui/main.ui:123 ui/main.ui:124
+msgid "Browse"
+msgstr "Browse"
+
+#: ui/main.ui:141
+msgid "Files functions"
+msgstr "Files functions"
+
+#: ui/main.ui:147
+msgid "Sockets functions"
+msgstr "Sockets functions"
+
+#: ui/main.ui:153
+msgid "Deselect All"
+msgstr "Deselect All"
+
+#: ui/main.ui:159
+msgid "Hide the selected syscall"
+msgstr "Hide the selected syscall"
+
+#: ui/main.ui:165
+msgid "Show only the selected syscall"
+msgstr "Show only the selected syscall"
+
+#: ui/main.ui:171
+msgid "Reset filter"
+msgstr "Reset filter"
+
+#: ui/main.ui:178
+msgid "Exclude the selected syscall"
+msgstr "Exclude the selected syscall"
+
+#: ui/main.ui:184
+msgid "Include the selected syscall"
+msgstr "Include the selected syscall"
+
+#: ui/main.ui:238
+msgid "Options"
+msgstr "Options"
+
+#: ui/main.ui:276
+msgid "Filter syscalls"
+msgstr "Filter syscalls"
+
+#: ui/main.ui:340
+msgid "Visible columns"
+msgstr "Visible columns"
+
+#: ui/main.ui:350 ui/main.ui:906
+msgid "Activities"
+msgstr "Activities"
+
+#: ui/main.ui:418 ui/main.ui:965
+msgid "Counts"
+msgstr "Counts"
+
+#: ui/main.ui:450 ui/main.ui:1038
+msgid "Files"
+msgstr "Files"
+
+#: ui/main.ui:491 ui/main.ui:1132 ui/shortcuts.ui:52
+msgid "Processes"
+msgstr "Processes"
+
+#: ui/main.ui:571
+msgid "Program to execute:"
+msgstr "Program to execute:"
+
+#: ui/main.ui:809 ui/main.ui:1076
+msgid "Timestamp"
+msgstr "Timestamp"
+
+#: ui/main.ui:824 ui/main.ui:1090
+msgid "Time"
+msgstr "Time"
+
+#: ui/main.ui:839 ui/main.ui:929 ui/main.ui:1189
+msgid "Syscall"
+msgstr "Syscall"
+
+#: ui/main.ui:855 ui/main.ui:1202
+msgid "Format"
+msgstr "Format"
+
+#: ui/main.ui:872 ui/main.ui:989 ui/main.ui:1062
+msgid "PID"
+msgstr "PID"
+
+#: ui/main.ui:887
+msgid "Instruction pointer"
+msgstr "Instruction pointer"
+
+#: ui/main.ui:943
+msgid "Calls count"
+msgstr "Calls count"
+
+#: ui/main.ui:1002
+msgid "Existing"
+msgstr "Existing"
+
+#: ui/main.ui:1016
+msgid "File path"
+msgstr "File path"
+
+#: ui/main.ui:1104
+msgid "Information"
+msgstr "Information"
+
+#: ui/main.ui:1175
+msgid "Checked"
+msgstr "Checked"
+
+#: ui/main.ui:1284
+#, python-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Selected intercepted syscalls (%(selected)d of %(total)d)"
+
+#: ui/shortcuts.ui:21
+msgid "Open the about dialog"
+msgstr "Open the about dialog"
+
+#: ui/shortcuts.ui:35
+msgid "Open the shortcuts dialog"
+msgstr "Open the shortcuts dialog"
+
+#: ui/shortcuts.ui:42
+msgid "Quit"
+msgstr "Quit"
+
+#: ui/shortcuts.ui:57
+msgid "Browse file to open"
+msgstr "Browse file to open"
+
+#: ui/shortcuts.ui:64
+msgid "Start process"
+msgstr "Start process"
+
+#: ui/shortcuts.ui:71
+msgid "Stop running process"
+msgstr "Stop running process"
+
+#: ui/shortcuts.ui:81
+msgid "Results"
+msgstr "Results"
+
+#: ui/shortcuts.ui:93
+msgid "Reset the syscalls filter"
+msgstr "Reset the syscalls filter"

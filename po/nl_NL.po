@@ -4,224 +4,275 @@
 # Website: https://www.muflone.com/gptrace/
 # This file is distributed under the same license of gpTrace.
 # Dutch translation for gpTrace.
-# 
+#
 # Translators:
 # Heimen Stoffels <vistausss(at)fastmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2014-08-24 17:09:29 +0200\n"
-"PO-Revision-Date: 2017-09-22 01:04+0000\n"
+"POT-Creation-Date: 2022-08-11 23:01+0200\n"
+"PO-Revision-Date: 2022-08-11 22:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>\n"
-"Language-Team: Dutch (Netherlands) (http://www.transifex.com/muflone/gptrace/language/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://explore.transifex.com/muflone/gptrace/)\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ui/main.glade.h:1
-msgid "Activities"
-msgstr "Activiteiten"
-
-#: ui/main.glade.h:2
-msgid "Visible columns"
-msgstr "Zichtbare kolommen"
-
-#: ui/main.glade.h:3
-msgid "Filter activities"
-msgstr "Activiteiten filteren"
-
-#: ui/main.glade.h:4
-msgid "Hide the selected syscall"
-msgstr "De geselecteerde systeemoproep verbergen"
-
-#: ui/main.glade.h:5
-msgid "Show only the selected syscall"
-msgstr "Alleen de geselecteerde systeemoproep weergeven"
-
-#: ui/main.glade.h:6
-msgid "Reset filter"
-msgstr "Filter herstellen"
-
-#: ui/main.glade.h:7
-msgid "Ignore (don't intercept) the selected syscall"
-msgstr "De geselecteerde systeemoproep negeren (dus niet onderscheppen)"
-
-#: ui/main.glade.h:8
-msgid "Unignore (intercept) the selected syscall"
-msgstr "De geselecteerde systeemoproep niet meer negeren (dus onderscheppen)"
-
-#: ui/main.glade.h:9
-msgid "Counts"
-msgstr "Tellers"
-
-#: ui/main.glade.h:10
-msgid "Show only called syscalls"
-msgstr "Alleen aangeroepen systeemoproepen weergeven"
-
-#: ui/main.glade.h:11
-msgid "Files"
-msgstr "Bestanden"
-
-#: ui/main.glade.h:12
-msgid "Show only existing files"
-msgstr "Alleen bestaande bestanden weergeven"
-
-#: ui/main.glade.h:13
-msgid "Processes"
-msgstr "Processen"
-
-#: ui/main.glade.h:14
-msgid "Clear list now"
-msgstr "Lijst nu wissen"
-
-#: ui/main.glade.h:15
-msgid "Clear automatically"
-msgstr "Automatisch wissen"
-
-#: ui/main.glade.h:16
-msgid "Program to execute:"
-msgstr "Applicatie om uit te voeren:"
-
-#: ui/main.glade.h:17
-msgid "Timestamp"
-msgstr "Tijdstempel"
-
-#: ui/main.glade.h:18
-msgid "Time"
-msgstr "Tijd"
-
-#: ui/main.glade.h:19
-msgid "Syscall"
-msgstr "Systeemoproep"
-
-#: ui/main.glade.h:20
-msgid "Format"
-msgstr "Type"
-
-#: ui/main.glade.h:21
-msgid "PID"
-msgstr "PID"
-
-#: ui/main.glade.h:22
-msgid "Instruction pointer"
-msgstr "Instructiepointer"
-
-#: ui/main.glade.h:23
-msgid "Calls count"
-msgstr "Aanroepteller"
-
-#: ui/main.glade.h:24
-msgid "Existing"
-msgstr "Bestaande"
-
-#: ui/main.glade.h:25
-msgid "File path"
-msgstr "Bestandspad"
-
-#: ui/main.glade.h:26
-msgid "Information"
-msgstr "Informatie"
-
-#: ui/main.glade.h:27
-msgid "Checked"
-msgstr "Gecontroleerd"
-
-#: ui/main.glade.h:29
-#, no-c-format
-msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
-msgstr "Geselecteerde onderschepte systeemoproepen (%(selected)d of %(total)d)"
-
-#: ui/appmenu.ui.h:1
-msgid "_About gpTrace"
-msgstr "_Over gpTrace"
-
-#: ui/appmenu.ui.h:2
-msgid "_Quit"
-msgstr "Af_sluiten"
-
-#: gptrace/event_tracer.py:54
+#: gptrace/event_tracer.py:59
 msgid "Process execution"
 msgstr "Procesuitvoering"
 
-#: gptrace/event_tracer.py:56
+#: gptrace/event_tracer.py:61
 msgid "Process exit"
 msgstr "Procesafsluiting"
 
-#: gptrace/event_tracer.py:58
+#: gptrace/event_tracer.py:63
 #, python-format
 msgid "Process signal: %s"
 msgstr "Processignaal: %s"
 
-#: gptrace/event_tracer.py:63
+#: gptrace/event_tracer.py:68
 #, python-format
 msgid "Event: %s"
 msgstr "Bezig met: %s"
 
-#: gptrace/event_tracer.py:68
+#: gptrace/event_tracer.py:73
 msgid "Command line"
 msgstr "Opdrachtregel (terminal)"
 
-#: gptrace/event_tracer.py:70
+#: gptrace/event_tracer.py:76
 msgid "Current working directory"
 msgstr "Huidige werkmap"
 
-#: gptrace/event_tracer.py:74
+#: gptrace/event_tracer.py:80
 msgid "Parent PID"
 msgstr "Ouder-PID"
 
-#: gptrace/event_tracer.py:78
+#: gptrace/event_tracer.py:85
 msgid "User ID"
 msgstr "Gebruiker-PID"
 
-#: gptrace/event_tracer.py:79
+#: gptrace/event_tracer.py:86
 msgid "User name"
 msgstr "Gebruikersnaam"
 
-#: gptrace/event_tracer.py:80
+#: gptrace/event_tracer.py:88
 msgid "User real name"
 msgstr "Echte naam van gebruiker"
 
-#: gptrace/event_tracer.py:82
+#: gptrace/event_tracer.py:91
 msgid "Effective user ID"
 msgstr "Effectieve gebruiker-ID"
 
-#: gptrace/event_tracer.py:83
+#: gptrace/event_tracer.py:93
 msgid "Effective user name"
 msgstr "Effectieve gebruikersnaam"
 
-#: gptrace/event_tracer.py:84
+#: gptrace/event_tracer.py:95
 msgid "Effective user real name"
 msgstr "Effectieve echte naam van gebruiker"
 
-#: gptrace/event_tracer.py:86
+#: gptrace/event_tracer.py:98
 msgid "Group ID"
 msgstr "Groeps-ID"
 
-#: gptrace/event_tracer.py:87
+#: gptrace/event_tracer.py:100
 msgid "Group name"
 msgstr "Groepsnaam"
 
-#: gptrace/event_tracer.py:89
+#: gptrace/event_tracer.py:103
 msgid "Effective group ID"
 msgstr "Effectieve groeps-ID"
 
-#: gptrace/event_tracer.py:90
+#: gptrace/event_tracer.py:105
 msgid "Effective group name"
 msgstr "Effectieve groepsnaam"
 
-#: gptrace/event_tracer.py:91
+#: gptrace/event_tracer.py:107
 msgid "Status"
 msgstr "Status"
 
-#: gptrace/ui/main.py:457
+#: gptrace/ui/about.py:58
+#, python-brace-format
+msgid "Version {VERSION}"
+msgstr "Versie {VERSION}"
+
+#: gptrace/ui/main.py:343
+msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+msgstr ""
+
+#: gptrace/ui/main.py:391
 msgid "Select a program to execute"
 msgstr "Selecteer een applicatie om uit te voeren"
 
-#: gptrace/ui/main.py:484
-msgid ""
-"When <i><b>Show only existing files</b></i> is selected the sorting by click"
-" on the column headers is disabled"
+#: ui/main.ui:59 ui/main.ui:60 ui/shortcuts.ui:28
+msgid "Open the options menu"
+msgstr "Optiesmenu openen"
+
+#: ui/main.ui:73 ui/shortcuts.ui:86
+msgid "Clear the results list"
+msgstr ""
+
+#: ui/main.ui:80
+msgid "Automatically clear results"
+msgstr ""
+
+#: ui/main.ui:86
+msgid "Count only called syscalls"
+msgstr ""
+
+#: ui/main.ui:92
+msgid "Show only existing files"
+msgstr "Alleen bestaande bestanden weergeven"
+
+#: ui/main.ui:123 ui/main.ui:124
+msgid "Browse"
+msgstr ""
+
+#: ui/main.ui:141
+msgid "Files functions"
+msgstr ""
+
+#: ui/main.ui:147
+msgid "Sockets functions"
+msgstr ""
+
+#: ui/main.ui:153
+msgid "Deselect All"
+msgstr "Niets selecteren"
+
+#: ui/main.ui:159
+msgid "Hide the selected syscall"
+msgstr "De geselecteerde systeemoproep verbergen"
+
+#: ui/main.ui:165
+msgid "Show only the selected syscall"
+msgstr "Alleen de geselecteerde systeemoproep weergeven"
+
+#: ui/main.ui:171
+msgid "Reset filter"
+msgstr "Filter herstellen"
+
+#: ui/main.ui:178
+msgid "Exclude the selected syscall"
+msgstr ""
+
+#: ui/main.ui:184
+msgid "Include the selected syscall"
+msgstr ""
+
+#: ui/main.ui:238
+msgid "Options"
+msgstr "Opties"
+
+#: ui/main.ui:276
+msgid "Filter syscalls"
+msgstr ""
+
+#: ui/main.ui:340
+msgid "Visible columns"
+msgstr "Zichtbare kolommen"
+
+#: ui/main.ui:350 ui/main.ui:906
+msgid "Activities"
+msgstr "Activiteiten"
+
+#: ui/main.ui:418 ui/main.ui:965
+msgid "Counts"
+msgstr "Tellers"
+
+#: ui/main.ui:450 ui/main.ui:1038
+msgid "Files"
+msgstr "Bestanden"
+
+#: ui/main.ui:491 ui/main.ui:1132 ui/shortcuts.ui:52
+msgid "Processes"
+msgstr "Processen"
+
+#: ui/main.ui:571
+msgid "Program to execute:"
+msgstr "Applicatie om uit te voeren:"
+
+#: ui/main.ui:809 ui/main.ui:1076
+msgid "Timestamp"
+msgstr "Tijdstempel"
+
+#: ui/main.ui:824 ui/main.ui:1090
+msgid "Time"
+msgstr "Tijd"
+
+#: ui/main.ui:839 ui/main.ui:929 ui/main.ui:1189
+msgid "Syscall"
+msgstr "Systeemoproep"
+
+#: ui/main.ui:855 ui/main.ui:1202
+msgid "Format"
+msgstr "Type"
+
+#: ui/main.ui:872 ui/main.ui:989 ui/main.ui:1062
+msgid "PID"
+msgstr "PID"
+
+#: ui/main.ui:887
+msgid "Instruction pointer"
+msgstr "Instructiepointer"
+
+#: ui/main.ui:943
+msgid "Calls count"
+msgstr "Aanroepteller"
+
+#: ui/main.ui:1002
+msgid "Existing"
+msgstr "Bestaande"
+
+#: ui/main.ui:1016
+msgid "File path"
+msgstr "Bestandspad"
+
+#: ui/main.ui:1104
+msgid "Information"
+msgstr "Informatie"
+
+#: ui/main.ui:1175
+msgid "Checked"
+msgstr "Gecontroleerd"
+
+#: ui/main.ui:1284
+#, python-format
+msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgstr "Geselecteerde onderschepte systeemoproepen (%(selected)d of %(total)d)"
+
+#: ui/shortcuts.ui:21
+msgid "Open the about dialog"
+msgstr "Open het venster ‘Over’"
+
+#: ui/shortcuts.ui:35
+msgid "Open the shortcuts dialog"
+msgstr "Open het sneltoetsvenster"
+
+#: ui/shortcuts.ui:42
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: ui/shortcuts.ui:57
+msgid "Browse file to open"
+msgstr ""
+
+#: ui/shortcuts.ui:64
+msgid "Start process"
+msgstr ""
+
+#: ui/shortcuts.ui:71
+msgid "Stop running process"
+msgstr ""
+
+#: ui/shortcuts.ui:81
+msgid "Results"
+msgstr ""
+
+#: ui/shortcuts.ui:93
+msgid "Reset the syscalls filter"
 msgstr ""
