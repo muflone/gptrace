@@ -22,7 +22,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             sudo apt update
-            sudo apt install gettext libgirepository1.0-dev libcairo2-dev
+            sudo apt install gettext gir1.2-gtk-3.0 libgirepository1.0-dev python3-gi
             pip install -r requirements_travis.txt
       - run:
           name: check code
