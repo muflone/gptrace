@@ -384,6 +384,10 @@ class UIMain(UIBase):
         """
         self.do_include_exclude_syscall(False)
 
+    def on_action_filter_include_syscall_activate(self, action):
+        """Add the selected syscall name to the intercepted syscalls model"""
+        self.do_include_exclude_syscall(True)
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -593,10 +597,6 @@ class UIMain(UIBase):
                 if widget is menuitem:
                     column.set_visible(widget.get_active())
                     break
-
-    def on_menuitemActivitiesUnignoreSyscall_activate(self, widget):
-        """Add the selected syscall name to the intercepted syscalls model"""
-        self.do_include_exclude_syscall(True)
 
     def on_treeview_activities_button_release_event(self, widget, event):
         """Show filter menu on right click"""
