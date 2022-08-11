@@ -13,14 +13,44 @@
 
 **Documentation:** https://www.muflone.com/gptrace/
 
+# Description
+
+**gpTrace** can be used as an application debugger to discover what activities
+an application does, which files accesses (or tries to use in the case they
+miss), how many external processes are called and what arguments those processes
+were using.
+
+From the **gpTrace** main window you choose an executable file, click the button
+**Start** and let the external program execute.
+
+![Activities tab](https://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
+
+In the **Activities** tab you'll see the system calls were made and you can
+filter what to see or what you prefer to ignore to better undestand what the
+external program is doing.
+
+![Counts tab](https://www.muflone.com/resources/gptrace/archive/latest/english/counts.png)
+
+In the **Counts** tab you'll see how many calls are made for each system call.
+
+![Files tab](https://www.muflone.com/resources/gptrace/archive/latest/english/files.png)
+
+In the **Files** tab you'll the files the external program used or tried to use.
+If you want to see only the existing files and ignore what files the process has
+not found you can configure in the upper righe options menu.
+
+![Files tab](https://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
+
+In the **Processes** tab you'll the external processes were called from your
+application, along with their information and command line arguments.
+
 # System Requirements
 
-* Python 3.x (developed and tested for Python 3.9.6)
-* XDG library for Python 3
+* Python >= 3.6 (developed and tested for Python 3.9 and 3.10)
+* XDG library for Python 3 ( https://pypi.org/project/pyxdg/ )
 * GTK+ 3.0 libraries for Python 3
-* GObject libraries for Python 3
-* Distutils library for Python 3 (usually shipped with Python distribution)
-* PTrace library for Python 3 (https://pypi.org/project/python-ptrace/)
+* GObject libraries for Python 3 ( https://pypi.org/project/PyGObject/ )
+* PTrace library for Python 3 ( https://pypi.org/project/python-ptrace/ )
 
 # Installation
 
