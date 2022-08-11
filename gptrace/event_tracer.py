@@ -42,7 +42,7 @@ EGID = 'egid'
 
 class EventTracer(object):
     def __init__(self, callback):
-        """Handle events requests by firing up the callback each time a new
+        """Handle events requests by firing up the callback each time new
         information must be shown"""
         self.event_callback = callback
 
@@ -52,7 +52,7 @@ class EventTracer(object):
             # Under Linux the new process phase first fork a new process with
             # the same command line of the starting process then changes its
             # command line
-            # Therefore here I skip the NewProcessEvent event and after I add
+            # Therefore here I skip the NewProcessEvent event and, after, I add
             # a new process during the ProcessExecution event
             status = None
         elif isinstance(event, ProcessExecution):

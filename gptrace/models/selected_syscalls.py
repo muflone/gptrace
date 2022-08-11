@@ -32,6 +32,7 @@ class ModelSelectedSyscalls(ModelBase):
     def __init__(self, model):
         """Initialize the model and set the syscalls list to empty list"""
         super(self.__class__, self).__init__(model)
+        self.syscalls = None
         self.clear()
 
     def add(self, items):
@@ -44,7 +45,7 @@ class ModelSelectedSyscalls(ModelBase):
         return False
 
     def clear(self):
-        """Remove every items in the model and clear the syscalls list"""
+        """Remove every item in the model and clear the syscalls list"""
         super(self.__class__, self).clear()
         self.syscalls = []
         return False

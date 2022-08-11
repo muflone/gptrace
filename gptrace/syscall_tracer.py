@@ -39,13 +39,15 @@ class SyscallTracer(Application):
         # Parse self.options
         self.options = options
         self.program = program
+        self.debugger = None
+        self.syscall_options = None
         self.processOptions()
         self.ignore_syscall_callback = ignore_syscall_callback
         self.syscall_callback = syscall_callback
         self.event_callback = event_callback
         self.quit_callback = quit_callback
 
-    def runDebugger(self):
+    def run_debugger(self):
         """Create debugger and traced process"""
         logging.info('Started debugger')
         self.setupDebugger()
@@ -62,22 +64,22 @@ class SyscallTracer(Application):
             max_array_count=20,
         )
         self.syscall_options.instr_pointer = self.options.show_ip
-        self.syscallTrace(process)
+        self.syscall_trace(process)
 
-    def displaySyscall(self, syscall):
+    def display_syscall(self, syscall):
         self.syscall_callback(syscall)
 
     def syscall(self, process):
         state = process.syscall_state
         syscall = state.event(self.syscall_options)
         if syscall and (syscall.result is not None or self.options.enter):
-            self.displaySyscall(syscall)
+            self.display_syscall(syscall)
         # Break at next syscall
         process.syscall()
 
-    def syscallTrace(self, process):
+    def syscall_trace(self, process):
         # First query to break at next syscall
-        self.prepareProcess(process)
+        self.process_prepare(process)
 
         while True:
             # No more process? Exit
@@ -90,7 +92,7 @@ class SyscallTracer(Application):
                 process = event.process
             except ProcessExit as event:
                 logging.debug('A process has exited')
-                self.processExited(event)
+                self.process_exited(event)
                 continue
             except ProcessSignal as event:
                 self.event_callback(event)
@@ -101,7 +103,7 @@ class SyscallTracer(Application):
                 logging.debug('A new process is spawned')
                 self.event_callback(event)
                 process = event.process
-                self.prepareProcess(process)
+                self.process_prepare(process)
                 process.parent.syscall()
                 continue
             except ProcessExecution as event:
@@ -116,26 +118,26 @@ class SyscallTracer(Application):
             # Process syscall enter or exit
             self.syscall(process)
 
-    def prepareProcess(self, process):
+    def process_prepare(self, process):
         process.syscall()
         process.syscall_state.ignore_callback = self.ignore_syscall_callback
 
-    def processExited(self, event):
+    def process_exited(self, event):
         # Display syscall which has not exited
         state = event.process.syscall_state
         if (state.next_event == "exit") and (
                 not self.options.enter) and state.syscall:
-            self.displaySyscall(state.syscall)
+            self.display_syscall(state.syscall)
         self.event_callback(event)
 
     def main(self):
         self.debugger = PtraceDebugger()
         try:
-            self.runDebugger()
+            self.run_debugger()
         except ChildError as event:
             self.event_callback(event)
         except ProcessExit as event:
-            self.processExited(event)
+            self.process_exited(event)
         except (KeyError, PtraceError, OSError) as error:
             self._handle_exceptions_during_quit(error, 'main')
         if self.debugger:

@@ -255,7 +255,7 @@ class UIMain(UIBase):
         # Connect signals from the UI file to the functions with the same name
         self.ui.connect_signals(self)
 
-    def on_action_about_activate(self, widget):
+    def on_action_about_activate(self, action):
         """Show the about dialog"""
         about = UIAbout(parent=self.ui.window,
                         settings=self.settings,
@@ -302,11 +302,11 @@ class UIMain(UIBase):
         self.ui.window.destroy()
         self.application.quit()
 
-    def on_action_options_menu_activate(self, widget):
+    def on_action_options_menu_activate(self, action):
         """Open the options menu"""
         self.ui.button_options.clicked()
 
-    def on_action_clear_results_activate(self, widget):
+    def on_action_clear_results_activate(self, action):
         """Clear the results list"""
         logging.debug('Clearing results list')
         self.model_activities.clear()
@@ -493,7 +493,7 @@ class UIMain(UIBase):
             len(self.ui.text_program.get_text()) > 0)
 
     def on_text_program_icon_release(self, widget, icon_position, event):
-        """Click an icon next to a Entry"""
+        """Click an icon next to an Entry"""
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
             self.ui.action_browse.activate()
 

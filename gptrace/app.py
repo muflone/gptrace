@@ -28,6 +28,7 @@ class Application(Gtk.Application):
     def __init__(self, options):
         super(self.__class__, self).__init__(application_id=APP_ID)
         self.options = options
+        self.ui = None
         self.connect('activate', self.activate)
         self.connect('startup', self.startup)
 

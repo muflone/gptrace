@@ -18,7 +18,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gettext import dgettext as gettext_with_domain
 from gettext import gettext as _
 import os.path
 
@@ -84,13 +83,6 @@ def find_button_from_gtktreeviewcolumn(tvwcolumn):
     return widget
 
 
-def GTK30_(message, context=None):
-    """Get a translated message from GTK+ 3 domain"""
-    return gettext_with_domain('gtk30',
-                               context and '%s\x04%s' % (
-                                   context, message) or message)
-
-
 def get_ui_file(filename):
     """Return the full path of a Glade/UI file"""
     return os.path.join(DIR_UI, filename)
@@ -102,6 +94,5 @@ __all__ = [
     'process_events',
     'find_button_from_gtktreeviewcolumn',
     '_',
-    'GTK30_',
     'get_ui_file'
 ]
