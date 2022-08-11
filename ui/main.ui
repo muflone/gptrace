@@ -149,9 +149,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="action_syscalls_clear">
-        <property name="label" translatable="yes">Clear</property>
-        <signal name="activate" handler="on_action_syscalls_clear_activate" swapped="no"/>
+      <object class="GtkAction" id="action_syscalls_deselect_all">
+        <property name="label" translatable="yes">Deselect All</property>
+        <signal name="activate" handler="on_action_syscalls_deselect_all_activate" swapped="no"/>
       </object>
     </child>
     <child>
@@ -1263,9 +1263,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button_syscalls_clear">
+                  <object class="GtkButton" id="button_syscalls_deselect_all">
                     <property name="use-action-appearance">True</property>
-                    <property name="related-action">action_syscalls_clear</property>
+                    <property name="related-action">action_syscalls_deselect_all</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

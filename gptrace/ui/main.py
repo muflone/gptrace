@@ -412,7 +412,7 @@ class UIMain(UIBase):
                 self.model_intercepted_syscalls.set_checked(row, True)
         self.do_update_intercepted_syscalls_count()
 
-    def on_action_syscalls_clear_activate(self, action):
+    def on_action_syscalls_deselect_all_activate(self, action):
         """Disable any syscall to intercept"""
         for row in self.model_intercepted_syscalls:
             self.model_intercepted_syscalls.set_checked(row, False)
