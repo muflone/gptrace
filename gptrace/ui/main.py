@@ -339,6 +339,20 @@ class UIMain(UIBase):
             self.ui.treeview_files.set_model(self.ui.model_files)
         self.ui.infobar_information.set_visible(state)
 
+    def on_action_filter_hide_syscall_activate(self, action):
+        """Hide the selected syscall from the results"""
+        selection = self.ui.treeview_activities.get_selection()
+        if selection:
+            model, iter = selection.get_selected()
+            if iter:
+                # Add the selected syscall to the filtered syscalls list
+                iter = self.ui.filter_activities.convert_iter_to_child_iter(
+                    iter)
+                self.filtered_items.append(self.model_activities.get_syscall(
+                    treepath=iter))
+                # Filter the results
+                self.ui.filter_activities.refilter()
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -523,20 +537,6 @@ class UIMain(UIBase):
         """Show columns visibility menu on right click"""
         if event.button == Gdk.BUTTON_SECONDARY:
             self.show_popup_menu(menu)
-
-    def on_menuitemActivitiesFilterHideSyscall_activate(self, widget):
-        """Hide the selected syscall from the results"""
-        selection = self.ui.treeview_activities.get_selection()
-        if selection:
-            model, iter = selection.get_selected()
-            if iter:
-                # Add the selected syscall to the filtered syscalls list
-                iter = self.ui.filter_activities.convert_iter_to_child_iter(
-                    iter)
-                self.filtered_items.append(self.model_activities.get_syscall(
-                    treepath=iter))
-                # Filter the results
-                self.ui.filter_activities.refilter()
 
     def on_menuitemActivitiesFilterShowOnlySyscall_activate(self, widget):
         """Show only the selected syscall from the results"""

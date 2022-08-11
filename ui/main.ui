@@ -92,6 +92,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="toggled" handler="on_action_files_only_existing_toggled" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkAction" id="action_filter_hide_syscall">
+        <property name="label" translatable="yes">Hide Syscall</property>
+        <signal name="activate" handler="on_action_filter_hide_syscall_activate" swapped="no"/>
+      </object>
+    </child>
   </object>
   <object class="GtkActionGroup" id="actions_process">
     <property name="accel-group">accelerators</property>
@@ -219,11 +225,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkMenuItem" id="menuitemActivitiesFilterHideSyscall">
+                      <object class="GtkMenuItem" id="menuitem_activities_filter_hide_syscall">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_filter_hide_syscall</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Hide Syscall</property>
-                        <signal name="activate" handler="on_menuitemActivitiesFilterHideSyscall_activate" swapped="no"/>
+                        <property name="label">Hide Syscall</property>
                       </object>
                     </child>
                     <child>
