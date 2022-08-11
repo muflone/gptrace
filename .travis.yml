@@ -2,7 +2,7 @@ os: linux
 dist: bionic
 language: python
 python:
-  - "3.9"
+  - "3.6"
 virtualenv:
   system_site_packages: true
 addons:
@@ -18,9 +18,5 @@ script:
   - python -m compileall gptrace.py setup.py gptrace
   - python -m pycodestyle gptrace.py setup.py gptrace
   - python -m flake8 gptrace.py setup.py gptrace
-  - python -m build --outdir=dist .
-  - python -m pip install --verbose dist/*.whl
-  - python -m pip list
-  - python -m pip freeze
-  - ls -laR .
-  - python -m pip uninstall --yes --verbose gptrace
+  - python setup.py install --optimize=1 --root=build
+  - ls -laR build
