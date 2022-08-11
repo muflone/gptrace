@@ -379,9 +379,9 @@ class UIMain(UIBase):
 
     def on_action_browse_activate(self, action):
         """Select the program to open"""
-        if program := show_dialog_fileopen(
-                parent=self.ui.window,
-                title=_("Select a program to execute")):
+        program = show_dialog_fileopen(parent=self.ui.window,
+                                       title=_("Select a program to execute"))
+        if program:
             self.ui.text_program.set_text(program)
 
     def on_action_syscalls_select_all_activate(self, action):
