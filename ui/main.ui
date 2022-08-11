@@ -104,6 +104,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="activate" handler="on_action_filter_show_only_syscall_activate" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkAction" id="action_filter_reset_syscalls">
+        <property name="label" translatable="yes">Reset filter</property>
+        <signal name="activate" handler="on_action_filter_reset_syscalls_activate" swapped="no"/>
+      </object>
+    </child>
   </object>
   <object class="GtkActionGroup" id="actions_process">
     <property name="accel-group">accelerators</property>
@@ -249,11 +255,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitemActivitiesFilterReset">
+                      <object class="GtkMenuItem" id="menuitem_activities_filter_reset">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_filter_reset_syscalls</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Reset</property>
-                        <signal name="activate" handler="on_menuitemActivitiesFilterReset_activate" swapped="no"/>
+                        <property name="label">Reset</property>
                       </object>
                     </child>
                     <child>

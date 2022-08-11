@@ -372,6 +372,12 @@ class UIMain(UIBase):
                 # Filter the results
                 self.ui.filter_activities.refilter()
 
+    def on_action_filter_reset_syscalls_activate(self, action):
+        """Clear the filtered syscalls list including all"""
+        while len(self.filtered_items):
+            self.filtered_items.pop()
+        self.ui.filter_activities.refilter()
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -591,12 +597,6 @@ class UIMain(UIBase):
                         break
                 # Update the intercepted syscalls count
                 self.do_update_intercepted_syscalls_count()
-
-    def on_menuitemActivitiesFilterReset_activate(self, widget):
-        """Clear the filtered syscalls list including all"""
-        while len(self.filtered_items):
-            self.filtered_items.pop()
-        self.ui.filter_activities.refilter()
 
     def on_treeview_activities_button_release_event(self, widget, event):
         """Show filter menu on right click"""
