@@ -1,28 +1,19 @@
-####################
-# Compiled sources #
-####################
+# Ignore Python compiled files
 *.pyc
 __pycache__/
 
-#################
-# PyCharm files #
-#################
-/.idea/
+# Ignore build and dist folders for PyPI
+/build/
+/dist/
 
-#########################
-# Language translations #
-#########################
+# Ignore compiled translation files
 /locale/
 
-################
-# Local builds #
-################
-/build/
-/root/
-
-################
-# Backup files #
-################
-*.glade~
+# Ignore backup files
 *.ui~
+*.glade~
+\#*.glade#
 \#*.ui#
+
+# Ignore PyCharm project folder
+/.idea/
