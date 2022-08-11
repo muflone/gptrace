@@ -156,7 +156,7 @@ class UIMain(UIBase):
                                         self.ui.button_about,
                                         self.ui.button_options])
         # Set buttons with always show image
-        for button in (self.ui.button_start, self.ui.button_browse):
+        for button in (self.ui.button_start, ):
             button.set_always_show_image(True)
         self.set_buttons_style_suggested_action(
             buttons=[self.ui.button_start])
@@ -293,7 +293,7 @@ class UIMain(UIBase):
     def on_text_program_icon_release(self, widget, icon_position, event):
         """Click an icon next to a Entry"""
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
-            self.ui.text_program.set_text('')
+            self.ui.action_browse.activate()
 
     def on_text_program_changed(self, widget):
         """Enable or disable the button if a program path was set"""
@@ -560,6 +560,7 @@ class UIMain(UIBase):
         self.ui.action_start.set_sensitive(False)
         self.ui.action_stop.set_sensitive(True)
         self.ui.action_browse.set_sensitive(False)
+        self.ui.text_program.set_property('secondary-icon-sensitive', False)
         # Start debugger
         self.thread_loader = DaemonThread(
             target=self.thread_debug_process,
@@ -581,6 +582,7 @@ class UIMain(UIBase):
             self.ui.action_start.set_sensitive(True)
             self.ui.action_stop.set_sensitive(False)
             self.ui.action_browse.set_sensitive(True)
+            self.ui.text_program.set_property('secondary-icon-sensitive', True)
 
     def on_action_browse_activate(self, action):
         """Select the program to open"""

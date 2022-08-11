@@ -96,7 +96,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="label" translatable="yes">Browse</property>
         <property name="short-label" translatable="yes">Browse</property>
         <property name="icon-name">document-open</property>
-        <property name="is-important">True</property>
         <signal name="activate" handler="on_action_browse_activate" swapped="no"/>
       </object>
       <accelerator key="o" modifiers="GDK_CONTROL_MASK"/>
@@ -471,6 +470,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <property name="title">gpTrace</property>
     <property name="show-close-button">True</property>
     <child>
+      <object class="GtkLabel" id="label_program">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Program to execute:</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="text_program">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="hexpand">True</property>
+        <property name="secondary-icon-name">document-open</property>
+        <signal name="changed" handler="on_text_program_changed" swapped="no"/>
+        <signal name="icon-release" handler="on_text_program_icon_release" swapped="no"/>
+      </object>
+      <packing>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkButton" id="button_start">
         <property name="label">Start</property>
         <property name="related-action">action_start</property>
@@ -478,6 +497,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="can-focus">True</property>
         <property name="receives-default">True</property>
       </object>
+      <packing>
+        <property name="position">2</property>
+      </packing>
     </child>
     <child>
       <object class="GtkButton" id="button_stop">
@@ -489,7 +511,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="relief">none</property>
       </object>
       <packing>
-        <property name="position">1</property>
+        <property name="position">3</property>
       </packing>
     </child>
     <child>
@@ -506,7 +528,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
       <packing>
         <property name="pack-type">end</property>
-        <property name="position">2</property>
+        <property name="position">5</property>
       </packing>
     </child>
     <child>
@@ -520,7 +542,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
       <packing>
         <property name="pack-type">end</property>
-        <property name="position">3</property>
+        <property name="position">6</property>
       </packing>
     </child>
   </object>
@@ -640,59 +662,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
         <child>
-          <object class="GtkBox" id="boxProgram">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="spacing">5</property>
-            <child>
-              <object class="GtkLabel" id="label_program">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Program to execute:</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="text_program">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="secondary-icon-stock">gtk-clear</property>
-                <signal name="changed" handler="on_text_program_changed" swapped="no"/>
-                <signal name="icon-release" handler="on_text_program_icon_release" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button_browse">
-                <property name="label" translatable="yes">Browse</property>
-                <property name="related-action">action_browse</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkInfoBar" id="infobar_information">
             <property name="app-paintable">True</property>
             <property name="can-focus">False</property>
@@ -745,7 +714,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -1103,7 +1072,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -1251,7 +1220,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="position">3</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
