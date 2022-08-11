@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2022-08-11 23:12+0200\n"
+"POT-Creation-Date: 2022-08-11 23:25+0200\n"
 "PO-Revision-Date: 2022-08-11 20:57+0200\n"
 "Last-Translator: sahwar <ve4ernik(at)gmail.com>\n"
 "Language-Team: Bulgarian (https://explore.transifex.com/muflone/gptrace/)\n"
@@ -100,7 +100,7 @@ msgstr "Статус"
 msgid "Version {VERSION}"
 msgstr "Версия {VERSION}"
 
-#: gptrace/ui/main.py:343
+#: gptrace/ui/main.py:344
 msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr "Когато опцията <i><b>Показване само на съществуващи файлове</b></i> е избрана, сортирането чрез щракване на колоните е изключено"
 
@@ -169,78 +169,82 @@ msgid "Options"
 msgstr ""
 
 #: ui/main.ui:276
+msgid "Intercepted syscalls"
+msgstr ""
+
+#: ui/main.ui:325
 msgid "Filter syscalls in the results"
 msgstr ""
 
-#: ui/main.ui:340
+#: ui/main.ui:389
 msgid "Visible columns"
 msgstr "Видими колони"
 
-#: ui/main.ui:350 ui/main.ui:906
+#: ui/main.ui:399 ui/main.ui:955
 msgid "Activities"
 msgstr "Действия"
 
-#: ui/main.ui:418 ui/main.ui:965
+#: ui/main.ui:467 ui/main.ui:1014
 msgid "Counts"
 msgstr "Броения"
 
-#: ui/main.ui:450 ui/main.ui:1038
+#: ui/main.ui:499 ui/main.ui:1087
 msgid "Files"
 msgstr "Файлове"
 
-#: ui/main.ui:491 ui/main.ui:1132 ui/shortcuts.ui:52
+#: ui/main.ui:540 ui/main.ui:1181 ui/shortcuts.ui:52
 msgid "Processes"
 msgstr "Процеси"
 
-#: ui/main.ui:571
+#: ui/main.ui:620
 msgid "Program to execute:"
 msgstr "Програма за изпълнение:"
 
-#: ui/main.ui:809 ui/main.ui:1076
+#: ui/main.ui:858 ui/main.ui:1125
 msgid "Timestamp"
 msgstr "Времеви печат"
 
-#: ui/main.ui:824 ui/main.ui:1090
+#: ui/main.ui:873 ui/main.ui:1139
 msgid "Time"
 msgstr "Време"
 
-#: ui/main.ui:839 ui/main.ui:929 ui/main.ui:1189
+#: ui/main.ui:888 ui/main.ui:978 ui/main.ui:1238
 msgid "Syscall"
 msgstr "Syscall"
 
-#: ui/main.ui:855 ui/main.ui:1202
+#: ui/main.ui:904 ui/main.ui:1251
 msgid "Format"
 msgstr "Формат"
 
-#: ui/main.ui:872 ui/main.ui:989 ui/main.ui:1062
+#: ui/main.ui:921 ui/main.ui:1038 ui/main.ui:1111
 msgid "PID"
 msgstr "PID"
 
-#: ui/main.ui:887
+#: ui/main.ui:936
 msgid "Instruction pointer"
 msgstr "Инструкционен указател (instruction pointer)"
 
-#: ui/main.ui:943
+#: ui/main.ui:992
 msgid "Calls count"
 msgstr "Брояч на извикванията"
 
-#: ui/main.ui:1002
+#: ui/main.ui:1051
 msgid "Existing"
 msgstr "Съществуващ"
 
-#: ui/main.ui:1016
+#: ui/main.ui:1065
 msgid "File path"
 msgstr "Пътека на файла"
 
-#: ui/main.ui:1104
+#: ui/main.ui:1153
 msgid "Information"
 msgstr "Информация"
 
-#: ui/main.ui:1175
+#: ui/main.ui:1224
 msgid "Checked"
 msgstr "Проверен/отбелязан"
 
-#: ui/main.ui:1284
+#: ui/main.ui:1333
 #, python-format
 msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
 msgstr "Избрани прехванати syscalls (%(selected)d от %(total)d)"

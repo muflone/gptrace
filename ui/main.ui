@@ -137,15 +137,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="action_syscalls_file">
+      <object class="GtkAction" id="action_syscalls_files">
         <property name="label" translatable="yes">Files functions</property>
-        <signal name="activate" handler="on_action_syscalls_file_activate" swapped="no"/>
+        <signal name="activate" handler="on_action_syscalls_files_activate" swapped="no"/>
       </object>
     </child>
     <child>
       <object class="GtkAction" id="action_syscalls_sockets">
         <property name="label" translatable="yes">Sockets functions</property>
-        <signal name="activate" handler="on_action_syscalls_socket_activate" swapped="no"/>
+        <signal name="activate" handler="on_action_syscalls_sockets_activate" swapped="no"/>
       </object>
     </child>
     <child>
@@ -267,6 +267,55 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label">Show only existing files</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="menuitem_intercepted_syscalls">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Intercepted syscalls</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu_intercepted_syscalls">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_select_all">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_syscalls_select_all</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Select All</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_files">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_syscalls_files</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Files functions</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_sockets">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_syscalls_sockets</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Sockets functions</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_deselect_all">
+                        <property name="use-action-appearance">True</property>
+                        <property name="related-action">action_syscalls_deselect_all</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Deselect All</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
@@ -1239,7 +1288,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <child>
                   <object class="GtkButton" id="button_syscalls_file">
                     <property name="use-action-appearance">True</property>
-                    <property name="related-action">action_syscalls_file</property>
+                    <property name="related-action">action_syscalls_files</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

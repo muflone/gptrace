@@ -399,14 +399,14 @@ class UIMain(UIBase):
             self.model_intercepted_syscalls.set_checked(row, True)
         self.do_update_intercepted_syscalls_count()
 
-    def on_action_syscalls_file_activate(self, action):
+    def on_action_syscalls_files_activate(self, action):
         """Intercept all the syscalls that use filenames"""
         for row in self.model_intercepted_syscalls:
             if self.model_intercepted_syscalls.get_has_filename_arguments(row):
                 self.model_intercepted_syscalls.set_checked(row, True)
         self.do_update_intercepted_syscalls_count()
 
-    def on_action_syscalls_socket_activate(self, action):
+    def on_action_syscalls_sockets_activate(self, action):
         """Intercept all the syscalls used by sockets"""
         for row in self.model_intercepted_syscalls:
             if self.model_intercepted_syscalls.get_socket_function(row):
