@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2022-08-11 23:25+0200\n"
+"POT-Creation-Date: 2022-08-11 23:38+0200\n"
 "PO-Revision-Date: 2022-08-11 21:14+0200\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (https://explore.transifex.com/muflone/gptrace/)\n"
@@ -100,11 +100,11 @@ msgstr "Būsena"
 msgid "Version {VERSION}"
 msgstr "Versija {VERSION}"
 
-#: gptrace/ui/main.py:344
+#: gptrace/ui/main.py:343
 msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr ""
 
-#: gptrace/ui/main.py:392
+#: gptrace/ui/main.py:391
 msgid "Select a program to execute"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgid "Options"
 msgstr ""
 
 #: ui/main.ui:276
-msgid "Intercepted syscalls"
+msgid "Selected syscalls"
 msgstr ""
 
 #: ui/main.ui:325
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ui/main.ui:1333
 #, python-format
-msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgid "Selected syscalls (%(selected)d of %(total)d)"
 msgstr ""
 
 #: ui/shortcuts.ui:21

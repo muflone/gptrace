@@ -149,19 +149,19 @@ class Settings(object):
         self.set_int(section, SIZE_WIDTH, size[0])
         self.set_int(section, SIZE_HEIGHT, size[1])
 
-    def get_intercepted_syscalls(self):
-        """Get the intercepted syscalls list"""
+    def get_selected_syscalls(self):
+        """Get the selected syscalls list"""
         results = None
-        if self.config.has_option(SECTION_APPLICATION, 'intercepted syscalls'):
+        if self.config.has_option(SECTION_APPLICATION, 'selected syscalls'):
             results = self.config.get(
-                SECTION_APPLICATION, 'intercepted syscalls').split(',')
+                SECTION_APPLICATION, 'selected syscalls').split(',')
         return results
 
-    def set_intercepted_syscalls(self, model):
-        """Save the intercepted syscalls list"""
+    def set_selected_syscalls(self, model):
+        """Save the selected syscalls list"""
         if not self.config.has_section(SECTION_APPLICATION):
             self.config.add_section(SECTION_APPLICATION)
-        self.config.set(SECTION_APPLICATION, 'intercepted syscalls',
+        self.config.set(SECTION_APPLICATION, 'selected syscalls',
                         ','.join(model.syscalls))
 
     def get_visible_columns(self, section):

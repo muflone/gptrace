@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
-"POT-Creation-Date: 2022-08-11 23:25+0200\n"
+"POT-Creation-Date: 2022-08-11 23:38+0200\n"
 "PO-Revision-Date: 2022-08-11 20:57+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
 "Language-Team: English (United States) (https://explore.transifex.com/muflone/gptrace/)\n"
@@ -100,11 +100,11 @@ msgstr "Status"
 msgid "Version {VERSION}"
 msgstr "Version {VERSION}"
 
-#: gptrace/ui/main.py:344
+#: gptrace/ui/main.py:343
 msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 
-#: gptrace/ui/main.py:392
+#: gptrace/ui/main.py:391
 msgid "Select a program to execute"
 msgstr "Select a program to execute"
 
@@ -169,8 +169,8 @@ msgid "Options"
 msgstr "Options"
 
 #: ui/main.ui:276
-msgid "Intercepted syscalls"
-msgstr "Intercepted syscalls"
+msgid "Selected syscalls"
+msgstr "Selected syscalls"
 
 #: ui/main.ui:325
 msgid "Filter syscalls in the results"
@@ -246,8 +246,8 @@ msgstr "Checked"
 
 #: ui/main.ui:1333
 #, python-format
-msgid "Selected intercepted syscalls (%(selected)d of %(total)d)"
-msgstr "Selected intercepted syscalls (%(selected)d of %(total)d)"
+msgid "Selected syscalls (%(selected)d of %(total)d)"
+msgstr "Selected syscalls (%(selected)d of %(total)d)"
 
 #: ui/shortcuts.ui:21
 msgid "Open the about dialog"

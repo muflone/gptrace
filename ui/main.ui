@@ -270,16 +270,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitem_intercepted_syscalls">
+              <object class="GtkMenuItem" id="menuitem_selected_syscalls">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Intercepted syscalls</property>
+                <property name="label" translatable="yes">Selected syscalls</property>
                 <child type="submenu">
-                  <object class="GtkMenu" id="menu_intercepted_syscalls">
+                  <object class="GtkMenu" id="menu_selected_syscalls">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_select_all">
+                      <object class="GtkMenuItem" id="menuitem_selected_syscalls_select_all">
                         <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_select_all</property>
                         <property name="visible">True</property>
@@ -288,7 +288,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_files">
+                      <object class="GtkMenuItem" id="menuitem_selected_syscalls_files">
                         <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_files</property>
                         <property name="visible">True</property>
@@ -297,7 +297,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_sockets">
+                      <object class="GtkMenuItem" id="menuitem_selected_syscalls_sockets">
                         <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_sockets</property>
                         <property name="visible">True</property>
@@ -306,7 +306,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem_intercepted_syscalls_deselect_all">
+                      <object class="GtkMenuItem" id="menuitem_selected_syscalls_deselect_all">
                         <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_deselect_all</property>
                         <property name="visible">True</property>
@@ -734,7 +734,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   <object class="GtkTreeModelFilter" id="filter_files">
     <property name="child-model">model_files</property>
   </object>
-  <object class="GtkListStore" id="model_intercepted_syscalls">
+  <object class="GtkTreeStore" id="model_processes">
+    <columns>
+      <!-- column-name PID -->
+      <column type="gchararray"/>
+      <!-- column-name Timestamp -->
+      <column type="gdouble"/>
+      <!-- column-name Time -->
+      <column type="gchararray"/>
+      <!-- column-name Information -->
+      <column type="gchararray"/>
+      <!-- column-name Value -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="model_selected_syscalls">
     <columns>
       <!-- column-name colChecked -->
       <column type="gboolean"/>
@@ -748,20 +762,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <column type="gboolean"/>
       <!-- column-name colForSocket -->
       <column type="gboolean"/>
-    </columns>
-  </object>
-  <object class="GtkTreeStore" id="model_processes">
-    <columns>
-      <!-- column-name PID -->
-      <column type="gchararray"/>
-      <!-- column-name Timestamp -->
-      <column type="gdouble"/>
-      <!-- column-name Time -->
-      <column type="gchararray"/>
-      <!-- column-name Information -->
-      <column type="gchararray"/>
-      <!-- column-name Value -->
-      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="window">
@@ -1214,7 +1214,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                       <object class="GtkTreeView" id="treeview_syscalls">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="model">model_intercepted_syscalls</property>
+                        <property name="model">model_selected_syscalls</property>
                         <property name="search-column">1</property>
                         <child internal-child="selection">
                           <object class="GtkTreeSelection"/>
@@ -1330,7 +1330,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkLabel" id="label_syscalls">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Selected intercepted syscalls (%(selected)d of %(total)d)</property>
+                <property name="label" translatable="yes">Selected syscalls (%(selected)d of %(total)d)</property>
               </object>
             </child>
           </object>

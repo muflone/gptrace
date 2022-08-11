@@ -21,7 +21,7 @@
 from .base import ModelBase
 
 
-class ModelInterceptedSyscalls(ModelBase):
+class ModelSelectedSyscalls(ModelBase):
     COL_CHECKED = 0
     COL_SYSCALL = 1
     COL_RESULT = 2

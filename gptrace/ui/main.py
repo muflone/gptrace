@@ -44,8 +44,8 @@ from gptrace.localize import text_gtk30
 from gptrace.models.activities import ModelActivities
 from gptrace.models.counts import ModelCounts
 from gptrace.models.files import ModelFiles
-from gptrace.models.intercepted_syscalls import ModelInterceptedSyscalls
 from gptrace.models.processes import ModelProcesses
+from gptrace.models.selected_syscalls import ModelSelectedSyscalls
 from gptrace.settings import (Settings,
                               SECTION_APPLICATION,
                               SECTION_ACTIVITIES,
@@ -72,13 +72,13 @@ class UIMain(UIBase):
         self.load_ui()
         # Prepares the models
         self.model_activities = ModelActivities(self.ui.model_activities)
-        self.model_intercepted_syscalls = ModelInterceptedSyscalls(
-            self.ui.model_intercepted_syscalls)
+        self.model_selected_syscalls = ModelSelectedSyscalls(
+            self.ui.model_selected_syscalls)
         self.model_counts = ModelCounts(self.ui.model_counts)
         self.model_files = ModelFiles(self.ui.model_files)
         self.model_processes = ModelProcesses(self.ui.model_processes)
-        # Restore the intercepted syscalls list from settings
-        saved_syscalls = self.settings.get_intercepted_syscalls()
+        # Restore the selected syscalls list from settings
+        saved_syscalls = self.settings.get_selected_syscalls()
         # Restore the options from settings
         self.ui.action_auto_clear_results.set_active(
             self.settings.get_boolean(
@@ -103,8 +103,8 @@ class UIMain(UIBase):
         # Load all the available syscall names
         for syscall in sorted(SYSCALL_NAMES.values()):
             prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ()))
-            self.model_intercepted_syscalls.add(items=(
-                # If the configuration file has a list of intercepted syscalls
+            self.model_selected_syscalls.add(items=(
+                # If the configuration file has a list of selected syscalls
                 # then set each syscall status accordingly
                 saved_syscalls is None and True or syscall in saved_syscalls,
                 # Add syscall name
@@ -120,7 +120,7 @@ class UIMain(UIBase):
                 syscall in SOCKET_SYSCALL_NAMES,
             ))
             self.model_counts.add(items=(syscall, 0, False))
-        self.do_update_intercepted_syscalls_count()
+        self.do_update_selected_syscalls_count()
         # Restore visible columns
         for current_section in self.column_headers.get_sections():
             self.column_headers.load_visible_columns(current_section)
@@ -271,10 +271,9 @@ class UIMain(UIBase):
     def on_action_quit_activate(self, action):
         """Quit the application"""
         logging.debug(f'{self.__class__.__name__} quit')
-        # Save settings for window size, intercepted syscalls and visible
-        # columns
+        # Save settings for window size, selected syscalls and visible columns
         self.settings.save_window_position(self.ui.window, SECTION_WINDOW_NAME)
-        self.settings.set_intercepted_syscalls(self.model_intercepted_syscalls)
+        self.settings.set_selected_syscalls(self.model_selected_syscalls)
         for section in self.column_headers.get_sections():
             self.column_headers.save_visible_columns(section)
         self.settings.set_boolean(
@@ -395,29 +394,29 @@ class UIMain(UIBase):
 
     def on_action_syscalls_select_all_activate(self, action):
         """Intercept all the syscalls"""
-        for row in self.model_intercepted_syscalls:
-            self.model_intercepted_syscalls.set_checked(row, True)
-        self.do_update_intercepted_syscalls_count()
+        for row in self.model_selected_syscalls:
+            self.model_selected_syscalls.set_checked(row, True)
+        self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_files_activate(self, action):
         """Intercept all the syscalls that use filenames"""
-        for row in self.model_intercepted_syscalls:
-            if self.model_intercepted_syscalls.get_has_filename_arguments(row):
-                self.model_intercepted_syscalls.set_checked(row, True)
-        self.do_update_intercepted_syscalls_count()
+        for row in self.model_selected_syscalls:
+            if self.model_selected_syscalls.get_has_filename_arguments(row):
+                self.model_selected_syscalls.set_checked(row, True)
+        self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_sockets_activate(self, action):
         """Intercept all the syscalls used by sockets"""
-        for row in self.model_intercepted_syscalls:
-            if self.model_intercepted_syscalls.get_socket_function(row):
-                self.model_intercepted_syscalls.set_checked(row, True)
-        self.do_update_intercepted_syscalls_count()
+        for row in self.model_selected_syscalls:
+            if self.model_selected_syscalls.get_socket_function(row):
+                self.model_selected_syscalls.set_checked(row, True)
+        self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_deselect_all_activate(self, action):
         """Disable any syscall to intercept"""
-        for row in self.model_intercepted_syscalls:
-            self.model_intercepted_syscalls.set_checked(row, False)
-        self.do_update_intercepted_syscalls_count()
+        for row in self.model_selected_syscalls:
+            self.model_selected_syscalls.set_checked(row, False)
+        self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_filter_hide_activate(self, action):
         """Hide the selected syscall from the results"""
@@ -460,18 +459,18 @@ class UIMain(UIBase):
 
     def on_action_syscalls_filter_exclude_activate(self, action):
         """
-        Remove the selected syscall name from the intercepted syscalls model
+        Remove the selected syscall name from the selected syscalls model
         """
         self.do_include_exclude_syscall(False)
 
     def on_action_syscalls_filter_include_activate(self, action):
-        """Add the selected syscall name to the intercepted syscalls model"""
+        """Add the selected syscall name to the selected syscalls model"""
         self.do_include_exclude_syscall(True)
 
     def on_cell_syscalls_checked_toggled(self, widget, treepath):
         """Handle click on the checked column"""
-        self.model_intercepted_syscalls.toggle_checked(treepath)
-        self.do_update_intercepted_syscalls_count()
+        self.model_selected_syscalls.toggle_checked(treepath)
+        self.do_update_selected_syscalls_count()
 
     def on_infobar_information_response(self, widget, response):
         """Click on the infobar buttons"""
@@ -554,7 +553,7 @@ class UIMain(UIBase):
 
     def do_include_exclude_syscall(self, status):
         """
-        Add or remove the selected syscall name from the intercepted syscalls
+        Add or remove the selected syscall name from the selected syscalls
         model
         """
         selection = self.ui.treeview_activities.get_selection()
@@ -564,18 +563,18 @@ class UIMain(UIBase):
                 # Get the syscall name to ignore/unignore
                 selected_syscall = self.model_activities.get_syscall(
                     self.ui.filter_activities.convert_iter_to_child_iter(iter))
-                # Cycle each row in the intercepted syscalls model
-                for row in self.model_intercepted_syscalls:
+                # Cycle each row in the selected syscalls model
+                for row in self.model_selected_syscalls:
                     # If the syscall name for the row is the same then
                     # ignore/unignore
-                    if self.model_intercepted_syscalls.get_syscall(
+                    if self.model_selected_syscalls.get_syscall(
                             row) == selected_syscall:
-                        self.model_intercepted_syscalls.set_checked(
+                        self.model_selected_syscalls.set_checked(
                             treepath=row,
                             value=status)
                         break
-                # Update the intercepted syscalls count
-                self.do_update_intercepted_syscalls_count()
+                # Update the selected syscalls count
+                self.do_update_selected_syscalls_count()
 
     def do_syscall_callback(self, syscall):
         """Add the syscall to the syscalls model"""
@@ -601,7 +600,7 @@ class UIMain(UIBase):
 
     def do_syscall_callback_ignore(self, syscall):
         """Determine if to ignore a callback before it's processed"""
-        if syscall.name in self.model_intercepted_syscalls.syscalls:
+        if syscall.name in self.model_selected_syscalls.syscalls:
             # Process the syscall
             return False
         else:
@@ -612,10 +611,10 @@ class UIMain(UIBase):
         """The debugger is quitting"""
         self.ui.action_stop.activate()
 
-    def do_update_intercepted_syscalls_count(self):
-        """Update the intercepted syscalls count label"""
+    def do_update_selected_syscalls_count(self):
+        """Update the selected syscalls count label"""
         self.ui.label_syscalls.set_text(
             self.label_syscalls_text % {
-                'selected': len(self.model_intercepted_syscalls.syscalls),
-                'total': self.model_intercepted_syscalls.count(),
+                'selected': len(self.model_selected_syscalls.syscalls),
+                'total': self.model_selected_syscalls.count(),
             })
