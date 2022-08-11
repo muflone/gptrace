@@ -353,6 +353,25 @@ class UIMain(UIBase):
                 # Filter the results
                 self.ui.filter_activities.refilter()
 
+    def on_action_filter_show_only_syscall_activate(self, action):
+        """Show only the selected syscall from the results"""
+        selection = self.ui.treeview_activities.get_selection()
+        if selection:
+            model, iter = selection.get_selected()
+            if iter:
+                while len(self.filtered_items):
+                    self.filtered_items.pop()
+                # First include every syscall names to the filtered syscalls
+                self.filtered_items.extend(SYSCALL_NAMES.values())
+                # Then remove the selected syscall from the filtered syscalls
+                # list
+                iter = self.ui.filter_activities.convert_iter_to_child_iter(
+                    iter)
+                self.filtered_items.remove(self.model_activities.get_syscall(
+                    treepath=iter))
+                # Filter the results
+                self.ui.filter_activities.refilter()
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -537,25 +556,6 @@ class UIMain(UIBase):
                 if widget is menuitem:
                     column.set_visible(widget.get_active())
                     break
-
-    def on_menuitemActivitiesFilterShowOnlySyscall_activate(self, widget):
-        """Show only the selected syscall from the results"""
-        selection = self.ui.treeview_activities.get_selection()
-        if selection:
-            model, iter = selection.get_selected()
-            if iter:
-                while len(self.filtered_items):
-                    self.filtered_items.pop()
-                # First include every syscall names to the filtered syscalls
-                self.filtered_items.extend(SYSCALL_NAMES.values())
-                # Then remove the selected syscall from the filtered syscalls
-                # list
-                iter = self.ui.filter_activities.convert_iter_to_child_iter(
-                    iter)
-                self.filtered_items.remove(self.model_activities.get_syscall(
-                    treepath=iter))
-                # Filter the results
-                self.ui.filter_activities.refilter()
 
     def on_menuitemActivitiesIgnoreSyscall_activate(self, widget):
         """
