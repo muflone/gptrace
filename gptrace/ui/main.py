@@ -443,6 +443,11 @@ class UIMain(UIBase):
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
             self.ui.action_browse.activate()
 
+    def on_treeview_button_release_event(self, widget, event, menu):
+        """Show columns visibility menu on right click"""
+        if event.button == Gdk.BUTTON_SECONDARY:
+            self.show_popup_menu(menu)
+
     def on_window_delete_event(self, widget, event):
         """Close the application by closing the main window"""
         self.ui.action_quit.activate()
@@ -532,11 +537,6 @@ class UIMain(UIBase):
                 if widget is menuitem:
                     column.set_visible(widget.get_active())
                     break
-
-    def on_treeview_button_release_event(self, widget, event, menu):
-        """Show columns visibility menu on right click"""
-        if event.button == Gdk.BUTTON_SECONDARY:
-            self.show_popup_menu(menu)
 
     def on_menuitemActivitiesFilterShowOnlySyscall_activate(self, widget):
         """Show only the selected syscall from the results"""

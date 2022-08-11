@@ -768,6 +768,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <property name="can-focus">True</property>
                     <property name="model">filter_activities</property>
                     <property name="search-column">2</property>
+                    <signal name="button-release-event" handler="on_treeview_activities_button_release_event" swapped="no"/>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
