@@ -20,7 +20,7 @@
 
 from gi.repository import Gtk
 
-from gptrace.localize import text, text_gtk30
+from gptrace.localize import text
 from gptrace.ui.base import UIBase
 
 
@@ -29,9 +29,6 @@ class UIShortcuts(UIBase):
         """Prepare the shortcuts dialog"""
         super().__init__(filename='shortcuts.ui')
         self.ui.shortcuts.set_transient_for(parent)
-        # Initialize translations
-        self.ui.shortcut_select_all.props.title = (
-            text_gtk30('Select _All').replace('_', ''))
         # Initialize groups
         for widget in self.ui.get_objects_by_type(Gtk.ShortcutsGroup):
             widget.props.title = text(widget.props.title)
