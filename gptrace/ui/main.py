@@ -125,7 +125,8 @@ class UIMain(UIBase):
         # Set ModelFilter
         self.filtered_items = []
         self.ui.filter_activities.set_visible_func(
-            self.check_for_filtered_syscall,
+            lambda model, iter, data:
+            self.model_activities.get_syscall(iter) not in self.filtered_items,
             self.filtered_items)
         # Set counts filter
         self.ui.filter_counts.set_visible_column(
@@ -339,55 +340,6 @@ class UIMain(UIBase):
             self.ui.treeview_files.set_model(self.ui.model_files)
         self.ui.infobar_information.set_visible(state)
 
-    def on_action_filter_hide_syscall_activate(self, action):
-        """Hide the selected syscall from the results"""
-        selection = self.ui.treeview_activities.get_selection()
-        if selection:
-            model, iter = selection.get_selected()
-            if iter:
-                # Add the selected syscall to the filtered syscalls list
-                iter = self.ui.filter_activities.convert_iter_to_child_iter(
-                    iter)
-                self.filtered_items.append(self.model_activities.get_syscall(
-                    treepath=iter))
-                # Filter the results
-                self.ui.filter_activities.refilter()
-
-    def on_action_filter_show_only_syscall_activate(self, action):
-        """Show only the selected syscall from the results"""
-        selection = self.ui.treeview_activities.get_selection()
-        if selection:
-            model, iter = selection.get_selected()
-            if iter:
-                while len(self.filtered_items):
-                    self.filtered_items.pop()
-                # First include every syscall names to the filtered syscalls
-                self.filtered_items.extend(SYSCALL_NAMES.values())
-                # Then remove the selected syscall from the filtered syscalls
-                # list
-                iter = self.ui.filter_activities.convert_iter_to_child_iter(
-                    iter)
-                self.filtered_items.remove(self.model_activities.get_syscall(
-                    treepath=iter))
-                # Filter the results
-                self.ui.filter_activities.refilter()
-
-    def on_action_filter_reset_syscalls_activate(self, action):
-        """Clear the filtered syscalls list including all"""
-        while len(self.filtered_items):
-            self.filtered_items.pop()
-        self.ui.filter_activities.refilter()
-
-    def on_action_filter_exclude_syscall_activate(self, action):
-        """
-        Remove the selected syscall name from the intercepted syscalls model
-        """
-        self.do_include_exclude_syscall(False)
-
-    def on_action_filter_include_syscall_activate(self, action):
-        """Add the selected syscall name to the intercepted syscalls model"""
-        self.do_include_exclude_syscall(True)
-
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.action_auto_clear_results.get_active():
@@ -458,6 +410,55 @@ class UIMain(UIBase):
             self.model_intercepted_syscalls.set_checked(row, False)
         self.do_update_intercepted_syscalls_count()
 
+    def on_action_syscalls_filter_hide_activate(self, action):
+        """Hide the selected syscall from the results"""
+        selection = self.ui.treeview_activities.get_selection()
+        if selection:
+            model, iter = selection.get_selected()
+            if iter:
+                # Add the selected syscall to the filtered syscalls list
+                iter = self.ui.filter_activities.convert_iter_to_child_iter(
+                    iter)
+                self.filtered_items.append(self.model_activities.get_syscall(
+                    treepath=iter))
+                # Filter the results
+                self.ui.filter_activities.refilter()
+
+    def on_action_syscalls_filter_show_only_activate(self, action):
+        """Show only the selected syscall from the results"""
+        selection = self.ui.treeview_activities.get_selection()
+        if selection:
+            model, iter = selection.get_selected()
+            if iter:
+                while len(self.filtered_items):
+                    self.filtered_items.pop()
+                # First include every syscall names to the filtered syscalls
+                self.filtered_items.extend(SYSCALL_NAMES.values())
+                # Then remove the selected syscall from the filtered syscalls
+                # list
+                iter = self.ui.filter_activities.convert_iter_to_child_iter(
+                    iter)
+                self.filtered_items.remove(self.model_activities.get_syscall(
+                    treepath=iter))
+                # Filter the results
+                self.ui.filter_activities.refilter()
+
+    def on_action_syscalls_filter_reset_activate(self, action):
+        """Clear the filtered syscalls list including all"""
+        while len(self.filtered_items):
+            self.filtered_items.pop()
+        self.ui.filter_activities.refilter()
+
+    def on_action_syscalls_filter_exclude_activate(self, action):
+        """
+        Remove the selected syscall name from the intercepted syscalls model
+        """
+        self.do_include_exclude_syscall(False)
+
+    def on_action_syscalls_filter_include_activate(self, action):
+        """Add the selected syscall name to the intercepted syscalls model"""
+        self.do_include_exclude_syscall(True)
+
     def on_cell_syscalls_checked_toggled(self, widget, treepath):
         """Handle click on the checked column"""
         self.model_intercepted_syscalls.toggle_checked(treepath)
@@ -468,6 +469,16 @@ class UIMain(UIBase):
         if response == Gtk.ResponseType.CLOSE:
             self.ui.infobar_information.set_visible(False)
 
+    def on_menuitem_visible_column_toggled(self, widget):
+        """Hide or show a column header"""
+        for section in self.column_headers.get_sections():
+            for (column, menu, menuitem) in self.column_headers.get_values(
+                    section):
+                # Set column visibility
+                if widget is menuitem:
+                    column.set_visible(widget.get_active())
+                    break
+
     def on_text_program_changed(self, widget):
         """Enable or disable the action if a program path was set"""
         self.ui.action_start.set_sensitive(
@@ -477,6 +488,13 @@ class UIMain(UIBase):
         """Click an icon next to a Entry"""
         if icon_position == Gtk.EntryIconPosition.SECONDARY:
             self.ui.action_browse.activate()
+
+    def on_treeview_activities_button_release_event(self, widget, event):
+        """Show filter menu on right click"""
+        if event.button == Gdk.BUTTON_SECONDARY:
+            if self.ui.treeview_activities.get_path_at_pos(int(event.x),
+                                                           int(event.y)):
+                self.show_popup_menu(self.ui.menuActivitiesFilter)
 
     def on_treeview_button_release_event(self, widget, event, menu):
         """Show columns visibility menu on right click"""
@@ -587,25 +605,3 @@ class UIMain(UIBase):
                 'selected': len(self.model_intercepted_syscalls.syscalls),
                 'total': self.model_intercepted_syscalls.count(),
             })
-
-    def on_menuitemVisibleColumns_toggled(self, widget):
-        """Hide or show a column header"""
-        for section in self.column_headers.get_sections():
-            for (column, menu, menuitem) in self.column_headers.get_values(
-                    section):
-                # Set column visibility
-                if widget is menuitem:
-                    column.set_visible(widget.get_active())
-                    break
-
-    def on_treeview_activities_button_release_event(self, widget, event):
-        """Show filter menu on right click"""
-        if event.button == Gdk.BUTTON_SECONDARY:
-            if self.ui.treeview_activities.get_path_at_pos(int(event.x),
-                                                           int(event.y)):
-                self.show_popup_menu(self.ui.menuActivitiesFilter)
-
-    def check_for_filtered_syscall(self, model, iter, data):
-        """Check if the sycall name should be filtered"""
-        return (self.model_activities.get_syscall(iter) not in
-                self.filtered_items)

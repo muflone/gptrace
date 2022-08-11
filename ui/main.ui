@@ -92,36 +92,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="toggled" handler="on_action_files_only_existing_toggled" swapped="no"/>
       </object>
     </child>
-    <child>
-      <object class="GtkAction" id="action_filter_hide_syscall">
-        <property name="label" translatable="yes">Hide Syscall</property>
-        <signal name="activate" handler="on_action_filter_hide_syscall_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_filter_show_only_syscall">
-        <property name="label" translatable="yes">Show only the selected Syscall</property>
-        <signal name="activate" handler="on_action_filter_show_only_syscall_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_filter_reset_syscalls">
-        <property name="label" translatable="yes">Reset filter</property>
-        <signal name="activate" handler="on_action_filter_reset_syscalls_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_filter_exclude_syscall">
-        <property name="label" translatable="yes">Exclude the selected syscall</property>
-        <signal name="activate" handler="on_action_filter_exclude_syscall_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_filter_include_syscall">
-        <property name="label" translatable="yes">Include the selected syscall</property>
-        <signal name="activate" handler="on_action_filter_include_syscall_activate" swapped="no"/>
-      </object>
-    </child>
   </object>
   <object class="GtkActionGroup" id="actions_process">
     <property name="accel-group">accelerators</property>
@@ -154,6 +124,63 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="activate" handler="on_action_browse_activate" swapped="no"/>
       </object>
       <accelerator key="o" modifiers="GDK_CONTROL_MASK"/>
+    </child>
+  </object>
+  <object class="GtkActionGroup" id="actions_syscalls">
+    <property name="accel-group">accelerators</property>
+    <child>
+      <object class="GtkAction" id="action_syscalls_select_all">
+        <property name="label">Select All</property>
+        <signal name="activate" handler="on_action_syscalls_select_all_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_file">
+        <property name="label">Filename arguments</property>
+        <signal name="activate" handler="on_action_syscalls_file_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_socket">
+        <property name="label" translatable="yes">Socket functions</property>
+        <signal name="activate" handler="on_action_syscalls_socket_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_clear">
+        <property name="label" translatable="yes">Clear</property>
+        <signal name="activate" handler="on_action_syscalls_clear_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_filter_hide">
+        <property name="label" translatable="yes">Hide the selected syscall</property>
+        <signal name="activate" handler="on_action_syscalls_filter_hide_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_filter_show_only">
+        <property name="label" translatable="yes">Show only the selected syscall</property>
+        <signal name="activate" handler="on_action_syscalls_filter_show_only_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_filter_reset">
+        <property name="label" translatable="yes">Reset filter</property>
+        <signal name="activate" handler="on_action_syscalls_filter_reset_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_filter_exclude">
+        <property name="label" translatable="yes">Exclude the selected syscall</property>
+        <signal name="activate" handler="on_action_syscalls_filter_exclude_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="action_syscalls_filter_include">
+        <property name="label" translatable="yes">Include the selected syscall</property>
+        <signal name="activate" handler="on_action_syscalls_filter_include_activate" swapped="no"/>
+      </object>
     </child>
   </object>
   <object class="GtkMenu" id="menu_options">
@@ -217,7 +244,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="related-action">action_auto_clear_results</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Automatic clear</property>
+                <property name="label">Automatically clear results</property>
                 <property name="active">True</property>
               </object>
             </child>
@@ -243,7 +270,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               <object class="GtkMenuItem" id="menuitemActivitiesFilter">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Filter Syscalls</property>
+                <property name="label" translatable="yes">Filter syscalls</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menuActivitiesFilter">
                     <property name="visible">True</property>
@@ -251,7 +278,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_hide_syscall">
                         <property name="use-action-appearance">True</property>
-                        <property name="related-action">action_filter_hide_syscall</property>
+                        <property name="related-action">action_syscalls_filter_hide</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">Hide Syscall</property>
@@ -260,7 +287,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_show_only_syscall">
                         <property name="use-action-appearance">True</property>
-                        <property name="related-action">action_filter_show_only_syscall</property>
+                        <property name="related-action">action_syscalls_filter_show_only</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">Show only Syscall</property>
@@ -269,14 +296,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_reset">
                         <property name="use-action-appearance">True</property>
-                        <property name="related-action">action_filter_reset_syscalls</property>
+                        <property name="related-action">action_syscalls_filter_reset</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">Reset</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem" id="menuitemActivitiesFilterSeparator">
+                      <object class="GtkSeparatorMenuItem">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
@@ -284,7 +311,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_exclude_syscall">
                         <property name="use-action-appearance">True</property>
-                        <property name="related-action">action_filter_exclude_syscall</property>
+                        <property name="related-action">action_syscalls_filter_exclude</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">Exclude syscall</property>
@@ -293,7 +320,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_include_syscall">
                         <property name="use-action-appearance">True</property>
-                        <property name="related-action">action_filter_include_syscall</property>
+                        <property name="related-action">action_syscalls_filter_include</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">Include syscall</property>
@@ -329,7 +356,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Timestamp</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -338,7 +365,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Time</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -347,7 +374,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Syscall</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -356,7 +383,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Format</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -365,7 +392,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">PID</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -374,7 +401,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">IP</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -397,7 +424,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Syscall</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -406,7 +433,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Count</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -429,7 +456,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">PID</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -438,7 +465,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Existing</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -447,7 +474,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Path</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -470,7 +497,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">PID</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -479,7 +506,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Timestamp</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -488,7 +515,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Time</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -497,7 +524,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <property name="can-focus">False</property>
                                 <property name="label">Information</property>
                                 <property name="active">True</property>
-                                <signal name="toggled" handler="on_menuitemVisibleColumns_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -608,33 +635,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="pack-type">end</property>
         <property name="position">6</property>
       </packing>
-    </child>
-  </object>
-  <object class="GtkActionGroup" id="actions_syscalls">
-    <property name="accel-group">accelerators</property>
-    <child>
-      <object class="GtkAction" id="action_syscalls_select_all">
-        <property name="label">Select All</property>
-        <signal name="activate" handler="on_action_syscalls_select_all_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_syscalls_file">
-        <property name="label">Filename arguments</property>
-        <signal name="activate" handler="on_action_syscalls_file_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_syscalls_socket">
-        <property name="label" translatable="yes">Socket functions</property>
-        <signal name="activate" handler="on_action_syscalls_socket_activate" swapped="no"/>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="action_syscalls_clear">
-        <property name="label" translatable="yes">Clear</property>
-        <signal name="activate" handler="on_action_syscalls_clear_activate" swapped="no"/>
-      </object>
     </child>
   </object>
   <object class="GtkListStore" id="model_activities">
