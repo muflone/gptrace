@@ -18,6 +18,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import logging
+
 from ptrace import PtraceError
 from ptrace.debugger import (PtraceDebugger,
                              Application,
@@ -32,6 +34,7 @@ from ptrace.func_call import FunctionCallOptions
 class SyscallTracer(Application):
     def __init__(self, options, program, ignore_syscall_callback,
                  syscall_callback, event_callback, quit_callback):
+        logging.info(f'Starting debug for: {program}')
         Application.__init__(self)
         # Parse self.options
         self.options = options
@@ -43,7 +46,8 @@ class SyscallTracer(Application):
         self.quit_callback = quit_callback
 
     def runDebugger(self):
-        # Create debugger and traced process
+        """Create debugger and traced process"""
+        logging.info('Started debugger')
         self.setupDebugger()
         process = self.createProcess()
         if not process:
@@ -78,12 +82,14 @@ class SyscallTracer(Application):
         while True:
             # No more process? Exit
             if not self.debugger:
+                logging.debug('The debugger has exited')
                 break
             # Wait until next syscall enter
             try:
                 event = self.debugger.waitSyscall()
                 process = event.process
             except ProcessExit as event:
+                logging.debug('A process has exited')
                 self.processExited(event)
                 continue
             except ProcessSignal as event:
@@ -92,6 +98,7 @@ class SyscallTracer(Application):
                 process.syscall(event.signum)
                 continue
             except NewProcessEvent as event:
+                logging.debug('A new process is spawned')
                 self.event_callback(event)
                 process = event.process
                 self.prepareProcess(process)
@@ -102,7 +109,8 @@ class SyscallTracer(Application):
                 process = event.process
                 process.syscall()
                 continue
-            except IndexError:
+            except IndexError as error:
+                logging.error(f'IndexError: {error}')
                 continue
 
             # Process syscall enter or exit
@@ -149,8 +157,8 @@ class SyscallTracer(Application):
             # PID is fired
             pass
         elif isinstance(exception, PtraceError):
-            print("PtraceError from %s" % context, exception)
+            logging.error(f'PtraceError from {context}: {exception}')
         elif isinstance(exception, OSError):
-            print('OSError from %s' % context, exception)
+            logging.error(f'OSError from {context}: {exception}')
         else:
-            print('Unexpected exception from %s' % context)
+            logging.error(f'Unexpected exception from {context}')

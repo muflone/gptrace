@@ -18,6 +18,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import logging
+
 from gi.repository.GdkPixbuf import Pixbuf
 
 from gptrace.constants import (APP_AUTHOR,
@@ -40,6 +42,7 @@ class UIAbout(UIBase):
     def __init__(self, parent, settings, options):
         """Prepare the about dialog"""
         super().__init__(filename='about.ui')
+        logging.debug(f'{self.__class__.__name__} init')
         self.settings = settings
         self.options = options
         # Retrieve the translators list
@@ -72,10 +75,12 @@ class UIAbout(UIBase):
 
     def show(self):
         """Show the About dialog"""
+        logging.debug(f'{self.__class__.__name__} show')
         self.ui.dialog.run()
         self.ui.dialog.hide()
 
     def destroy(self):
         """Destroy the About dialog"""
+        logging.debug(f'{self.__class__.__name__} destroy')
         self.ui.dialog.destroy()
         self.ui.dialog = None

@@ -19,6 +19,7 @@
 ##
 
 import datetime
+import logging
 import optparse
 import os.path
 import shlex
@@ -63,6 +64,7 @@ SECTION_WINDOW_NAME = 'main window'
 class UIMain(UIBase):
     def __init__(self, application, options):
         super().__init__(filename='main.ui')
+        logging.debug(f'{self.__class__.__name__} init')
         self.application = application
         # Load settings
         self.settings = Settings(FILE_SETTINGS, True)
@@ -140,6 +142,7 @@ class UIMain(UIBase):
 
     def run(self):
         """Show the UI"""
+        logging.debug(f'{self.__class__.__name__} run')
         self.ui.window.show_all()
         # Set Start/Stop button width as the larger between the two
         # to avoid being resized during the change
@@ -266,6 +269,7 @@ class UIMain(UIBase):
 
     def on_action_quit_activate(self, action):
         """Quit the application"""
+        logging.debug(f'{self.__class__.__name__} quit')
         # Save settings for window size, intercepted syscalls and visible
         # columns
         self.settings.save_window_position(self.ui.window, SECTION_WINDOW_NAME)
@@ -292,6 +296,7 @@ class UIMain(UIBase):
         process_events()
         # Cancel the running thread
         if self.thread_loader and self.thread_loader.is_alive():
+            logging.info('canceling running thread')
             self.thread_loader.cancel()
             self.thread_loader.join()
         self.ui.window.destroy()
@@ -303,6 +308,7 @@ class UIMain(UIBase):
 
     def on_action_clear_results_activate(self, widget):
         """Clear the results list"""
+        logging.debug('Clearing results list')
         self.model_activities.clear()
         self.model_counts.clear_values()
         self.model_files.clear()
@@ -362,9 +368,11 @@ class UIMain(UIBase):
     def on_action_stop_activate(self, action):
         """Stop the running debugger"""
         if self.thread_loader:
+            logging.warning('cancel running thread')
             self.thread_loader.cancel()
             try:
                 # Race condition, the debugger may be set to None
+                logging.info('quit the debugger')
                 self.debugger.quit()
             except AttributeError:
                 pass
@@ -494,22 +502,27 @@ class UIMain(UIBase):
         if event.button == Gdk.BUTTON_SECONDARY:
             if self.ui.treeview_activities.get_path_at_pos(int(event.x),
                                                            int(event.y)):
+                logging.debug('show activities popup menu')
                 self.show_popup_menu(self.ui.menuActivitiesFilter)
 
     def on_treeview_button_release_event(self, widget, event, menu):
         """Show columns visibility menu on right click"""
         if event.button == Gdk.BUTTON_SECONDARY:
+            logging.debug('show columns popup menu')
             self.show_popup_menu(menu)
 
     def on_window_delete_event(self, widget, event):
         """Close the application by closing the main window"""
+        logging.debug(f'{self.__class__.__name__} delete')
         self.ui.action_quit.activate()
 
     def do_debug_process(self, program):
         """Debug the requested program to trace the syscalls"""
+        logging.info(f'starting debug for program: {program}')
 
         def add_process(pid, information, value):
             """Add a process information"""
+            logging.info(f'added new process: {information}')
             now = datetime.datetime.now()
             GObject.idle_add(self.model_processes.add, (
                 str(pid),

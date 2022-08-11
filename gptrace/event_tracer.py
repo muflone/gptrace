@@ -18,6 +18,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import logging
 from grp import getgrgid
 from pwd import getpwuid
 
@@ -62,7 +63,7 @@ class EventTracer(object):
             status = _('Process signal: %s') % event
         elif isinstance(event, ChildError):
             status = None
-            print(event)
+            logging.error(f'ChildError: {event}')
         else:
             status = _('Event: %s') % event
 
