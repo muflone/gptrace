@@ -91,12 +91,12 @@ class UIMain(UIBase):
                 default=self.ui.action_counts_only_called.get_active()))
         self.ui.action_counts_only_called.toggled()
         # Update the Show only existing files status
-        self.ui.menuitem_files_show_only_existing.set_active(
+        self.ui.action_files_only_existing.set_active(
             self.settings.get_boolean(
                 section=SECTION_FILES,
                 option='only existing',
-                default=self.ui.menuitem_files_show_only_existing.get_active()))
-        self.on_menuitem_files_show_only_existing_toggled(None)
+                default=self.ui.action_files_only_existing.get_active()))
+        self.ui.action_files_only_existing.toggled()
         self.ui.infobar_information.set_visible(False)
         # Load all the available syscall names
         for syscall in sorted(SYSCALL_NAMES.values()):
@@ -282,7 +282,7 @@ class UIMain(UIBase):
         self.settings.set_boolean(
             section=SECTION_FILES,
             option='only existing',
-            value=self.ui.menuitem_files_show_only_existing.get_active())
+            value=self.ui.action_files_only_existing.get_active())
         self.settings.save()
         # Immediately hide the main window and let the events process to handle
         # an instantly close instead of slowly let GTK to empty the model
@@ -313,6 +313,31 @@ class UIMain(UIBase):
             self.ui.treeview_counts.set_model(self.ui.filter_counts)
         else:
             self.ui.treeview_counts.set_model(self.ui.model_counts)
+
+    def on_action_files_only_existing_toggled(self, action):
+        """Set visibility of only existing files in files section"""
+        state = self.ui.action_files_only_existing.get_active()
+        # Configure column sort order ID for each column in order to allow
+        # the sort if the show only existing files setting is set
+        self.ui.column_files_existing.set_sort_column_id(
+            state and -1 or self.model_files.COL_EXISTING)
+        self.ui.column_files_pid.set_sort_column_id(
+            state and -1 or self.model_files.COL_PID)
+        self.ui.column_files_path.set_sort_column_id(
+            state and -1 or self.model_files.COL_FILEPATH)
+        # BUG: GTK+ seems to not react if the sort column ID is changed
+        # Set the clickable property again after setting the sort column ID
+        self.ui.column_files_existing.set_clickable(True)
+        self.ui.column_files_pid.set_clickable(True)
+        self.ui.column_files_path.set_clickable(True)
+        if state:
+            self.ui.treeview_files.set_model(self.ui.filter_files)
+            self.ui.label_infobar_content.set_markup(
+                _('When <i><b>Show only existing files</b></i> is selected '
+                  'the sorting by click on the column headers is disabled'))
+        else:
+            self.ui.treeview_files.set_model(self.ui.model_files)
+        self.ui.infobar_information.set_visible(state)
 
     def on_action_start_activate(self, action):
         """Start debugger"""
@@ -584,28 +609,3 @@ class UIMain(UIBase):
         """Check if the sycall name should be filtered"""
         return (self.model_activities.get_syscall(iter) not in
                 self.filtered_items)
-
-    def on_menuitem_files_show_only_existing_toggled(self, widget):
-        """Set visibility of only existing files in files section"""
-        state = self.ui.menuitem_files_show_only_existing.get_active()
-        # Configure column sort order ID for each column in order to allow
-        # the sort if the show only existing files setting is set
-        self.ui.column_files_existing.set_sort_column_id(
-            state and -1 or self.model_files.COL_EXISTING)
-        self.ui.column_files_pid.set_sort_column_id(
-            state and -1 or self.model_files.COL_PID)
-        self.ui.column_files_path.set_sort_column_id(
-            state and -1 or self.model_files.COL_FILEPATH)
-        # BUG: GTK+ seems to not react if the sort column ID is changed
-        # Set the clickable property again after setting the sort column ID
-        self.ui.column_files_existing.set_clickable(True)
-        self.ui.column_files_pid.set_clickable(True)
-        self.ui.column_files_path.set_clickable(True)
-        if state:
-            self.ui.treeview_files.set_model(self.ui.filter_files)
-            self.ui.label_infobar_content.set_markup(
-                _('When <i><b>Show only existing files</b></i> is selected '
-                  'the sorting by click on the column headers is disabled'))
-        else:
-            self.ui.treeview_files.set_model(self.ui.model_files)
-        self.ui.infobar_information.set_visible(state)
