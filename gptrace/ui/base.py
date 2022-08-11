@@ -87,6 +87,11 @@ class UIBase(object):
         for button in buttons:
             button.get_style_context().add_class('suggested-action')
 
+    def set_buttons_style_destructive_action(self, buttons: Iterable):
+        """Add the destructive-action style to a widget"""
+        for button in buttons:
+            button.get_style_context().add_class('destructive-action')
+
     def show_popup_menu(self, menu: Gtk.Menu):
         """Show a popup menu at the current position"""
         if not Gtk.check_version(3, 22, 0):
