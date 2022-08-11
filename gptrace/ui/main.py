@@ -84,12 +84,12 @@ class UIMain(UIBase):
                 option='autoclear',
                 default=self.ui.action_auto_clear_results.get_active()))
         # Update the Show only called syscalls in counts status
-        self.ui.menuitem_counts_only_called.set_active(
+        self.ui.action_counts_only_called.set_active(
             self.settings.get_boolean(
                 section=SECTION_COUNTS,
                 option='only called',
-                default=self.ui.menuitem_counts_only_called.get_active()))
-        self.on_menuitem_counts_only_called_toggled(None)
+                default=self.ui.action_counts_only_called.get_active()))
+        self.ui.action_counts_only_called.toggled()
         # Update the Show only existing files status
         self.ui.menuitem_files_show_only_existing.set_active(
             self.settings.get_boolean(
@@ -278,7 +278,7 @@ class UIMain(UIBase):
         self.settings.set_boolean(
             section=SECTION_COUNTS,
             option='only called',
-            value=self.ui.menuitem_counts_only_called.get_active())
+            value=self.ui.action_counts_only_called.get_active())
         self.settings.set_boolean(
             section=SECTION_FILES,
             option='only existing',
@@ -306,6 +306,13 @@ class UIMain(UIBase):
         self.model_counts.clear_values()
         self.model_files.clear()
         self.model_processes.clear()
+
+    def on_action_counts_only_called_toggled(self, action):
+        """Set visibility of syscalls in counts section"""
+        if self.ui.action_counts_only_called.get_active():
+            self.ui.treeview_counts.set_model(self.ui.filter_counts)
+        else:
+            self.ui.treeview_counts.set_model(self.ui.model_counts)
 
     def on_action_start_activate(self, action):
         """Start debugger"""
@@ -577,13 +584,6 @@ class UIMain(UIBase):
         """Check if the sycall name should be filtered"""
         return (self.model_activities.get_syscall(iter) not in
                 self.filtered_items)
-
-    def on_menuitem_counts_only_called_toggled(self, widget):
-        """Set visibility of syscalls in counts section"""
-        if self.ui.menuitem_counts_only_called.get_active():
-            self.ui.treeview_counts.set_model(self.ui.filter_counts)
-        else:
-            self.ui.treeview_counts.set_model(self.ui.model_counts)
 
     def on_menuitem_files_show_only_existing_toggled(self, widget):
         """Set visibility of only existing files in files section"""
