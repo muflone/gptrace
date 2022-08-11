@@ -47,8 +47,6 @@ class UIBase(object):
             # Remove the button label for not important buttons
             if not action.get_is_important():
                 button.props.label = None
-        # Connect signals from the glade file to the functions with the
-        # same name
 
     def set_titles(self) -> None:
         """
