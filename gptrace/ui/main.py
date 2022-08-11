@@ -300,10 +300,17 @@ class UIMain(UIBase):
         """Open the options menu"""
         self.ui.button_options.clicked()
 
+    def on_action_clear_results_activate(self, widget):
+        """Clear the results list"""
+        self.model_activities.clear()
+        self.model_counts.clear_values()
+        self.model_files.clear()
+        self.model_processes.clear()
+
     def on_action_start_activate(self, action):
         """Start debugger"""
         if self.ui.menuitem_auto_clear.get_active():
-            self.on_menuitemClear_activate(None)
+            self.ui.action_clear_results.activate()
         # Disable file chooser and set stop icon
         self.ui.text_program.set_sensitive(False)
         self.ui.action_start.set_sensitive(False)
@@ -484,13 +491,6 @@ class UIMain(UIBase):
         """Show columns visibility menu on right click"""
         if event.button == Gdk.BUTTON_SECONDARY:
             self.show_popup_menu(menu)
-
-    def on_menuitemClear_activate(self, widget):
-        """Clear the syscalls list"""
-        self.model_activities.clear()
-        self.model_counts.clear_values()
-        self.model_files.clear()
-        self.model_processes.clear()
 
     def on_menuitemActivitiesFilterHideSyscall_activate(self, widget):
         """Hide the selected syscall from the results"""

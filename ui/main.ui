@@ -68,6 +68,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
       <accelerator key="F10"/>
     </child>
+    <child>
+      <object class="GtkAction" id="action_clear_results">
+        <property name="label" translatable="yes">Clear results</property>
+        <signal name="activate" handler="on_action_clear_results_activate" swapped="no"/>
+      </object>
+    </child>
   </object>
   <object class="GtkActionGroup" id="actions_process">
     <property name="accel-group">accelerators</property>
@@ -133,6 +139,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       </object>
     </child>
     <child>
+      <object class="GtkMenuItem" id="menuitem_clear_results">
+        <property name="use-action-appearance">True</property>
+        <property name="related-action">action_clear_results</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label">Clear results</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
@@ -148,14 +163,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
           <object class="GtkMenu" id="menu_menu_options">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <child>
-              <object class="GtkMenuItem" id="menuitem_clear">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Clear list</property>
-                <signal name="activate" handler="on_menuitemClear_activate" swapped="no"/>
-              </object>
-            </child>
             <child>
               <object class="GtkCheckMenuItem" id="menuitem_auto_clear">
                 <property name="visible">True</property>
