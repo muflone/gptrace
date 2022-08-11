@@ -78,11 +78,11 @@ class UIMain(UIBase):
         # Restore the intercepted syscalls list from settings
         saved_syscalls = self.settings.get_intercepted_syscalls()
         # Restore the options from settings
-        self.ui.menuitem_auto_clear.set_active(
+        self.ui.action_auto_clear_results.set_active(
             self.settings.get_boolean(
                 section=SECTION_APPLICATION,
                 option='autoclear',
-                default=self.ui.menuitem_auto_clear.get_active()))
+                default=self.ui.action_auto_clear_results.get_active()))
         # Update the Show only called syscalls in counts status
         self.ui.menuitem_counts_only_called.set_active(
             self.settings.get_boolean(
@@ -274,7 +274,7 @@ class UIMain(UIBase):
         self.settings.set_boolean(
             section=SECTION_APPLICATION,
             option='autoclear',
-            value=self.ui.menuitem_auto_clear.get_active())
+            value=self.ui.action_auto_clear_results.get_active())
         self.settings.set_boolean(
             section=SECTION_COUNTS,
             option='only called',
@@ -309,7 +309,7 @@ class UIMain(UIBase):
 
     def on_action_start_activate(self, action):
         """Start debugger"""
-        if self.ui.menuitem_auto_clear.get_active():
+        if self.ui.action_auto_clear_results.get_active():
             self.ui.action_clear_results.activate()
         # Disable file chooser and set stop icon
         self.ui.text_program.set_sensitive(False)

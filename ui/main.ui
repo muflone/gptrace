@@ -74,6 +74,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <signal name="activate" handler="on_action_clear_results_activate" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkToggleAction" id="action_auto_clear_results">
+        <property name="label" translatable="yes">Automatically clear results</property>
+        <property name="active">True</property>
+      </object>
+    </child>
   </object>
   <object class="GtkActionGroup" id="actions_process">
     <property name="accel-group">accelerators</property>
@@ -165,6 +171,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="can-focus">False</property>
             <child>
               <object class="GtkCheckMenuItem" id="menuitem_auto_clear">
+                <property name="use-action-appearance">True</property>
+                <property name="related-action">action_auto_clear_results</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Automatic clear</property>
