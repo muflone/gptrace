@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.muflone.gptrace</id>
+
+  <name>gpTrace</name>
+  <summary>Trace the activities of an external application</summary>
+  <description>
+    <p>
+      gpTrace can be used as an application debugger to discover what activities
+      an application does, which files accesses (or tries to use in the case
+      they miss), how many external processes are called and what arguments
+      those processes were using.
+    </p>
+  </description>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <content_rating type="oars-1.0" />
+  <categories>
+    <category>System</category>
+  </categories>
+  <url type="homepage">https://github.com/muflone/gptrace</url>
+  <url type="help">https://www.muflone.com/gptrace</url>
+  <url type="translate">https://www.transifex.com/projects/p/gptrace/</url>
+  <url type="bugtracker">https://github.com/muflone/gptrace/issues</url>
+  <url type="contact">https://www.muflone.com/contacts/</url>
+
+  <launchable type="desktop-id">gptrace.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/main.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/counts.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/files.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/processes.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/about.png</image>
+    </screenshot>
+  </screenshots>
+</component>
