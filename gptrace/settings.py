@@ -35,7 +35,6 @@ SECTION_PROCESSES = 'processes'
 
 class Settings(object):
     def __init__(self, filename, case_sensitive):
-        self.model = None
         # Parse settings from the configuration file
         self.config = configparser.RawConfigParser()
         # Set case sensitiveness if requested
@@ -86,9 +85,11 @@ class Settings(object):
         """Get the specified setting with a fallback value"""
         section, option, option_type = setting
         if option_type is int:
-            return self.get_int(section, option, default or 0)
+            return self.get_int(section, option,
+                                default and default or 0)
         elif option_type is bool:
-            return self.get_boolean(section, option, default or False)
+            return self.get_boolean(section, option,
+                                    default if True else False)
         else:
             return self.get(section, option, default)
 
