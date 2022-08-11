@@ -10,7 +10,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/python:3.9.5
+      - image: cimg/python:3.9.5
 
     working_directory: ~/repo
 
@@ -30,5 +30,9 @@ jobs:
             python -m compileall gptrace.py setup.py gptrace
             python -m pycodestyle gptrace.py setup.py gptrace
             python -m flake8 gptrace.py setup.py gptrace
-            python setup.py install --optimize=1 --root=build
-            ls -laR build
+            python -m build --outdir=dist .
+            python -m pip install --verbose dist/*.whl
+            python -m pip list
+            python -m pip freeze
+            ls -laR .
+            python -m pip uninstall --yes --verbose gptrace
