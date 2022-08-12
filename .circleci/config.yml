@@ -19,18 +19,17 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
             sudo apt update
             sudo apt install gettext gir1.2-gtk-3.0 libcairo2-dev libgirepository1.0-dev python3-gi
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements_travis.txt
       - run:
           name: check code
           command: |
             . venv/bin/activate
-            python -m compileall gptrace.py setup.py gptrace
-            python -m pycodestyle gptrace.py setup.py gptrace
-            python -m flake8 gptrace.py setup.py gptrace
-            python setup.py build
+            python -m compileall gptrace gptrace.py setup.py
+            python -m pycodestyle gptrace gptrace.py setup.py
+            python -m flake8 gptrace gptrace.py setup.py
             python setup.py install --optimize=1 --root=build
             ls -laR .
