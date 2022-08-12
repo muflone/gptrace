@@ -27,10 +27,13 @@ from gptrace.ui.base import UIBase
 
 
 class UIShortcuts(UIBase):
-    def __init__(self, parent):
+    def __init__(self, parent, settings, options):
         """Prepare the shortcuts dialog"""
-        super().__init__(filename='shortcuts.ui')
         logging.debug(f'{self.__class__.__name__} init')
+        super().__init__(filename='shortcuts.ui')
+        # Initialize members
+        self.settings = settings
+        self.options = options
         # Load the user interface
         self.ui.shortcuts.set_transient_for(parent)
         # Initialize groups

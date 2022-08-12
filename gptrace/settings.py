@@ -26,11 +26,22 @@ POSITION_TOP = 'top'
 SIZE_WIDTH = 'width'
 SIZE_HEIGHT = 'height'
 
+DEFAULT_VALUES = {}
+
 SECTION_APPLICATION = 'application'
 SECTION_ACTIVITIES = 'activities'
 SECTION_COUNTS = 'counts'
 SECTION_FILES = 'files'
 SECTION_PROCESSES = 'processes'
+
+PREFERENCES_AUTO_CLEAR = 'autoclear'
+DEFAULT_VALUES[PREFERENCES_AUTO_CLEAR] = (SECTION_APPLICATION, True)
+
+PREFERENCES_COUNT_CALLED = 'only called'
+DEFAULT_VALUES[PREFERENCES_COUNT_CALLED] = (SECTION_COUNTS, False)
+
+PREFERENCES_FILES_EXISTING = 'only existing'
+DEFAULT_VALUES[PREFERENCES_FILES_EXISTING] = (SECTION_FILES, False)
 
 
 class Settings(object):
@@ -71,37 +82,46 @@ class Settings(object):
         """Get an integer option from a specific section"""
         return int(self.get(section, option, default))
 
+    def set_int(self, section, option, value):
+        """Set an integer option from a specific section"""
+        self.set(section, option, int(value))
+
     def get_list(self, section, option, separator=','):
         """Get an option list from a specific section"""
         value = self.get(section, option, '')
         if len(value):
             return [v.strip() for v in value.split(separator)]
 
-    def set_int(self, section, option, value):
-        """Set an integer option from a specific section"""
-        self.set(section, option, int(value))
+    def load_preferences(self):
+        """Load preferences"""
+        for option in DEFAULT_VALUES:
+            self.set_preference(option, self.get_preference(option))
 
-    def get_setting(self, setting, default=None):
-        """Get the specified setting with a fallback value"""
-        section, option, option_type = setting
-        if option_type is int:
-            return self.get_int(section, option,
-                                default and default or 0)
-        elif option_type is bool:
-            return self.get_boolean(section, option,
-                                    default if True else False)
+    def get_preference(self, option):
+        """Get a preference value by option name"""
+        section, default = DEFAULT_VALUES[option]
+        if isinstance(default, bool):
+            method_get = self.get_boolean
+        elif isinstance(default, int):
+            method_get = self.get_int
         else:
-            return self.get(section, option, default)
+            method_get = self.get
+        return method_get(section=section,
+                          option=option,
+                          default=default)
 
-    def set_setting(self, setting, value):
-        """Set the specified setting"""
-        section, option, option_type = setting
-        if option_type is int:
-            return self.set_int(section, option, value)
-        elif option_type is bool:
-            return self.set_boolean(section, option, value)
+    def set_preference(self, option, value):
+        """Set a preference value by option name"""
+        section, default = DEFAULT_VALUES[option]
+        if isinstance(default, bool):
+            method_set = self.set_boolean
+        elif isinstance(default, int):
+            method_set = self.set_int
         else:
-            return self.set(section, option, value)
+            method_set = self.set
+        return method_set(section=section,
+                          option=option,
+                          value=value)
 
     def save(self):
         """Save the whole configuration"""

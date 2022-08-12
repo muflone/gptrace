@@ -23,9 +23,9 @@ from typing import Iterable
 
 from gi.repository import Gtk
 
-from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.constants import DIR_ICONS
 from gptrace.functions import get_ui_file
+from gptrace.gtkbuilder_loader import GtkBuilderLoader
 from gptrace.localize import text
 
 
@@ -36,6 +36,7 @@ class UIBase(object):
     def set_buttons_icons(self, buttons: Iterable) -> None:
         """
         Set icons for buttons
+
         :param buttons: tuple or list of buttons to customize
         :return: None
         """

@@ -28,7 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_quit">
         <property name="label" context="gtk30">_Quit</property>
-        <property name="short-label" context="gtk30">_Quit</property>
         <signal name="activate" handler="on_action_quit_activate" swapped="no"/>
       </object>
       <accelerator key="q" modifiers="GDK_CONTROL_MASK"/>
@@ -36,7 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_about">
         <property name="label" context="gtk30">About</property>
-        <property name="short-label">About</property>
         <property name="icon-name">help-about</property>
         <signal name="activate" handler="on_action_about_activate" swapped="no"/>
       </object>
@@ -44,8 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkAction" id="action_shortcuts">
-        <property name="label" context="gtk30">Shortcuts</property>
-        <property name="short-label" context="gtk30">Shortcuts</property>
+        <property name="label" translatable="yes">Keyboard shortcuts</property>
         <property name="icon-name">help-browser</property>
         <signal name="activate" handler="on_action_shortcuts_activate" swapped="no"/>
       </object>
@@ -57,7 +54,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_options">
         <property name="label" translatable="yes">Open the options menu</property>
-        <property name="short-label" translatable="yes">Open the options menu</property>
         <property name="icon-name">open-menu</property>
       </object>
     </child>
@@ -79,18 +75,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
       <object class="GtkToggleAction" id="action_auto_clear_results">
         <property name="label" translatable="yes">Automatically clear results</property>
         <property name="active">True</property>
+        <signal name="toggled" handler="on_action_options_toggled" swapped="no"/>
       </object>
     </child>
     <child>
       <object class="GtkToggleAction" id="action_counts_only_called">
         <property name="label" translatable="yes">Count only called syscalls</property>
         <signal name="toggled" handler="on_action_counts_only_called_toggled" swapped="no"/>
+        <signal name="toggled" handler="on_action_options_toggled" swapped="no"/>
       </object>
     </child>
     <child>
       <object class="GtkToggleAction" id="action_files_only_existing">
         <property name="label" translatable="yes">Show only existing files</property>
         <signal name="toggled" handler="on_action_files_only_existing_toggled" swapped="no"/>
+        <signal name="toggled" handler="on_action_options_toggled" swapped="no"/>
       </object>
     </child>
   </object>
@@ -99,7 +98,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_start">
         <property name="label" context="gtk30">Start</property>
-        <property name="short-label" context="gtk30">Start</property>
         <property name="icon-name">system-run</property>
         <property name="is-important">True</property>
         <property name="sensitive">False</property>
@@ -110,7 +108,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_stop">
         <property name="label" context="gtk30">Stop</property>
-        <property name="short-label" context="gtk30">Stop</property>
         <property name="icon-name">process-stop</property>
         <property name="is-important">True</property>
         <property name="sensitive">False</property>
@@ -121,7 +118,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <child>
       <object class="GtkAction" id="action_browse">
         <property name="label" translatable="yes">Browse</property>
-        <property name="short-label" translatable="yes">Browse</property>
         <property name="icon-name">document-open</property>
         <signal name="activate" handler="on_action_browse_activate" swapped="no"/>
       </object>
@@ -191,38 +187,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <property name="can-focus">False</property>
     <child>
       <object class="GtkMenuItem" id="menuitem_browse">
-        <property name="use-action-appearance">True</property>
         <property name="related-action">action_browse</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label">Browse</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="menuitem_start">
-        <property name="use-action-appearance">True</property>
         <property name="related-action">action_start</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label">Start</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="menuitem_stop">
-        <property name="use-action-appearance">True</property>
         <property name="related-action">action_stop</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label">Stop</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="menuitem_clear_results">
-        <property name="use-action-appearance">True</property>
         <property name="related-action">action_clear_results</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label">Clear results</property>
       </object>
     </child>
     <child>
@@ -243,30 +231,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <property name="can-focus">False</property>
             <child>
               <object class="GtkCheckMenuItem" id="menuitem_auto_clear">
-                <property name="use-action-appearance">True</property>
                 <property name="related-action">action_auto_clear_results</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label">Automatically clear results</property>
                 <property name="active">True</property>
               </object>
             </child>
             <child>
               <object class="GtkCheckMenuItem" id="menuitem_counts_only_called">
-                <property name="use-action-appearance">True</property>
                 <property name="related-action">action_counts_only_called</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label">Count only called Syscalls</property>
               </object>
             </child>
             <child>
               <object class="GtkCheckMenuItem" id="menuitem_files_show_only_existing">
-                <property name="use-action-appearance">True</property>
                 <property name="related-action">action_files_only_existing</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label">Show only existing files</property>
               </object>
             </child>
             <child>
@@ -280,38 +262,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_selected_syscalls_select_all">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_select_all</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Select All</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_selected_syscalls_files">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_files</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Files functions</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_selected_syscalls_sockets">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_sockets</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Sockets functions</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_selected_syscalls_deselect_all">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_deselect_all</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Deselect All</property>
                       </object>
                     </child>
                   </object>
@@ -329,29 +303,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_hide_syscall">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_filter_hide</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Hide Syscall</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_show_only_syscall">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_filter_show_only</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Show only Syscall</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_filter_reset">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_filter_reset</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Reset</property>
                       </object>
                     </child>
                     <child>
@@ -362,20 +330,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_exclude_syscall">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_filter_exclude</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Exclude syscall</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menuitem_activities_include_syscall">
-                        <property name="use-action-appearance">True</property>
                         <property name="related-action">action_syscalls_filter_include</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">Include syscall</property>
                       </object>
                     </child>
                   </object>
@@ -406,7 +370,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_timestamp">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Timestamp</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -415,7 +378,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_time">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Time</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -424,7 +386,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_syscall">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Syscall</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -433,7 +394,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_format">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Format</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -442,7 +402,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -451,7 +410,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_ip">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">IP</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -474,7 +432,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_counts_syscall">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Syscall</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -483,7 +440,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_counts_count">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Count</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -506,7 +462,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -515,7 +470,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_existing">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Existing</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -524,7 +478,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_path">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Path</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -547,7 +500,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -556,7 +508,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_timestamp">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Timestamp</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -565,7 +516,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_time">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Time</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -574,7 +524,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_information">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label">Information</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -596,7 +545,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_shortcuts</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label" context="gtk30">Shortcuts</property>
       </object>
     </child>
     <child>
@@ -604,7 +552,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_about</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label" context="gtk30">About</property>
       </object>
     </child>
   </object>
@@ -777,62 +724,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
-        <child>
-          <object class="GtkInfoBar" id="infobar_information">
-            <property name="app-paintable">True</property>
-            <property name="can-focus">False</property>
-            <property name="no-show-all">True</property>
-            <property name="show-close-button">True</property>
-            <signal name="response" handler="on_infobar_information_response" swapped="no"/>
-            <child internal-child="action_area">
-              <object class="GtkButtonBox">
-                <property name="can-focus">False</property>
-                <property name="layout-style">start</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
-                <property name="can-focus">False</property>
-                <property name="spacing">16</property>
-                <child>
-                  <object class="GtkLabel" id="label_infobar_content">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="label">label_infobar_content</property>
-                    <property name="use-markup">True</property>
-                    <property name="ellipsize">end</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkNotebook">
             <property name="visible">True</property>
@@ -1019,61 +910,128 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
               </packing>
             </child>
             <child>
-              <object class="GtkScrolledWindow" id="scroll_section_files">
+              <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="shadow-type">in</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkTreeView" id="treeview_files">
+                  <object class="GtkInfoBar" id="infobar_information">
+                    <property name="app-paintable">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="no-show-all">True</property>
+                    <property name="show-close-button">True</property>
+                    <signal name="response" handler="on_infobar_information_response" swapped="no"/>
+                    <child internal-child="action_area">
+                      <object class="GtkButtonBox">
+                        <property name="can-focus">False</property>
+                        <property name="layout-style">start</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child internal-child="content_area">
+                      <object class="GtkBox">
+                        <property name="can-focus">False</property>
+                        <property name="spacing">16</property>
+                        <child>
+                          <object class="GtkLabel" id="label_infobar_content">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label">When &lt;i&gt;&lt;b&gt;Show only existing files&lt;/b&gt;&lt;/i&gt; is selected the sorting by click on the column headers is disabled</property>
+                            <property name="use-markup">True</property>
+                            <property name="wrap">True</property>
+                            <property name="ellipsize">end</property>
+                            <property name="lines">2</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scroll_section_files">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="model">model_files</property>
-                    <property name="search-column">1</property>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection"/>
-                    </child>
+                    <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkTreeViewColumn" id="column_files_pid">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">PID</property>
-                        <property name="clickable">True</property>
-                        <property name="reorderable">True</property>
-                        <child>
-                          <object class="GtkCellRendererText" id="cell_files_pid"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
+                      <object class="GtkTreeView" id="treeview_files">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="model">model_files</property>
+                        <property name="search-column">1</property>
+                        <child internal-child="selection">
+                          <object class="GtkTreeSelection"/>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="column_files_existing">
-                        <property name="title" translatable="yes">Existing</property>
-                        <property name="clickable">True</property>
-                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkCellRendererToggle" id="cell_files_existing"/>
-                          <attributes>
-                            <attribute name="active">2</attribute>
-                          </attributes>
+                          <object class="GtkTreeViewColumn" id="column_files_pid">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">PID</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cell_files_pid"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkTreeViewColumn" id="column_files_path">
-                        <property name="resizable">True</property>
-                        <property name="title" translatable="yes">File path</property>
-                        <property name="clickable">True</property>
-                        <property name="reorderable">True</property>
                         <child>
-                          <object class="GtkCellRendererText" id="cell_files_path"/>
-                          <attributes>
-                            <attribute name="text">1</attribute>
-                          </attributes>
+                          <object class="GtkTreeViewColumn" id="column_files_existing">
+                            <property name="title" translatable="yes">Existing</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
+                            <child>
+                              <object class="GtkCellRendererToggle" id="cell_files_existing"/>
+                              <attributes>
+                                <attribute name="active">2</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkTreeViewColumn" id="column_files_path">
+                            <property name="resizable">True</property>
+                            <property name="title" translatable="yes">File path</property>
+                            <property name="clickable">True</property>
+                            <property name="reorderable">True</property>
+                            <child>
+                              <object class="GtkCellRendererText" id="cell_files_path"/>
+                              <attributes>
+                                <attribute name="text">1</attribute>
+                              </attributes>
+                            </child>
+                          </object>
                         </child>
                       </object>
                     </child>
                   </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>

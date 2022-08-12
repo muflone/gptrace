@@ -3,7 +3,7 @@
 [![Travis CI Build Status](https://img.shields.io/travis/com/muflone/gptrace/master.svg)](https://www.travis-ci.com/github/muflone/gptrace)
 [![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/gptrace/master.svg)](https://circleci.com/gh/muflone/gptrace)
 
-**Description:** Trace the activities of an external application.
+**Description:** Trace the activities of an external application
 
 **Copyright:** 2014-2022 Fabio Castelli (Muflone) <muflone(at)muflone.com>
 
@@ -54,7 +54,7 @@ are also available clicking the mouse right button on the results list.
 # Reliability
 
 gpTrace uses a Python library called *ptrace* which, at the actual stage,
-results unstable and sometimes unreliable. Therefore you are warned the called
+results unstable and sometimes unreliable, therefore you are warned the called
 external program can fail, break, stop, hung or result unbearably slow.
 
 In particular the opening and the closing processes are very delicate and

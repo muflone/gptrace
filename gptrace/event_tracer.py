@@ -29,10 +29,10 @@ from ptrace.debugger.process_event import (NewProcessEvent,
 from ptrace.debugger.ptrace_signal import ProcessSignal
 from ptrace.os_tools import RUNNING_LINUX
 
-from gptrace.functions import _
-
 if RUNNING_LINUX:
     from ptrace.linux_proc import readProcessCmdline, readProcessLink, openProc
+
+from gptrace.localize import _
 
 UID = 'uid'
 GID = 'gid'

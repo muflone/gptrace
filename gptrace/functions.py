@@ -18,51 +18,11 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gettext import gettext as _
 import os.path
 
 from gi.repository import Gtk
 
 from gptrace.constants import DIR_UI
-
-
-def show_dialog_fileopen(parent, title):
-    """Show a FileChooserDialog with open and cancel buttons"""
-    dialog = Gtk.FileChooserDialog(
-        parent=parent,
-        flags=Gtk.DialogFlags.MODAL,
-        type=Gtk.WindowType.TOPLEVEL,
-        buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                 Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
-    )
-    if title:
-        dialog.set_title(title)
-    if dialog.run() == Gtk.ResponseType.OK:
-        result = dialog.get_filename()
-    else:
-        result = None
-    dialog.destroy()
-    return result
-
-
-def readlines(filename, empty_lines=False):
-    """
-    Read all the text in the specified filename, allowing to skip empty lines
-    """
-    result = []
-    with open(filename) as f:
-        for line in f.readlines():
-            line = line.strip()
-            if line or empty_lines:
-                result.append(line)
-        f.close()
-    return result
-
-
-def process_events():
-    """Process every pending GTK+ event"""
-    while Gtk.events_pending():
-        Gtk.main_iteration()
 
 
 def find_button_from_gtktreeviewcolumn(tvwcolumn):
@@ -88,11 +48,40 @@ def get_ui_file(filename):
     return os.path.join(DIR_UI, filename)
 
 
-__all__ = [
-    'show_dialog_fileopen',
-    'readlines',
-    'process_events',
-    'find_button_from_gtktreeviewcolumn',
-    '_',
-    'get_ui_file'
-]
+def process_events():
+    """Process every pending GTK+ event"""
+    while Gtk.events_pending():
+        Gtk.main_iteration()
+
+
+def readlines(filename, empty_lines=False):
+    """
+    Read all the text in the specified filename, allowing to skip empty lines
+    """
+    result = []
+    with open(filename) as f:
+        for line in f.readlines():
+            line = line.strip()
+            if line or empty_lines:
+                result.append(line)
+        f.close()
+    return result
+
+
+def show_dialog_fileopen(parent, title):
+    """Show a FileChooserDialog with open and cancel buttons"""
+    dialog = Gtk.FileChooserDialog(
+        parent=parent,
+        flags=Gtk.DialogFlags.MODAL,
+        type=Gtk.WindowType.TOPLEVEL,
+        buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                 Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
+    )
+    if title:
+        dialog.set_title(title)
+    if dialog.run() == Gtk.ResponseType.OK:
+        result = dialog.get_filename()
+    else:
+        result = None
+    dialog.destroy()
+    return result

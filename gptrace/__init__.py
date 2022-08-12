@@ -21,8 +21,7 @@
 import gettext
 import locale
 
-import gptrace.requires                                         # noqa: F401
-
+import gptrace.requires                                            # noqa: F401
 from gptrace.constants import DOMAIN_NAME, DIR_LOCALE
 
 
