@@ -13,6 +13,8 @@
 
 **Documentation:** https://www.muflone.com/gptrace/
 
+**Translations:** https://explore.transifex.com/muflone/gptrace/
+
 # Description
 
 **gpTrace** can be used as an application debugger to discover what activities
