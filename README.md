@@ -44,6 +44,11 @@ not found you can configure in the upper righe options menu.
 In the **Processes** tab you'll the external processes were called from your
 application, along with their information and command line arguments.
 
+![Options menu](https://www.muflone.com/resources/gptrace/archive/latest/english/options.png)
+
+From the upper right button you can configure the program options. Some options
+are also available clicking the mouse right button on the results list.
+
 # Reliability
 
 gpTrace uses a Python library called *ptrace* which, at the actual stage,
