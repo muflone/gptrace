@@ -19,10 +19,10 @@
   <categories>
     <category>System</category>
   </categories>
-  <url type="homepage">https://github.com/muflone/gptrace</url>
-  <url type="help">https://www.muflone.com/gptrace</url>
+  <url type="homepage">https://github.com/muflone/gptrace/</url>
+  <url type="help">https://www.muflone.com/gptrace/</url>
   <url type="translate">https://explore.transifex.com/muflone/gptrace/</url>
-  <url type="bugtracker">https://github.com/muflone/gptrace/issues</url>
+  <url type="bugtracker">https://github.com/muflone/gptrace/issues/</url>
   <url type="contact">https://www.muflone.com/contacts/</url>
 
   <launchable type="desktop-id">gptrace.desktop</launchable>

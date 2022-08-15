@@ -33,7 +33,7 @@ APP_URL = 'https://www.muflone.com/gptrace/'
 APP_AUTHOR = 'Fabio Castelli'
 APP_AUTHOR_EMAIL = 'muflone@muflone.com'
 APP_COPYRIGHT = f'Copyright 2014-2022 {APP_AUTHOR}'
-SOURCES_URL = 'https://github.com/muflone/gptrace'
+URL_SOURCES = 'https://github.com/muflone/gptrace/'
 # Other constants
 DOMAIN_NAME = 'gptrace'
 VERBOSE_LEVEL_QUIET = 0

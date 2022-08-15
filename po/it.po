@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
-"Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
 "POT-Creation-Date: 2022-08-15 22:52+0200\n"
 "PO-Revision-Date: 2022-08-11 22:47+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"

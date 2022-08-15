@@ -9,7 +9,7 @@
 
 **License:** GPL-3+
 
-**Source code:** https://github.com/muflone/gptrace
+**Source code:** https://github.com/muflone/gptrace/
 
 **Documentation:** https://www.muflone.com/gptrace/
 
