@@ -102,7 +102,7 @@ msgstr "Versie {VERSION}"
 
 #: gptrace/ui/about.py:62
 msgid "Trace the activities of an external application"
-msgstr ""
+msgstr "Volg alle activiteiten van een externe toepassing"
 
 #: gptrace/ui/about.py:71
 msgid "Contributors:"
