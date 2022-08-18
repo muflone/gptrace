@@ -20,6 +20,7 @@
 
 import logging
 
+import gptrace.requires                                            # noqa: F401
 from gptrace.app import Application
 from gptrace.command_line_options import CommandLineOptions
 from gptrace.constants import (DIR_DATA,
@@ -28,6 +29,7 @@ from gptrace.constants import (DIR_DATA,
                                DIR_PREFIX,
                                DIR_SETTINGS,
                                DIR_UI)
+import gptrace.translations                                        # noqa: F401
 
 
 def main():
