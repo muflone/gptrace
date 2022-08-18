@@ -19,8 +19,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from gptrace.main import main
+import gptrace.main
 
 
 if __name__ == '__main__':
-    main()
+    gptrace.main.main()
