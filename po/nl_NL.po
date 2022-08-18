@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
-"POT-Creation-Date: 2022-08-15 22:52+0200\n"
+"POT-Creation-Date: 2022-08-19 01:14+0200\n"
 "PO-Revision-Date: 2022-08-11 22:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>\n"
 "Language-Team: Dutch (Netherlands)\n"
@@ -95,24 +95,44 @@ msgstr "Effectieve groepsnaam"
 msgid "Status"
 msgstr "Status"
 
-#: gptrace/ui/about.py:59
+#: gptrace/ui/about.py:65
 #, python-brace-format
 msgid "Version {VERSION}"
 msgstr "Versie {VERSION}"
 
-#: gptrace/ui/about.py:62
+#: gptrace/ui/about.py:68
 msgid "Trace the activities of an external application"
 msgstr "Volg alle activiteiten van een externe toepassing"
 
-#: gptrace/ui/about.py:71
+#: gptrace/ui/about.py:77
 msgid "Contributors:"
 msgstr "Bijdragers:"
 
-#: gptrace/ui/main.py:453
+#: gptrace/ui/about.py:84
+msgid "Project home page"
+msgstr "Website"
+
+#: gptrace/ui/about.py:85
+msgid "Source code"
+msgstr "Broncode"
+
+#: gptrace/ui/about.py:86
+msgid "Author information"
+msgstr "Informatie over de maker"
+
+#: gptrace/ui/about.py:87
+msgid "Issues and bugs tracking"
+msgstr "Problemen en bugs"
+
+#: gptrace/ui/about.py:88
+msgid "Translations"
+msgstr "Vertalingen"
+
+#: gptrace/ui/main.py:452
 msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
 msgstr "Als <i><b>Alleen bestaande bestanden tonen</b></i> is ingeschakeld, dan kunt u niet sorteren door te klikken op de kolomtitels"
 
-#: gptrace/ui/main.py:501
+#: gptrace/ui/main.py:500
 msgid "Select a program to execute"
 msgstr "Selecteer een applicatie om uit te voeren"
 
@@ -122,7 +142,7 @@ msgstr "Sneltoetsen"
 
 #: ui/main.ui:56 ui/shortcuts.ui:28
 msgid "Open the options menu"
-msgstr "Optiesmenu openen"
+msgstr "Open het optiesmenu"
 
 #: ui/main.ui:69 ui/shortcuts.ui:86
 msgid "Clear the results list"
