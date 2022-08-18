@@ -21,10 +21,10 @@
 import gettext
 import locale
 
-from gptrace.constants import DOMAIN_NAME, DIR_LOCALE
+from gptrace.constants import APP_DOMAIN, DIR_LOCALE
 
 
 # Load domain for translation
 for module in (gettext, locale):
-    module.bindtextdomain(DOMAIN_NAME, DIR_LOCALE)
-    module.textdomain(DOMAIN_NAME)
+    module.bindtextdomain(APP_DOMAIN, DIR_LOCALE)
+    module.textdomain(APP_DOMAIN)
