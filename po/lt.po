@@ -6,7 +6,7 @@
 # Lithuanian translation for gpTrace.
 #
 # Translators:
-# Moo, 2016,2021
+# Moo, 2016-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
@@ -222,11 +222,11 @@ msgstr ""
 
 #: ui/main.ui:455 ui/main.ui:1045
 msgid "Files"
-msgstr ""
+msgstr "Failai"
 
 #: ui/main.ui:493 ui/main.ui:1139 ui/shortcuts.ui:52
 msgid "Processes"
-msgstr ""
+msgstr "Procesai"
 
 #: ui/main.ui:567
 msgid "Program to execute:"
