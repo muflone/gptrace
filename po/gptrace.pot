@@ -4,8 +4,6 @@
 # Website: https://www.muflone.com/gptrace/
 # This file is distributed under the same license of gpTrace.
 # X translation for gpTrace.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
