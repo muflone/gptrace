@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
-"POT-Creation-Date: 2022-08-19 01:14+0200\n"
+"POT-Creation-Date: 2022-08-20 18:05+0200\n"
 "PO-Revision-Date: 2022-08-11 22:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>\n"
 "Language-Team: Dutch (Netherlands)\n"
@@ -128,11 +128,15 @@ msgstr "Problemen en bugs"
 msgid "Translations"
 msgstr "Vertalingen"
 
-#: gptrace/ui/main.py:452
-msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
-msgstr "Als <i><b>Alleen bestaande bestanden tonen</b></i> is ingeschakeld, dan kunt u niet sorteren door te klikken op de kolomtitels"
+#: gptrace/ui/main.py:447
+msgid ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
+msgstr ""
+"Als <i><b>Alleen bestaande bestanden tonen</b></i> is ingeschakeld, dan kunt "
+"u niet sorteren door te klikken op de kolomtitels"
 
-#: gptrace/ui/main.py:500
+#: gptrace/ui/main.py:495
 msgid "Select a program to execute"
 msgstr "Selecteer een applicatie om uit te voeren"
 
@@ -173,7 +177,7 @@ msgid "Sockets functions"
 msgstr "Socketfuncties"
 
 #: ui/main.ui:149
-msgid "Deselect All"
+msgid "Deselect all"
 msgstr "Niets selecteren"
 
 #: ui/main.ui:155
@@ -196,87 +200,83 @@ msgstr "Geselecteerde systeemoproep verbergen"
 msgid "Include the selected syscall"
 msgstr "Geselecteerde systeemoproep tonen"
 
-#: ui/main.ui:226
+#: ui/main.ui:230
 msgid "Options"
 msgstr "Opties"
 
-#: ui/main.ui:258
+#: ui/main.ui:265
 msgid "Selected syscalls"
 msgstr "Geselecteerde systeemaanroepen"
 
-#: ui/main.ui:299
+#: ui/main.ui:310
 msgid "Filter syscalls in the results"
 msgstr "Systeemaanroepen filteren in resultaten"
 
-#: ui/main.ui:353
+#: ui/main.ui:369
 msgid "Visible columns"
 msgstr "Zichtbare kolommen"
 
-#: ui/main.ui:363 ui/main.ui:846
+#: ui/main.ui:379 ui/main.ui:879
 msgid "Activities"
 msgstr "Activiteiten"
 
-#: ui/main.ui:425 ui/main.ui:905
+#: ui/main.ui:447 ui/main.ui:938
 msgid "Counts"
 msgstr "Tellers"
 
-#: ui/main.ui:455 ui/main.ui:1045
+#: ui/main.ui:479 ui/main.ui:1078
 msgid "Files"
 msgstr "Bestanden"
 
-#: ui/main.ui:493 ui/main.ui:1139 ui/shortcuts.ui:52
+#: ui/main.ui:520 ui/main.ui:1172 ui/shortcuts.ui:52
 msgid "Processes"
 msgstr "Processen"
 
-#: ui/main.ui:567
+#: ui/main.ui:600
 msgid "Program to execute:"
 msgstr "Applicatie om uit te voeren:"
 
-#: ui/main.ui:749 ui/main.ui:1083
+#: ui/main.ui:782 ui/main.ui:1116
 msgid "Timestamp"
 msgstr "Tijdstempel"
 
-#: ui/main.ui:764 ui/main.ui:1097
+#: ui/main.ui:797 ui/main.ui:1130
 msgid "Time"
 msgstr "Tijd"
 
-#: ui/main.ui:779 ui/main.ui:869 ui/main.ui:1196
+#: ui/main.ui:812 ui/main.ui:902 ui/main.ui:1229
 msgid "Syscall"
 msgstr "Systeemoproep"
 
-#: ui/main.ui:795 ui/main.ui:1209
+#: ui/main.ui:828 ui/main.ui:1242
 msgid "Format"
 msgstr "Type"
 
-#: ui/main.ui:812 ui/main.ui:989 ui/main.ui:1069
+#: ui/main.ui:845 ui/main.ui:1022 ui/main.ui:1102
 msgid "PID"
 msgstr "PID"
 
-#: ui/main.ui:827
+#: ui/main.ui:860
 msgid "Instruction pointer"
 msgstr "Instructiepointer"
 
-#: ui/main.ui:883
+#: ui/main.ui:916
 msgid "Calls count"
 msgstr "Aanroepteller"
 
-#: ui/main.ui:1002
+#: ui/main.ui:1035
 msgid "Existing"
 msgstr "Bestaande"
 
-#: ui/main.ui:1016
+#: ui/main.ui:1049
 msgid "File path"
 msgstr "Bestandspad"
 
-#: ui/main.ui:1111
-msgid "Information"
-msgstr "Informatie"
-
-#: ui/main.ui:1182
+#: ui/main.ui:1215
 msgid "Checked"
 msgstr "Gecontroleerd"
 
-#: ui/main.ui:1291
+#: ui/main.ui:1324
 #, python-format
 msgid "Selected syscalls (%(selected)d of %(total)d)"
 msgstr "Geselecteerde systeemoproepen (%(selected)d of %(total)d)"
@@ -284,10 +284,6 @@ msgstr "Geselecteerde systeemoproepen (%(selected)d of %(total)d)"
 #: ui/shortcuts.ui:21
 msgid "Show the about dialog"
 msgstr "Toon het venster ‘Over’"
-
-#: ui/shortcuts.ui:42
-msgid "Quit"
-msgstr "Afsluiten"
 
 #: ui/shortcuts.ui:57
 msgid "Browse file to open"

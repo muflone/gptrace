@@ -40,7 +40,7 @@ from gptrace.event_tracer import EventTracer
 from gptrace.functions import (find_button_from_gtktreeviewcolumn,
                                process_events,
                                show_dialog_fileopen)
-from gptrace.localize import _, text_gtk30
+from gptrace.localize import _
 from gptrace.models.activities import ModelActivities
 from gptrace.models.counts import ModelCounts
 from gptrace.models.files import ModelFiles
@@ -97,11 +97,6 @@ class UIMain(UIBase):
     def load_ui(self):
         """Load the interface UI"""
         logging.debug(f'{self.__class__.__name__} load UI')
-        # Initialize translations
-        self.ui.action_start.set_label(text_gtk30('_Start'))
-        self.ui.action_stop.set_label(text_gtk30('_Stop'))
-        self.ui.action_about.set_label(text_gtk30('About'))
-        self.ui.action_syscalls_select_all.set_label(text_gtk30('Select _All'))
         # Initialize titles and tooltips
         self.set_titles()
         # Initialize Gtk.HeaderBar

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
-"POT-Creation-Date: 2022-08-19 01:14+0200\n"
+"POT-Creation-Date: 2022-08-20 18:05+0200\n"
 "PO-Revision-Date: 2022-08-11 20:56+0200\n"
 "Last-Translator: Fabio Castelli (Muflone) <muflone(at)muflone.com>\n"
 "Language-Team: English\n"
@@ -128,11 +128,15 @@ msgstr "Issues and bugs tracking"
 msgid "Translations"
 msgstr "Translations"
 
-#: gptrace/ui/main.py:452
-msgid "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
-msgstr "When <i><b>Show only existing files</b></i> is selected the sorting by click on the column headers is disabled"
+#: gptrace/ui/main.py:447
+msgid ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
+msgstr ""
+"When <i><b>Show only existing files</b></i> is selected the sorting by click "
+"on the column headers is disabled"
 
-#: gptrace/ui/main.py:500
+#: gptrace/ui/main.py:495
 msgid "Select a program to execute"
 msgstr "Select a program to execute"
 
@@ -173,8 +177,8 @@ msgid "Sockets functions"
 msgstr "Sockets functions"
 
 #: ui/main.ui:149
-msgid "Deselect All"
-msgstr "Deselect All"
+msgid "Deselect all"
+msgstr "Deselect all"
 
 #: ui/main.ui:155
 msgid "Hide the selected syscall"
@@ -196,87 +200,83 @@ msgstr "Exclude the selected syscall"
 msgid "Include the selected syscall"
 msgstr "Include the selected syscall"
 
-#: ui/main.ui:226
+#: ui/main.ui:230
 msgid "Options"
 msgstr "Options"
 
-#: ui/main.ui:258
+#: ui/main.ui:265
 msgid "Selected syscalls"
 msgstr "Selected syscalls"
 
-#: ui/main.ui:299
+#: ui/main.ui:310
 msgid "Filter syscalls in the results"
 msgstr "Filter syscalls in the results"
 
-#: ui/main.ui:353
+#: ui/main.ui:369
 msgid "Visible columns"
 msgstr "Visible columns"
 
-#: ui/main.ui:363 ui/main.ui:846
+#: ui/main.ui:379 ui/main.ui:879
 msgid "Activities"
 msgstr "Activities"
 
-#: ui/main.ui:425 ui/main.ui:905
+#: ui/main.ui:447 ui/main.ui:938
 msgid "Counts"
 msgstr "Counts"
 
-#: ui/main.ui:455 ui/main.ui:1045
+#: ui/main.ui:479 ui/main.ui:1078
 msgid "Files"
 msgstr "Files"
 
-#: ui/main.ui:493 ui/main.ui:1139 ui/shortcuts.ui:52
+#: ui/main.ui:520 ui/main.ui:1172 ui/shortcuts.ui:52
 msgid "Processes"
 msgstr "Processes"
 
-#: ui/main.ui:567
+#: ui/main.ui:600
 msgid "Program to execute:"
 msgstr "Program to execute:"
 
-#: ui/main.ui:749 ui/main.ui:1083
+#: ui/main.ui:782 ui/main.ui:1116
 msgid "Timestamp"
 msgstr "Timestamp"
 
-#: ui/main.ui:764 ui/main.ui:1097
+#: ui/main.ui:797 ui/main.ui:1130
 msgid "Time"
 msgstr "Time"
 
-#: ui/main.ui:779 ui/main.ui:869 ui/main.ui:1196
+#: ui/main.ui:812 ui/main.ui:902 ui/main.ui:1229
 msgid "Syscall"
 msgstr "Syscall"
 
-#: ui/main.ui:795 ui/main.ui:1209
+#: ui/main.ui:828 ui/main.ui:1242
 msgid "Format"
 msgstr "Format"
 
-#: ui/main.ui:812 ui/main.ui:989 ui/main.ui:1069
+#: ui/main.ui:845 ui/main.ui:1022 ui/main.ui:1102
 msgid "PID"
 msgstr "PID"
 
-#: ui/main.ui:827
+#: ui/main.ui:860
 msgid "Instruction pointer"
 msgstr "Instruction pointer"
 
-#: ui/main.ui:883
+#: ui/main.ui:916
 msgid "Calls count"
 msgstr "Calls count"
 
-#: ui/main.ui:1002
+#: ui/main.ui:1035
 msgid "Existing"
 msgstr "Existing"
 
-#: ui/main.ui:1016
+#: ui/main.ui:1049
 msgid "File path"
 msgstr "File path"
 
-#: ui/main.ui:1111
-msgid "Information"
-msgstr "Information"
-
-#: ui/main.ui:1182
+#: ui/main.ui:1215
 msgid "Checked"
 msgstr "Checked"
 
-#: ui/main.ui:1291
+#: ui/main.ui:1324
 #, python-format
 msgid "Selected syscalls (%(selected)d of %(total)d)"
 msgstr "Selected syscalls (%(selected)d of %(total)d)"
@@ -284,10 +284,6 @@ msgstr "Selected syscalls (%(selected)d of %(total)d)"
 #: ui/shortcuts.ui:21
 msgid "Show the about dialog"
 msgstr "Show the about dialog"
-
-#: ui/shortcuts.ui:42
-msgid "Quit"
-msgstr "Quit"
 
 #: ui/shortcuts.ui:57
 msgid "Browse file to open"

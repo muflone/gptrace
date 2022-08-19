@@ -39,7 +39,7 @@
               <object class="GtkShortcutsShortcut" id="shortcut_quit">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;ctrl&gt;Q</property>
-                <property name="title" translatable="yes">Quit</property>
+                <property name="title">Quit</property>
               </object>
             </child>
           </object>

@@ -22,9 +22,28 @@ import gettext
 import locale
 
 from gptrace.constants import APP_DOMAIN, DIR_LOCALE
+from gptrace.localize import store_message, strip_colon, strip_underline, text
 
 
 # Load domain for translation
 for module in (gettext, locale):
     module.bindtextdomain(APP_DOMAIN, DIR_LOCALE)
     module.textdomain(APP_DOMAIN)
+
+# Import some translated messages from GTK+ domain
+for message in ('About', '_Start', '_Stop'):
+    store_message(strip_colon(strip_underline(message)),
+                  strip_colon(strip_underline(text(message=message,
+                                                   gtk30=True))))
+
+# Import some translated messages from GTK+ domain and context
+for message in ('Information', '_Quit'):
+    store_message(strip_colon(strip_underline(message)),
+                  strip_colon(strip_underline(text(message=message,
+                                                   gtk30=True,
+                                                   context='Stock label'))))
+
+# Import some variations
+store_message('Select all',
+              strip_underline(text(message='Select _All',
+                                   gtk30=True)))

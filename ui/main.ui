@@ -128,7 +128,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <property name="accel-group">accelerators</property>
     <child>
       <object class="GtkAction" id="action_syscalls_select_all">
-        <property name="label">Select All</property>
+        <property name="label">Select all</property>
         <signal name="activate" handler="on_action_syscalls_select_all_activate" swapped="no"/>
       </object>
     </child>
@@ -146,7 +146,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </child>
     <child>
       <object class="GtkAction" id="action_syscalls_deselect_all">
-        <property name="label" translatable="yes">Deselect All</property>
+        <property name="label" translatable="yes">Deselect all</property>
         <signal name="activate" handler="on_action_syscalls_deselect_all_activate" swapped="no"/>
       </object>
     </child>
@@ -190,6 +190,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_browse</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">Browse</property>
       </object>
     </child>
     <child>
@@ -197,6 +198,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_start</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">Start</property>
       </object>
     </child>
     <child>
@@ -204,6 +206,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_stop</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">Stop</property>
       </object>
     </child>
     <child>
@@ -211,6 +214,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_clear_results</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">Clear the results list</property>
       </object>
     </child>
     <child>
@@ -234,6 +238,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="related-action">action_auto_clear_results</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="label">Automatically clear results</property>
                 <property name="active">True</property>
               </object>
             </child>
@@ -242,6 +247,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="related-action">action_counts_only_called</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="label">Count only called syscalls</property>
               </object>
             </child>
             <child>
@@ -249,6 +255,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <property name="related-action">action_files_only_existing</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="label">Show only existing files</property>
               </object>
             </child>
             <child>
@@ -265,6 +272,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_select_all</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Select all</property>
                       </object>
                     </child>
                     <child>
@@ -272,6 +280,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_files</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Files functions</property>
                       </object>
                     </child>
                     <child>
@@ -279,6 +288,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_sockets</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Sockets functions</property>
                       </object>
                     </child>
                     <child>
@@ -286,6 +296,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_deselect_all</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Deselect all</property>
                       </object>
                     </child>
                   </object>
@@ -306,6 +317,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_filter_hide</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Hide the selected syscall</property>
                       </object>
                     </child>
                     <child>
@@ -313,6 +325,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_filter_show_only</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Show only the selected syscall</property>
                       </object>
                     </child>
                     <child>
@@ -320,6 +333,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_filter_reset</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Reset filter</property>
                       </object>
                     </child>
                     <child>
@@ -333,6 +347,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_filter_exclude</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Exclude the selected syscall</property>
                       </object>
                     </child>
                     <child>
@@ -340,6 +355,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <property name="related-action">action_syscalls_filter_include</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="label">Include the selected syscall</property>
                       </object>
                     </child>
                   </object>
@@ -370,6 +386,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_timestamp">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Timestamp</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -378,6 +395,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_time">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Time</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -386,6 +404,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_syscall">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Syscall</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -394,6 +413,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_format">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Format</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -402,6 +422,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -410,6 +431,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_activities_ip">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Instruction pointer</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -432,6 +454,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_counts_syscall">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Syscall</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -440,6 +463,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_counts_count">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Calls count</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -462,6 +486,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -470,6 +495,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_existing">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Existing</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -478,6 +504,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_files_path">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">File path</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -500,6 +527,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_pid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">PID</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -508,6 +536,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_timestamp">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Timestamp</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -516,6 +545,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_time">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Time</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -524,6 +554,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                               <object class="GtkCheckMenuItem" id="menuitem_columns_processes_information">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="label">Information</property>
                                 <property name="active">True</property>
                                 <signal name="toggled" handler="on_menuitem_visible_column_toggled" swapped="no"/>
                               </object>
@@ -545,6 +576,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_shortcuts</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">Keyboard shortcuts</property>
       </object>
     </child>
     <child>
@@ -552,6 +584,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <property name="related-action">action_about</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="label">About</property>
       </object>
     </child>
   </object>
@@ -1108,7 +1141,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <child>
                       <object class="GtkTreeViewColumn" id="column_processes_information">
                         <property name="resizable">True</property>
-                        <property name="title" translatable="yes">Information</property>
+                        <property name="title" context="gtk30">Information</property>
                         <property name="clickable">True</property>
                         <property name="reorderable">True</property>
                         <child>
@@ -1232,7 +1265,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 </child>
                 <child>
                   <object class="GtkButton" id="button_syscalls_select_all">
-                    <property name="use-action-appearance">True</property>
+                    <property name="label">Select all</property>
                     <property name="related-action">action_syscalls_select_all</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -1245,7 +1278,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 </child>
                 <child>
                   <object class="GtkButton" id="button_syscalls_file">
-                    <property name="use-action-appearance">True</property>
+                    <property name="label">Files functions</property>
                     <property name="related-action">action_syscalls_files</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -1258,7 +1291,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 </child>
                 <child>
                   <object class="GtkButton" id="button_syscalls_socket">
-                    <property name="use-action-appearance">True</property>
+                    <property name="label">Sockets functions</property>
                     <property name="related-action">action_syscalls_sockets</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
@@ -1271,7 +1304,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 </child>
                 <child>
                   <object class="GtkButton" id="button_syscalls_deselect_all">
-                    <property name="use-action-appearance">True</property>
+                    <property name="label">Deselect all</property>
                     <property name="related-action">action_syscalls_deselect_all</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
