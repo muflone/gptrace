@@ -41,10 +41,15 @@ from gptrace.functions import (find_button_from_gtktreeviewcolumn,
                                process_events,
                                show_dialog_fileopen)
 from gptrace.localize import _
+from gptrace.models.activity_item import ActivityItem
 from gptrace.models.activities import ModelActivities
+from gptrace.models.count_item import CountItem
 from gptrace.models.counts import ModelCounts
+from gptrace.models.file_item import FileItem
 from gptrace.models.files import ModelFiles
+from gptrace.models.process_item import ProcessItem
 from gptrace.models.processes import ModelProcesses
+from gptrace.models.selected_syscall_item import SelectedSyscallItem
 from gptrace.models.selected_syscalls import ModelSelectedSyscalls
 from gptrace.settings import (Settings,
                               PREFERENCES_AUTO_CLEAR,
@@ -218,25 +223,30 @@ class UIMain(UIBase):
         # Restore the selected syscalls list from settings
         saved_syscalls = self.settings.get_selected_syscalls()
         # Load all the available syscall names
-        for syscall in sorted(SYSCALL_NAMES.values()):
+        for syscall in sorted(set(SYSCALL_NAMES.values())):
             prototype = SYSCALL_PROTOTYPES.get(syscall, ('', ()))
-            self.model_selected_syscalls.add(items=(
+            self.model_selected_syscalls.add_data(item=SelectedSyscallItem(
                 # If the configuration file has a list of selected syscalls
                 # then set each syscall status accordingly
-                saved_syscalls is None and True or syscall in saved_syscalls,
+                checked=(True
+                         if saved_syscalls is None
+                         else syscall in saved_syscalls),
                 # Add syscall name
-                syscall,
+                syscall=syscall,
                 # Add return type
-                prototype[0],
+                return_type=prototype[0],
                 # Add prototype arguments
-                ', '.join(['%s %s' % m for m in prototype[1]]),
+                arguments=', '.join(['%s %s' % m for m in prototype[1]]),
                 # Does this syscall use any filename/pathname argument?
-                any(argname in FILENAME_ARGUMENTS for argtype, argname in
-                    prototype[1]),
+                is_for_file=any(argname in FILENAME_ARGUMENTS
+                                for argtype, argname
+                                in prototype[1]),
                 # Is this syscall used by sockets?
-                syscall in SOCKET_SYSCALL_NAMES,
+                is_for_socket=syscall in SOCKET_SYSCALL_NAMES,
             ))
-            self.model_counts.add(items=(syscall, 0, False))
+            self.model_counts.add_data(item=CountItem(syscall=syscall,
+                                                      count=0,
+                                                      visibility=False))
         self.do_update_selected_syscalls_count()
         # Restore visible columns
         for current_section in self.column_headers.get_sections():
@@ -265,12 +275,12 @@ class UIMain(UIBase):
             """Add a process information"""
             logging.info(f'added new process: {information}')
             now = datetime.datetime.now()
-            GObject.idle_add(self.model_processes.add, (
-                str(pid),
-                (now - self.debug_start_time).total_seconds(),
-                now.strftime('%H:%M:%S.%f'),
-                information,
-                str(value).strip()))
+            GObject.idle_add(self.model_processes.add_data, ProcessItem(
+                pid=str(pid),
+                timestamp=(now - self.debug_start_time).total_seconds(),
+                time=now.strftime('%H:%M:%S.%f'),
+                information=information,
+                value=str(value).strip()))
 
         self.debug_start_time = datetime.datetime.now()
         self.debugger = SyscallTracer(
@@ -305,13 +315,14 @@ class UIMain(UIBase):
                 selected_syscall = self.model_activities.get_syscall(
                     self.ui.filter_activities.convert_iter_to_child_iter(iter))
                 # Cycle each row in the selected syscalls model
-                for row in self.model_selected_syscalls:
+                for key in self.model_selected_syscalls:
                     # If the syscall name for the row is the same then
                     # ignore/unignore
+                    treeiter = self.model_selected_syscalls.get_iter(key=key)
                     if self.model_selected_syscalls.get_syscall(
-                            row) == selected_syscall:
+                            treeiter=treeiter) == selected_syscall:
                         self.model_selected_syscalls.set_checked(
-                            treepath=row,
+                            treeiter=treeiter,
                             value=status)
                         break
                 # Update the selected syscalls count
@@ -320,24 +331,23 @@ class UIMain(UIBase):
     def do_syscall_callback(self, syscall):
         """Add the syscall to the syscalls model"""
         now = datetime.datetime.now()
-        GObject.idle_add(self.model_activities.add, (
-            (now - self.debug_start_time).total_seconds(),
-            now.strftime('%H:%M:%S.%f'),
-            syscall.name,
-            syscall.format(),
-            syscall.process.pid,
-            formatAddress(syscall.instr_pointer)
-        ))
+        GObject.idle_add(self.model_activities.add_data, ActivityItem(
+            timestamp=(now - self.debug_start_time).total_seconds(),
+            time=now.strftime('%H:%M:%S.%f'),
+            syscall=syscall.name,
+            format=syscall.format(),
+            pid=syscall.process.pid,
+            ip=formatAddress(syscall.instr_pointer)))
         GObject.idle_add(self.model_counts.increment_count, syscall.name)
         # Check if the syscall has any filename or pathname argument
         for argument in syscall.arguments:
             argument_text = argument.getText()
             if (argument.name in FILENAME_ARGUMENTS and
                     argument_text != "''..."):
-                GObject.idle_add(self.model_files.add, (
-                    str(syscall.process.pid),
-                    argument_text[1:-1],
-                    os.path.exists(argument_text[1:-1])))
+                GObject.idle_add(self.model_files.add_data, FileItem(
+                    pid=str(syscall.process.pid),
+                    file_path=argument_text[1:-1],
+                    existing=os.path.exists(argument_text[1:-1])))
 
     def do_syscall_callback_ignore(self, syscall):
         """Determine if to ignore a callback before it's processed"""
@@ -357,7 +367,7 @@ class UIMain(UIBase):
         self.ui.label_syscalls.set_text(
             self.label_syscalls_text % {
                 'selected': len(self.model_selected_syscalls.syscalls),
-                'total': self.model_selected_syscalls.count(),
+                'total': len(self.model_selected_syscalls),
             })
 
     def on_action_about_activate(self, widget):
@@ -498,28 +508,38 @@ class UIMain(UIBase):
 
     def on_action_syscalls_select_all_activate(self, widget):
         """Intercept all the syscalls"""
-        for row in self.model_selected_syscalls:
-            self.model_selected_syscalls.set_checked(row, True)
+        for key in self.model_selected_syscalls:
+            treeiter = self.model_selected_syscalls.get_iter(key=key)
+            self.model_selected_syscalls.set_checked(treeiter=treeiter,
+                                                     value=True)
         self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_files_activate(self, widget):
         """Intercept all the syscalls that use filenames"""
-        for row in self.model_selected_syscalls:
-            if self.model_selected_syscalls.get_has_filename_arguments(row):
-                self.model_selected_syscalls.set_checked(row, True)
+        for key in self.model_selected_syscalls:
+            treeiter = self.model_selected_syscalls.get_iter(key=key)
+            if self.model_selected_syscalls.get_has_filename_arguments(
+                    treeiter=treeiter):
+                self.model_selected_syscalls.set_checked(treeiter=treeiter,
+                                                         value=True)
         self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_sockets_activate(self, widget):
         """Intercept all the syscalls used by sockets"""
-        for row in self.model_selected_syscalls:
-            if self.model_selected_syscalls.get_socket_function(row):
-                self.model_selected_syscalls.set_checked(row, True)
+        for key in self.model_selected_syscalls:
+            treeiter = self.model_selected_syscalls.get_iter(key=key)
+            if self.model_selected_syscalls.get_socket_function(
+                    treeiter=treeiter):
+                self.model_selected_syscalls.set_checked(treeiter=treeiter,
+                                                         value=True)
         self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_deselect_all_activate(self, widget):
         """Disable any syscall to intercept"""
-        for row in self.model_selected_syscalls:
-            self.model_selected_syscalls.set_checked(row, False)
+        for key in self.model_selected_syscalls:
+            treeiter = self.model_selected_syscalls.get_iter(key=key)
+            self.model_selected_syscalls.set_checked(treeiter=treeiter,
+                                                     value=False)
         self.do_update_selected_syscalls_count()
 
     def on_action_syscalls_filter_hide_activate(self, widget):
@@ -532,7 +552,7 @@ class UIMain(UIBase):
                 iter = self.ui.filter_activities.convert_iter_to_child_iter(
                     iter)
                 self.filtered_items.append(self.model_activities.get_syscall(
-                    treepath=iter))
+                    treeiter=iter))
                 # Filter the results
                 self.ui.filter_activities.refilter()
 
@@ -551,7 +571,7 @@ class UIMain(UIBase):
                 iter = self.ui.filter_activities.convert_iter_to_child_iter(
                     iter)
                 self.filtered_items.remove(self.model_activities.get_syscall(
-                    treepath=iter))
+                    treeiter=iter))
                 # Filter the results
                 self.ui.filter_activities.refilter()
 
@@ -573,7 +593,8 @@ class UIMain(UIBase):
 
     def on_cell_syscalls_checked_toggled(self, widget, treepath):
         """Handle click on the checked column"""
-        self.model_selected_syscalls.toggle_checked(treepath)
+        treeiter = self.model_selected_syscalls.model[treepath].iter
+        self.model_selected_syscalls.toggle_checked(treeiter)
         self.do_update_selected_syscalls_count()
 
     def on_infobar_information_response(self, widget, response):

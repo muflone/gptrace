@@ -18,47 +18,44 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .base import ModelBase
+from .abstract import ModelAbstract
 
 
-class ModelFiles(ModelBase):
+class ModelFiles(ModelAbstract):
     COL_PID = 0
     COL_FILEPATH = 1
     COL_EXISTING = 2
 
-    KEY_ITER = 'iter'
-    KEY_FILES = 'files'
-
     def __init__(self, model):
         super(self.__class__, self).__init__(model)
-        # Store the TreeNodes in a dictionary for faster access
-        self.dictProcesses = {}
+        # Store the files in a list for each process
+        self.processes = {}
 
-    def add(self, items):
-        """Add a new row in the model"""
-        if not items[self.COL_PID] in self.dictProcesses.keys():
-            # Add a new row as process ID
-            super(self.__class__, self).add(
-                items=(items[self.COL_PID], None, True))
-            self.dictProcesses[items[self.COL_PID]] = {
-                self.KEY_ITER: self.model.get_iter(self.count() - 1),
-                self.KEY_FILES: []
-            }
-        # Add the items as children of the PID
-        subitems = [None, ]
-        subitems.extend(items[1:])
-        pid_process = self.dictProcesses[items[self.COL_PID]]
-        if not items[self.COL_FILEPATH] in pid_process[self.KEY_FILES]:
-            # The requested filepath doesn't exist in the saved list of
-            # processes therefore it will be appended under the PID node
-            self.add_node(pid_process[self.KEY_ITER], items=subitems)
-            pid_process[self.KEY_FILES].append(items[self.COL_FILEPATH])
-
-    def get_filepath(self, treepath):
-        """Get the filepath of a row"""
-        return self.get_model_data(treepath, self.COL_FILEPATH)
+    def add_data(self, item):
+        """Add a new row to the model if it doesn't exist"""
+        super(self.__class__, self).add_data(item)
+        if item.pid not in self.rows:
+            # Add a new process
+            process_row = self.model.append(None, (
+                item.pid,
+                None,
+                True
+            ))
+            self.rows[item.pid] = process_row
+            # Create a new list for the files for the current process
+            self.processes[item.pid] = []
+        else:
+            # Get the existing process iter
+            process_row = self.rows[item.pid]
+        # Add the file under the process if not already existing
+        if item.file_path and item.file_path not in self.processes[item.pid]:
+            self.model.append(process_row, (
+                None,
+                item.file_path,
+                item.existing))
+            self.processes[item.pid].append(item.file_path)
 
     def clear(self):
-        """Empty the model"""
-        self.dictProcesses.clear()
+        """Clear the model"""
+        self.processes.clear()
         return super(self.__class__, self).clear()

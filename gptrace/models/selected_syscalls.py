@@ -18,10 +18,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .base import ModelBase
+from .abstract import ModelAbstract
 
 
-class ModelSelectedSyscalls(ModelBase):
+class ModelSelectedSyscalls(ModelAbstract):
     COL_CHECKED = 0
     COL_SYSCALL = 1
     COL_RESULT = 2
@@ -35,14 +35,23 @@ class ModelSelectedSyscalls(ModelBase):
         self.syscalls = None
         self.clear()
 
-    def add(self, items):
-        """Add a new row in the model"""
-        super(self.__class__, self).add(items)
+    def add_data(self, item):
+        """Add a new row to the model if it doesn't exist"""
+        super(self.__class__, self).add_data(item)
+        if item.syscall not in self.rows:
+            new_row = self.model.append((
+                item.checked,
+                item.syscall,
+                item.return_type,
+                item.arguments,
+                item.is_for_file,
+                item.is_for_socket
+            ))
+            self.rows[item.syscall] = new_row
         # If the checked status is True add the syscall name to the
         # syscalls list
-        if items[self.COL_CHECKED]:
-            self.syscalls.append(items[self.COL_SYSCALL])
-        return False
+        if item.checked:
+            self.syscalls.append(item.syscall)
 
     def clear(self):
         """Remove every item in the model and clear the syscalls list"""
@@ -50,39 +59,32 @@ class ModelSelectedSyscalls(ModelBase):
         self.syscalls = []
         return False
 
-    def get_checked(self, treepath):
-        """Get the checked status"""
-        return self.get_model_data(treepath, self.COL_CHECKED)
-
-    def set_checked(self, treepath, value):
+    def set_checked(self, treeiter, value):
         """Set the checked status and insert/remove from the syscalls list"""
-        name = self.get_syscall(treepath)
+        name = self.get_syscall(treeiter)
         if value and name not in self.syscalls:
             self.syscalls.append(name)
         elif not value and name in self.syscalls:
             self.syscalls.remove(name)
-        return self.set_model_data(treepath, self.COL_CHECKED, value)
+        self.model[treeiter][self.COL_CHECKED] = value
 
-    def toggle_checked(self, treepath):
+    def toggle_checked(self, treeiter):
         """Toggle the checked status"""
-        return self.set_checked(treepath, not self.get_checked(treepath))
+        status = not self.model[treeiter][self.COL_CHECKED]
+        self.model[treeiter][self.COL_CHECKED] = status
+        if status:
+            self.syscalls.append(self.model[treeiter][self.COL_SYSCALL])
+        else:
+            self.syscalls.remove(self.model[treeiter][self.COL_SYSCALL])
 
-    def get_syscall(self, treepath):
+    def get_syscall(self, treeiter):
         """Get the syscall name"""
-        return self.get_model_data(treepath, self.COL_SYSCALL)
+        return self.model[treeiter][self.COL_SYSCALL]
 
-    def get_result_type(self, treepath):
-        """Get the result type"""
-        return self.get_model_data(treepath, self.COL_RESULT)
-
-    def get_arguments(self, treepath):
-        """Get the arguments list"""
-        return self.get_model_data(treepath, self.COL_ARGUMENTS)
-
-    def get_has_filename_arguments(self, treepath):
+    def get_has_filename_arguments(self, treeiter):
         """Get if any arguments is filename/pathname"""
-        return self.get_model_data(treepath, self.COL_FILENAME_ARGUMENTS)
+        return self.model[treeiter][self.COL_FILENAME_ARGUMENTS]
 
-    def get_socket_function(self, treepath):
+    def get_socket_function(self, treeiter):
         """Get if the function is used by sockets"""
-        return self.get_model_data(treepath, self.COL_SOCKET_FUNCTION)
+        return self.model[treeiter][self.COL_SOCKET_FUNCTION]

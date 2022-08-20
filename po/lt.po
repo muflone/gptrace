@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
-"POT-Creation-Date: 2022-08-20 18:05+0200\n"
+"POT-Creation-Date: 2022-08-21 00:38+0200\n"
 "PO-Revision-Date: 2022-08-11 21:14+0200\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian\n"
@@ -130,13 +130,13 @@ msgstr ""
 msgid "Translations"
 msgstr ""
 
-#: gptrace/ui/main.py:447
+#: gptrace/ui/main.py:457
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"
 msgstr ""
 
-#: gptrace/ui/main.py:495
+#: gptrace/ui/main.py:505
 msgid "Select a program to execute"
 msgstr ""
 

@@ -18,10 +18,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .base import ModelBase
+from .abstract import ModelAbstract
 
 
-class ModelProcesses(ModelBase):
+class ModelProcesses(ModelAbstract):
     COL_PID = 0
     COL_TIMESTAMP = 1
     COL_TIME = 2
@@ -33,39 +33,25 @@ class ModelProcesses(ModelBase):
         # Store the TreeNodes in a dictionary for faster access
         self.dictProcesses = {}
 
-    def add(self, items):
-        """Add a new row in the model"""
-        if not items[self.COL_PID] in self.dictProcesses.keys():
-            # Add a new row as process ID
-            super(self.__class__, self).add(items=(
-                items[self.COL_PID],
-                items[self.COL_TIMESTAMP],
-                items[self.COL_TIME],
-                items[self.COL_INFORMATION],
-                items[self.COL_VALUE],
-            ))
-            self.dictProcesses[items[self.COL_PID]] = self.model.get_iter(
-                self.count() - 1)
+    def add_data(self, item):
+        """Add a new row to the model if it doesn't exist"""
+        super(self.__class__, self).add_data(item)
+        if item.pid not in self.rows:
+            # Add a new process
+            process_row = self.model.append(None, (
+                item.pid,
+                item.timestamp,
+                item.time,
+                item.information,
+                item.value))
+            self.rows[item.pid] = process_row
         else:
-            # Add the items as children of the PID
-            self.add_node(self.dictProcesses[items[self.COL_PID]], items=items)
-
-    def get_pid(self, treepath):
-        """Get the PID of a row"""
-        return self.get_model_data(treepath, self.COL_PID)
-
-    def get_timestamp(self, treepath):
-        """Get the timestamp of a row"""
-        return self.get_model_data(treepath, self.COL_TIMESTAMP)
-
-    def get_time(self, treepath):
-        """Get the time of a row"""
-        return self.get_model_data(treepath, self.COL_TIME)
-
-    def get_information(self, treepath):
-        """Get the information of a row"""
-        return self.get_model_data(treepath, self.COL_INFORMATION)
-
-    def get_value(self, treepath):
-        """Get the value of a row"""
-        return self.get_model_data(treepath, self.COL_VALUE)
+            # Get the existing process iter
+            process_row = self.rows[item.pid]
+            # Add the information under the process
+            self.model.append(process_row, (
+                item.pid,
+                item.timestamp,
+                item.time,
+                item.information,
+                item.value))

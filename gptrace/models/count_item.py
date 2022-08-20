@@ -18,30 +18,8 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .abstract import ModelAbstract
-
-
-class ModelActivities(ModelAbstract):
-    COL_TIMESTAMP = 0
-    COL_TIME = 1
-    COL_SYSCALL = 2
-    COL_FORMAT = 3
-    COL_PID = 3
-    COL_IP = 4
-
-    def add_data(self, item):
-        """Add a new row to the model if it doesn't exist"""
-        super(self.__class__, self).add_data(item)
-        new_row = self.model.append((
-            item.timestamp,
-            item.time,
-            item.syscall,
-            item.format,
-            item.pid,
-            item.ip
-        ))
-        self.rows[len(self.rows)] = new_row
-
-    def get_syscall(self, treeiter):
-        """Get the syscall of a row"""
-        return self.model[treeiter][self.COL_SYSCALL]
+class CountItem(object):
+    def __init__(self, syscall, count, visibility):
+        self.syscall = syscall
+        self.count = count
+        self.visibility = visibility

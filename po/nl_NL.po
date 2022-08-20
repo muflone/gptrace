@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gpTrace\n"
 "Report-Msgid-Bugs-To: https://github.com/muflone/gptrace/issues/\n"
-"POT-Creation-Date: 2022-08-20 18:05+0200\n"
+"POT-Creation-Date: 2022-08-21 00:38+0200\n"
 "PO-Revision-Date: 2022-08-11 22:47+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss(at)fastmail.com>\n"
 "Language-Team: Dutch (Netherlands)\n"
@@ -128,7 +128,7 @@ msgstr "Problemen en bugs"
 msgid "Translations"
 msgstr "Vertalingen"
 
-#: gptrace/ui/main.py:447
+#: gptrace/ui/main.py:457
 msgid ""
 "When <i><b>Show only existing files</b></i> is selected the sorting by click "
 "on the column headers is disabled"
@@ -136,7 +136,7 @@ msgstr ""
 "Als <i><b>Alleen bestaande bestanden tonen</b></i> is ingeschakeld, dan kunt "
 "u niet sorteren door te klikken op de kolomtitels"
 
-#: gptrace/ui/main.py:495
+#: gptrace/ui/main.py:505
 msgid "Select a program to execute"
 msgstr "Selecteer een applicatie om uit te voeren"
 
