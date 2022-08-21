@@ -112,23 +112,23 @@ msgstr "Talkininkai:"
 
 #: gptrace/ui/about.py:84
 msgid "Project home page"
-msgstr ""
+msgstr "Projekto internetinė svetainė"
 
 #: gptrace/ui/about.py:85
 msgid "Source code"
-msgstr ""
+msgstr "Pirminis kodas"
 
 #: gptrace/ui/about.py:86
 msgid "Author information"
-msgstr ""
+msgstr "Informacija apie autorių"
 
 #: gptrace/ui/about.py:87
 msgid "Issues and bugs tracking"
-msgstr ""
+msgstr "Klaidos ir klaidų sekiklis"
 
 #: gptrace/ui/about.py:88
 msgid "Translations"
-msgstr ""
+msgstr "Vertimai"
 
 #: gptrace/ui/main.py:457
 msgid ""
@@ -146,7 +146,7 @@ msgstr "Klaviatūros trumpiniai"
 
 #: ui/main.ui:56 ui/shortcuts.ui:28
 msgid "Open the options menu"
-msgstr ""
+msgstr "Atverti parinkčių meniu"
 
 #: ui/main.ui:69 ui/shortcuts.ui:86
 msgid "Clear the results list"

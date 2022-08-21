@@ -178,7 +178,7 @@ msgstr ""
 
 #: ui/main.ui:149
 msgid "Deselect all"
-msgstr ""
+msgstr "Отмаркирване на всичко"
 
 #: ui/main.ui:155
 msgid "Hide the selected syscall"
