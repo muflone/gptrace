@@ -30,7 +30,7 @@ AppDir:
     id: com.muflone.gptrace
     name: gptrace
     icon: gptrace
-    version: 0.6.1
+    version: 0.6.2
     exec: usr/bin/python3
     exec_args: "$APPDIR/usr/share/gptrace/gptrace.py $@"
 

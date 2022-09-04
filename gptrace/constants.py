@@ -26,7 +26,7 @@ from xdg import BaseDirectory
 
 # Application constants
 APP_NAME = 'gpTrace'
-APP_VERSION = '0.6.1'
+APP_VERSION = '0.6.2'
 APP_DESCRIPTION = 'Trace the activities of an external application'
 APP_DOMAIN = 'gptrace'
 APP_AUTHOR = 'Fabio Castelli'
