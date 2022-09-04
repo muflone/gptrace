@@ -106,7 +106,7 @@ msgstr "Traccia le attività di un'applicazione esterna"
 
 #: gptrace/ui/about.py:77
 msgid "Contributors:"
-msgstr "Contributori"
+msgstr "Contributori:"
 
 #: gptrace/ui/about.py:84
 msgid "Project home page"
