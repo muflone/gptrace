@@ -11,7 +11,7 @@
 
 **Source code:** https://github.com/muflone/gptrace/
 
-**Documentation:** https://www.muflone.com/gptrace/
+**Documentation:** http://www.muflone.com/gptrace/
 
 **Translations:** https://explore.transifex.com/muflone/gptrace/
 
@@ -25,28 +25,28 @@ were using.
 From the **gpTrace** main window you choose an executable file, click the button
 **Start** and let the external program execute.
 
-![Activities tab](https://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
+![Activities tab](http://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
 
 In the **Activities** tab you'll see the system calls were made and you can
 filter what to see or what you prefer to ignore to better undestand what the
 external program is doing.
 
-![Counts tab](https://www.muflone.com/resources/gptrace/archive/latest/english/counts.png)
+![Counts tab](http://www.muflone.com/resources/gptrace/archive/latest/english/counts.png)
 
 In the **Counts** tab you'll see how many calls are made for each system call.
 
-![Files tab](https://www.muflone.com/resources/gptrace/archive/latest/english/files.png)
+![Files tab](http://www.muflone.com/resources/gptrace/archive/latest/english/files.png)
 
 In the **Files** tab you'll the files the external program used or tried to use.
 If you want to see only the existing files and ignore what files the process has
 not found you can configure in the upper righe options menu.
 
-![Files tab](https://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
+![Files tab](http://www.muflone.com/resources/gptrace/archive/latest/english/main.png)
 
 In the **Processes** tab you'll the external processes were called from your
 application, along with their information and command line arguments.
 
-![Options menu](https://www.muflone.com/resources/gptrace/archive/latest/english/options.png)
+![Options menu](http://www.muflone.com/resources/gptrace/archive/latest/english/options.png)
 
 From the upper right button you can configure the program options. Some options
 are also available clicking the mouse right button on the results list.

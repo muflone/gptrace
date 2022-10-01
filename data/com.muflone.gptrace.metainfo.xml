@@ -20,27 +20,27 @@
     <category>System</category>
   </categories>
   <url type="homepage">https://github.com/muflone/gptrace/</url>
-  <url type="help">https://www.muflone.com/gptrace/</url>
+  <url type="help">http://www.muflone.com/gptrace/</url>
   <url type="translate">https://explore.transifex.com/muflone/gptrace/</url>
   <url type="bugtracker">https://github.com/muflone/gptrace/issues/</url>
-  <url type="contact">https://www.muflone.com/contacts/</url>
+  <url type="contact">http://www.muflone.com/contacts/</url>
 
   <launchable type="desktop-id">gptrace.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/main.png</image>
+      <image>http://www.muflone.com/resources/gptrace/archive/latest/english/main.png</image>
     </screenshot>
     <screenshot>
-      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/counts.png</image>
+      <image>http://www.muflone.com/resources/gptrace/archive/latest/english/counts.png</image>
     </screenshot>
     <screenshot>
-      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/files.png</image>
+      <image>http://www.muflone.com/resources/gptrace/archive/latest/english/files.png</image>
     </screenshot>
     <screenshot>
-      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/processes.png</image>
+      <image>http://www.muflone.com/resources/gptrace/archive/latest/english/processes.png</image>
     </screenshot>
     <screenshot>
-      <image>https://www.muflone.com/resources/gptrace/archive/latest/english/about.png</image>
+      <image>http://www.muflone.com/resources/gptrace/archive/latest/english/about.png</image>
     </screenshot>
   </screenshots>
 </component>
